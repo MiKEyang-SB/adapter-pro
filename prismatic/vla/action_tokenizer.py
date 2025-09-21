@@ -57,13 +57,13 @@ class ActionTokenizer:
         self.action_token_begin_idx: int = int(self.tokenizer_len - (self.n_bins + 1))
         self.action_token_end_idx: int = int(self.tokenizer_len)
 
-    def __call__(self, action: np.ndarray, use_minivla) -> Union[str, List[str]]:
+    def __call__(self, action: np.ndarray, use_minivlm) -> Union[str, List[str]]:
         """Clip & bin actions to *the last `n_bins` tokens* of the vocabulary (e.g., tokenizer.vocab[-256:])."""
         action = np.clip(action, a_min=float(self.min_action), a_max=float(self.max_action))
         discretized_action = np.digitize(action, self.bins)
 
         # import pdb; pdb.set_trace()
-        if use_minivla:
+        if use_minivlm:
             return (self.tokenizer_len - discretized_action).tolist()
 
         else:
