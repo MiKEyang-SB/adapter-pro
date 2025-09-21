@@ -1,6 +1,6 @@
 # <img src="figure/LOGO2.png" width="50%" style="vertical-align:-7px;" />
 
-⚓ The official implementation of **VLA-Adapter: An Effective Paradigm for Tiny-Scale Vision-Language-Action Model**
+- The official implementation of **VLA-Adapter: An Effective Paradigm for Tiny-Scale Vision-Language-Action Model**
 
 <div id="top" align="center">
 <p align="center">
@@ -22,35 +22,37 @@
 
 <br/>
 
-## :pencil: TODO List<a name="todo"></a>
+## :black_nib: TODO List<a name="todo"></a>
 
-- A more powerful version, **VLA-Adapter++**, and a detailed **technical report** will be released soon. This will include better performance, more experimental scenarios, and more real-world systems supported.
+- A more powerful version, **VLA-Adapter++**, and a detailed **technical report** 📝 will be released soon. This will include better performance, more experimental scenarios, and more real-world systems supported.
 - It will soon be compatible with various foundation models, including but not limited to [VPP](https://arxiv.org/abs/2412.14803), [π0.5](https://arxiv.org/abs/2504.16054).
 
 
 <br/>
 
-## 📝 Table of Contents
+## 🌟 Table of Contents
 
-<!-- - [:movie_camera: Demo](#movie_camera-demo)
-- [:loudspeaker: News](#loudspeaker-news)
-- [🤗 Model Zoo](#ckpts)
-- [:video_game: Getting Started](#installation)
-- [:fire: Training Recipe](#fire-training-recipe)
-  - [Data Preparation](#zero-data-preparation)  
-  - [Task-centric Latent Action Learning](#one-task-centric-latent-action-learning)
-  - [Pretraining of Generalist Policy](#two-pretraining-of-generalist-policy)
-  - [Post-training for Deployment & Evaluations](#three-post-training-for-deployment--evaluations)
-    - [Real-world Experiment](#mechanical_arm-real-world-experiment)
-    - [LIBERO](#1-libero)
-    - [CALVIN](#2-calvin)
-    - [Room2Room](#3-room2room)
-    - [SimplerEnv](#4-simplerenv)
-- [:rocket: UniVLA's Performance](#rocket-univlas-performance) -->
-- [:rocket: Quick Start](#rocket-quick-start)  &emsp; => The **conda environment** and **dependencies** of VLA-Adapter are given.
+- [:rocket: Quick Start](#rocket-quick-start) 
   - [Conda Environment of VLA-Adapter](#conda-environment-of-vla-adapter)
-- [📚 Data Preparation](#data-preparation) &emsp; => Provides the **installation process** and **file structure** of LIBERO and CALVIN environments.
-- [Acknowledgment](#acknowledgment)
+  - [Install Dependencies](#install-dependencies)
+- [:pencil: Data Preparation](#pencil-data-preparation) 
+  - [LIBERO Benchmark](#libero-benchmark)
+  - [CALVIN Benchmark](#calvin-benchmark)
+  - [:video_game: Our Dependencies](#video_game-our-dependencies)
+  - [:pushpin: Benchmark Location](#pushpin-benchmark-location)
+- [:fire: Training for Different Configurations](#fire-training-for-different-configurations) &emsp; => Provides **training configurations** for GPUs ranging from **10GB** to **80GB** of VRAM.
+  - [:books: Related File for Training](#books-related-file-for-training)
+  - [:ledger: How to Train on Extremely Limited VRAM GPUs](#ledger-how-to-train-on-extremely-limited-vram-gpus) &emsp; => A card with 10GB-12GB *(e.g. NVIDIA GeForce RTX 2080Ti, 3060, 3080, 4070, 4080, and 5070)*
+  - [:ledger: How to Train on Low VRAM GPUs](#ledger-how-to-train-on-low-vram-gpus) &emsp; => A card with 24GB *(e.g. NVIDIA GeForce RTX 3090 and 4090)*
+  - [:ledger: How to Train on Larger VRAM GPUs](#ledger-how-to-train-on-larger-vram-gpus) &emsp; => A Consumer GPU with 32GB *(e.g. NVIDIA GeForce RTX 5090)* &emsp; A Professional-Grade GPU with 40GB-48GB *(e.g. NVIDIA A100-40GB, A800-40GB, L20, and RTX A6000).*
+  - [:ledger: How to Train on Sufficient VRAM GPUs](#ledger-how-to-train-on-sufficient-vram-gpus) &emsp; => Professional-Grade GPUs with ≥80GB *(e.g. NVIDIA A100-80GB, A800-80GB, H100, H800, H20-NVLink, and GB200).*
+- [:mechanical_arm: Inference](#mechanical_arm-inference)
+  - [:books: Related File for Inference](#books-related-file-for-inference)
+  - [🤗 Checkpoint of VLA-Adapter](#ckpts)
+  - [:notebook: How to Eval](#evals)
+- [🌈 Success Rate Comparison](#results)
+- [📝 Citation](#cite)
+- [:heart: Acknowledgment](#heart-acknowledgment)
 
 <br/>
 
@@ -65,7 +67,7 @@ conda create -n vla-adapter python=3.10.16 -y
 conda activate vla-adapter
 ```
 
-###  1.2 Install Dependencies.
+### Install Dependencies
 
 ```bash
 # Install PyTorch
@@ -91,9 +93,11 @@ pip install "flash-attn==2.5.5" --no-build-isolation
 <br/>
 
 
-## 📚 2. Data Preparation <a name="data-preparation"></a>
+## :pencil: Data Preparation
 
-### 2.1 LIBERO Benchmark (Optional).
+### LIBERO Benchmark
+
+- **(Optional)**
 
 Clone and install the [LIBERO repo](https://github.com/Lifelong-Robot-Learning/LIBERO) and required packages:
 
@@ -116,7 +120,9 @@ sudo apt-get update
 sudo apt-get install libgl1-mesa-dev libegl1-mesa-dev libgles2-mesa-dev libglew-dev
 ```
 
-### 2.2 CALVIN Benchmark (Optional).
+### CALVIN Benchmark
+
+- **(Optional)**
 
 ```bash
 git clone --recurse-submodules https://github.com/mees/calvin.git
@@ -144,12 +150,14 @@ sudo apt-get install libgl1-mesa-dev libegl1-mesa-dev libgles2-mesa-dev libglew-
 ```
 
 
-### 2.3 Our dependencies (including LIBERO and CALVIN).
+### :video_game: Our Dependencies 
+
+- **(including LIBERO and CALVIN)**
 
 At this point, the environment is fully installed. If you want to confirm whether the environment is correct, you can see the `requirements.txt` file we released.
 
 
-### 2.4 Benchmark Location.
+### :pushpin: Benchmark Location
 
 The downloaded dataset can be placed in the `/data` folder. The overall directory structure is as follows:
 
@@ -176,19 +184,21 @@ The downloaded dataset can be placed in the `/data` folder. The overall director
 <br/>
 <br/>
 
-## 🔥 3. Training for Different Configurations
+## :fire: Training for Different Configurations
 
 **We provide different training configurations for different users. You can choose the configuration suitable for training based on your GPU card type.**
 
-### 📄 3.1 Related File.
+### :books: Related File for Training
 * `vla-scripts/finetune.py`: VLA fine-tuning script
 
 
-### 📘 3.2 How to Train? <br/> &emsp;&emsp;&emsp;&emsp; => *Extremely Limited VRAM (A card with 10GB-12GB) (e.g. NVIDIA GeForce RTX 2080Ti, 3060, 3080, 4070, 4080, and 5070).*
+### :ledger: How to Train on Extremely Limited VRAM GPUs
+
+***=> Extremely Limited VRAM (A card with 10GB-12GB) (e.g. NVIDIA GeForce RTX 2080Ti, 3060, 3080, 4070, 4080, and 5070).***
 
 >***About `batch_size`, `lora_rank`, `grad_accumulation_steps`, and `max_steps`.***
 
-If your resources are extremely limited, you can set `--batch_size 1` and `--lora_rank 64`, it only be required `9.6GB` of VRAM. Certainly, `batch size = 1` will cause gradient updates to be greatly affected by extreme values, and loss convergence will be unstable. In this case, you can modify the `grad_accumulation_steps` parameter to simulate a similar effect. For example, `--batch_size 1` with `--grad_accumulation_steps 8` has a similar effect to `--batch_size 8`, but the training speed will be slower. This means that you can't use the [OpenVLA-OFT](https://github.com/moojink/openvla-oft) model on a card with `10GB` because even with `batch size = 1`, it requires `25GB` of VRAM. Fortunately, you can use VLA-Adapter. However, the `batch size` is still small, you can increase `--max_steps` to achieve the performance reported in the paper.
+If your resources are extremely limited, you can set `--batch_size 1` and `--lora_rank 64`, it only requires `9.6GB` of VRAM. Certainly, `batch size = 1` will cause gradient updates to be greatly affected by extreme values, and loss convergence will be unstable. In this case, you can modify the `grad_accumulation_steps` parameter to simulate a similar effect. For example, `--batch_size 1` with `--grad_accumulation_steps 8` has a similar effect to `--batch_size 8`, but the training speed will be slower. This means that you can't use the [OpenVLA-OFT](https://github.com/moojink/openvla-oft) model on a card with `10GB` because even with `batch size = 1`, it requires `25GB` of VRAM. Fortunately, you can use VLA-Adapter. However, the `batch size` is still small, you can increase `--max_steps` to achieve the performance reported in the paper.
 
 >***About `vlm_path`.***
 
@@ -238,10 +248,11 @@ Please note that the obtained models will be stored in the `/outputs` folder. Ea
 
 <br/>
 
-### 📘 3.3 How to Train? <br/> &emsp;&emsp;&emsp;&emsp; => *Low VRAM (A card with 24GB) (e.g. NVIDIA GeForce RTX 3090 and 4090).*
+### :ledger: How to Train on Low VRAM GPUs
+
+***=> Low VRAM (A card with 24GB) (e.g. NVIDIA GeForce RTX 3090 and 4090).***
 
 >***About `batch_size`, `lora_rank`, `grad_accumulation_steps`, and `max_steps`.***
-
 
 If you have such a device, you can increase the `batch size` and `lora rank`: `--batch_size 4` and `--lora_rank 64`. This only takes nearly `20GB`. This is consistent with the rank in our paper. This means that you can't use the [OpenVLA-OFT](https://github.com/moojink/openvla-oft) model on a card with `24GB` because even with `batch size = 1`, it requires `25GB` of VRAM. Fortunately, you can use VLA-Adapter. However, the `batch size` is still small, you can increase `--max_steps` to achieve the performance reported in the paper.
 
@@ -296,7 +307,10 @@ Please note that the obtained models will be stored in the `/outputs` folder. Ea
 
 <br/>
 
-### 📘 3.4 How to Train? <br/> &emsp;&emsp;&emsp;&emsp; => *A Consumer GPU with 32GB (e.g. NVIDIA GeForce RTX 5090) <br/> &emsp;&emsp;&emsp;&emsp; => A Professional-Grade GPU with 40GB-48GB (e.g. NVIDIA A100-40GB, A800-40GB, L20, and RTX A6000).*
+### :ledger: How to Train on Larger VRAM GPUs
+
+***=> A Consumer GPU with 32GB (e.g. NVIDIA GeForce RTX 5090) <br/> => A Professional-Grade GPU with 40GB-48GB (e.g. NVIDIA A100-40GB, A800-40GB, L20, and RTX A6000).***
+
 
 >***About `batch_size`, `lora_rank`, `grad_accumulation_steps`, and `max_steps`.***
 
@@ -354,8 +368,9 @@ Please note that the obtained models will be stored in the `/outputs` folder. Ea
 
 <br/>
 
+### :ledger: How to Train on Sufficient VRAM GPUs
 
-### 📘 3.5 How to Train? <br/> &emsp;&emsp;&emsp;&emsp; => *Professional-Grade GPUs with ≥80GB (e.g. NVIDIA A100-80GB, A800-80GB, H100, H800, H20-NVLink, and H200).*
+***=> Professional-Grade GPUs with ≥80GB (e.g. NVIDIA A100-80GB, A800-80GB, H100, H800, H20-NVLink, and GB200).***
 
 >***About `batch_size`, `lora_rank`, `grad_accumulation_steps`, and `max_steps`.***
 
@@ -408,9 +423,9 @@ CUDA_VISIBLE_DEVICES=X torchrun --standalone --nnodes 1 --nproc-per-node X vla-s
 
 Please note that the obtained models will be stored in the `/outputs` folder. Each model will take up nearly `3GB` of memory, so you need to reserve enough space. We strongly recommend that you get our trained model from [VLA-Adapter HuggingFace](https://huggingface.co/VLA-Adapter) and place it in this folder for inference.
 
-## 🦾 Evaluations
+## :mechanical_arm: Inference
 
-### 📄 4.1 Related file.
+### :books: Related File for Inference
 * `experiments/robot/libero/`: LIBERO eval files
   * `run_libero_eval.py`: LIBERO eval script
   * `libero_utils.py`: LIBERO eval utils
@@ -420,7 +435,7 @@ Please note that the obtained models will be stored in the `/outputs` folder. Ea
 
 <br/>
 
-### 🤗 4.2 Checkpoint of VLA-Adapter.
+### 🤗 Checkpoint of VLA-Adapter <a name="ckpts"></a>
 We fine-tuned `Qwen2.5-0.5B` with our adapter bridge paradigm on four LIBERO task suites independently: `LIBERO-Spatial`, `LIBERO-Object`, `LIBERO-Goal`, and `LIBERO-Long`. 
 The four VLA-Adapter checkpoints for LIBERO are available on Hugging Face:
 * [VLA-Adapter/LIBERO-Spatial](https://huggingface.co/VLA-Adapter/LIBERO-Spatial) 
@@ -442,7 +457,8 @@ These files need to be placed in the `/output` folder. If you trained your own m
 <br/>
 
 
-### 📘 4.3 How to Eval?
+### :notebook: How to Eval <a name="evals"></a>
+
 **We strongly recommend that you use our open source `Pro` version of the model, which has stronger performance.** To start evaluations with one of these checkpoints, run one of the commands below. Each will automatically download the appropriate checkpoint listed above. If you want to use the original version of the model, you only need to adjust the `-- use_pro_version` parameter to `False` and pass the original version of the model to the `--pretrained_checkpoint` parameter. Finally, the inference results will be displayed in the `/eval_logs` folder, and the inference video will be displayed in the `/rollouts/vla-adapter` folder. 
 
 
@@ -502,12 +518,13 @@ The evaluation script will run 500 trials by default (10 tasks x 50 episodes eac
 
 If you want to get the inference **throughput**, you can run it in the `run_libero_eval.py` file. You can add  `start = time.time()` and `end = time.time()` before and after `lines 334--345` and calculate the difference between the two. This difference is the time it takes to generate `8 chunks`. This gives you the inference throughput. We measured it multiple times and took the average value of `0.036s`.
 
+<br/>
 
-## Success Rate Comparison
+## 🌈 Success Rate Comparison <a name="results"></a>
 
 ### Performance on LIBERO benchmark. 
 
-<b style="border: 1px solid black; padding-left: 0px; text-align: left;">XX</b> represents the best performance, <b>XX</b> represents the second best performance, and <i><u>XX*</u></i> represents the third best performance.
+<b><i>XX</i></b> represents the best performance, <b>XX</b> represents the second best performance, and <i><u>XX*</u></i> represents the third best performance.
 <table>
   <tr>
    <td><strong>LIBERO</strong></td>  <td><strong>Methods</strong></td>
@@ -580,13 +597,13 @@ If you want to get the inference **throughput**, you can run it in the `run_libe
    <td><b>0.5B</b></td><td><b>97.8</b></td><td><b>99.2</b></td><td><i><u>97.2*</u></i></td><td> <b>95.0 </b></td><td><b>97.3</b></td></tr>
 
   <tr><td><b>VLA-Adapter-Pro (Ours)</b></td>
-   <td><b>0.5B</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">99.6</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">99.6</b> </td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">98.2</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">96.4</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">98.5</b></td></tr>
+   <td><b>0.5B</b></td><td><b><i>99.6</i></b></td><td><b><i>99.6</i></b> </td><td><b><i>98.2</i></b></td><td><b><i>96.4</i></b></td><td><b><i>98.5</i></b></td></tr>
   
 </table>
 
 ### Performance on CALVIN ABC→D benchmark. 
 
-<b style="border: 1px solid black; padding-left: 0px; text-align: left;">XX</b> represents the best performance, <b>XX</b> represents the second best performance, and <i><u>XX*</u></i> represents the third best performance.
+<b><i>XX</i></b> represents the best performance, <b>XX</b> represents the second best performance, and <i><u>XX*</u></i> represents the third best performance.
 
 <table>
   <tr>
@@ -627,24 +644,18 @@ If you want to get the inference **throughput**, you can run it in the `run_libe
   <tr><td>Seer (Tian et al., 2025) </td><td> 0.32B</td><td> 94.4 </td><td>87.2 </td><td>79.9 </td><td>72.2 </td><td>64.3</td><td> 3.98</td></tr>
 
   <tr><td><b>VLA-Adapter (Ours)</b></td>
-   <td><b>0.5B</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">99.1</b> </td><td><b>94.6</b> </td><td><b>88.8</b></td><td> <b>82.8</b> </td><td><b>76.5</b> </td><td><b>4.42</b></td></tr>
+   <td><b>0.5B</b></td><td><b><i>99.1</i></b> </td><td><b>94.6</b> </td><td><b>88.8</b></td><td> <b>82.8</b> </td><td><b>76.5</b> </td><td><b>4.42</b></td></tr>
 
   <tr><td><b>VLA-Adapter-Pro (Ours)</b></td>
-   <td><b>0.5B</b></td><td><b>98.5</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">95.0</b> </td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">90.5</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">85.3</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">80.0</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">4.50</b></td></tr>
+   <td><b>0.5B</b></td><td><b>98.5</b></td><td><b><i>95.0</i></b> </td><td><b><i>90.5</i></b></td><td><b><i>85.3</i></b></td><td><b><i>80.0</i></b></td><td><b><i>4.50</i></b></td></tr>
   
 </table>
 
 
 <br/>
 
-## Effectiveness Comparison
 
-<img src=figure/Teaser1.png width=70% />
-
-
-
-
-## Citation<a name="cite"></a>
+## 📝 Citation <a name="cite"></a>
 
 ### 🫶 If you feel that this paper, models, or codes are helpful, please cite our paper, thanks for your support of VLA-Adapter!
 
@@ -657,6 +668,6 @@ If you want to get the inference **throughput**, you can run it in the `run_libe
 }
 ```
 
-## 📚 Acknowledgment <a name="acknowledgment"></a>
+## :heart: Acknowledgment
 
 We thank [OpenVLA-OFT](https://github.com/moojink/openvla-oft) and [RoboDual](https://github.com/OpenDriveLab/RoboDual) for their open-sourced work!
