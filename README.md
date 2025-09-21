@@ -48,7 +48,7 @@
     - [SimplerEnv](#4-simplerenv)
 - [:rocket: UniVLA's Performance](#rocket-univlas-performance) -->
 - [:rocket: Quick Start](#rocket-quick-start)  &emsp; => The **conda environment** and **dependencies** of VLA-Adapter are given.
-  - [1.1 Conda Environment of VLA-Adapter.](#1.1—conda-environment-of-vla-adapter.)
+  - [1.1 Conda Environment of VLA-Adapter](#1-1—conda-environment-of-vla-adapter)
 - [📚 Data Preparation](#data-preparation) &emsp; => Provides the **installation process** and **file structure** of LIBERO and CALVIN environments.
 - [Acknowledgment](#acknowledgment)
 
@@ -57,7 +57,7 @@
 ## :rocket: Quick Start
 
 
-### 1.1 Conda Environment of VLA-Adapter.
+### 1.1 Conda Environment of VLA-Adapter
 
 ```bash
 # Create and activate conda environment
