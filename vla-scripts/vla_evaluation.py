@@ -308,76 +308,8 @@ class DualSystemCalvinEvaluation(CalvinBaseModel):
             )
 
 
-        # if (step + 1) % 8 == 0 or step == 0:
-        #     # Run VLA Inference
-        #     action, hidden_states = self.dual_sys.module.slow_system.predict_action(**inputs, do_sample=False)
-        #     action = torch.tensor(action).to(hidden_states.device).unsqueeze(0)
-        #     action = rearrange(action, 'b (f d) -> b f d', f=8)
-        #     self.action = action[:,:,:7]
-        #     self.hidden_states = hidden_states
-        #
-        #
-        # num_cond_actions = 8 - (step + 1) % 8
-        # if step == 0:
-        #     num_cond_actions = 8
-        #
-        # zero_actions = torch.zeros((1, self.temporal_size, 7))
-        # zero_actions[:, :num_cond_actions] = self.action[:, -num_cond_actions:]
-        # ref_actions = zero_actions.to(self.action.device)
-        #
-        #
-        #
-        # if step == 0:
-        #     self.obs_buffer = image
-        #
-        # prev_img = self.processor.image_processor.apply_transform(Image.fromarray(self.obs_buffer))[:3].unsqueeze(0).to(self.dual_sys.device)
-        # obs = (inputs["pixel_values"][:,:3].to(torch.float), prev_img)
-        #
-        #
-        # hist_action = torch.zeros((1,4,7)).to(self.dual_sys.device)
-        # available_hist_acts = len(self.hist_action)
-        # available_hist_acts = 4 if available_hist_acts > 4 else available_hist_acts
-        # if available_hist_acts > 0:
-        #     hist_action[:, -available_hist_acts:] = torch.stack(self.hist_action[-available_hist_acts:], dim=0).unsqueeze(0).to(self.dual_sys.device)
-        #
-        #
-        # dp_action = self.dual_sys.module.ema_fast_system.ema_model.predict_action(
-        #     ref_action=ref_actions.to(torch.float),
-        #     action_cond=self.hidden_states.to(torch.float),
-        #     obs=obs,
-        #     depth_obs=depth_image,
-        #     gripper_obs=(gripper_image, depth_gripper),
-        #     tactile_obs=tactile_image,
-        #     lang=instruction,
-        #     proprio=proprio,
-        #     hist_action=hist_action,
-        # )
-        # self.obs_buffer = image
-        # action = np.array(dp_action.tolist())
-        #
-        #
-        # # Shift action buffer
-        # self.action_buffer[1:, :, :] = self.action_buffer[:-1, :, :]
-        # self.action_buffer_mask[1:, :] = self.action_buffer_mask[:-1, :]
-        # self.action_buffer[:, :-1, :] = self.action_buffer[:, 1:, :]
-        # self.action_buffer_mask[:, :-1] = self.action_buffer_mask[:, 1:]
-        # self.action_buffer_mask = self.action_buffer_mask * self.temporal_mask
-        #
-        # # Add to action buffer
-        # self.action_buffer[0] = action
-        # self.action_buffer_mask[0] = np.array([True] * self.temporal_mask.shape[0], dtype=np.bool_)
-        #
-        # # Ensemble temporally to predict action
-        # action_prediction = np.sum(self.action_buffer[:, 0, :] * self.action_buffer_mask[:, 0:1] * self.temporal_weights, axis=0) / np.sum(self.action_buffer_mask[:, 0:1] * self.temporal_weights)
-        #
-        #
-        # if action_prediction[-1] < -0.5:
-        #     action_prediction[-1] = -1
-        # else:
-        #     action_prediction[-1] = 1
-        #
-        # self.hist_action.append(torch.from_numpy(action_prediction))
 
         action[:,-1] = 1 - action[:,-1]
         
+
         return [action[i] for i in range(min(len(action), 8))]
