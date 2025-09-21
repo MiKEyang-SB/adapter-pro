@@ -121,10 +121,10 @@ class GenerateConfig:
     wandb_entity: str = "your-wandb-entity"          # Name of WandB entity
     wandb_project: str = "your-wandb-project"        # Name of WandB project
 
-    seed: int = 7                                   # Random Seed (for reproducibility)
+    seed: int = 7                                    # Random Seed (for reproducibility)
 
     # fmt: on
-    save_version: str = "vla-adapter"                        # version of 
+    save_version: str = "vla-adapter"                # version of 
     use_pro_version: bool = True                     # encourage to use the pro models we released.
     phase: str = "Inference"
 
