@@ -1,13 +1,7 @@
 
 """
 Loads a checkpoint that only has a LoRA adapter (no merged model) and merges the adapter
-into the base OpenVLA model. Saves the final checkpoint in the same directory.
-
-Make sure to specify the correct base checkpoint when running this script. For example,
-- if you fine-tuned the default OpenVLA-7B model without modifications, then `--base_checkpoint=="openvla/openvla-7b"`
-- if you fine-tuned a different model or resumed fine-tuning from a different checkpoint, then specify that base checkpoint
-- if you fine-tuned the default OpenVLA-7B model with modifications to `modeling_prismatic.py` (OpenVLA class definition),
-  then the base checkpoint path should point to the checkpoint containing the modifications
+into the base VLA-Adapter model. Saves the final checkpoint in the same directory.
 
 Usage:
     python vla-scripts/merge_lora_weights_and_save.py \
