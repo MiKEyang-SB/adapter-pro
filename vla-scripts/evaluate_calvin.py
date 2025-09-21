@@ -894,8 +894,6 @@ def main(cfg: GenerateConfig):
     os.makedirs(eval_dir, exist_ok=True)
     env = make_env(os.path.join(CALVIN_ROOT, 'dataset/task_ABC_D'), observation_space, DEVICE)
 
-    # eva = DualSystemCalvinEvaluation(dual_sys, processor, action_tokenizer)
-    # dual_sys.eval()
 
     eva = DualSystemCalvinEvaluation(model, proprio_projector, noisy_action_projector, action_head, processor, use_x0_prediction=cfg.use_x0_prediction)
     avg_reward = torch.tensor(evaluate_policy(
