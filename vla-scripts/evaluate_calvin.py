@@ -205,14 +205,6 @@ def make_env(dataset_path, observation_space, device):
 def evaluate_policy(model, env, eval_sr_path, eval_result_path, num_procs, procs_id, eval_dir, ep_len, num_sequences, task_name='test', enrich_lang=False, debug=False):
     conf_dir = Path(f"{CALVIN_ROOT}/calvin_models") / "conf"
     task_cfg = OmegaConf.load(conf_dir / "callbacks/rollout/tasks/new_playtable_tasks.yaml")
-    # # ================= 把 push right 的 0.1 -> 0.05 =================
-    # for task_na, task_config in task_cfg["tasks"].items():
-    #     if "push" in task_na:
-    #         for i in range(len(task_config)):
-    #             if task_config[i] == 0.1:
-    #                 task_config[i] = 0.05
-    #             elif task_config[i] == -0.1:
-    #                 task_config[i] = -0.05
     task_oracle = hydra.utils.instantiate(task_cfg)
 
 
