@@ -14,7 +14,8 @@
 
 > **📝 Paper: https://arxiv.org/abs/2502.19645**<br/>
 > **🌍 Project page: https://vla-adapter.github.io/**<br/>
-> **🤗 HuggingFace: https://huggingface.co/VLA-Adapter**
+> **🤗 HuggingFace: https://huggingface.co/VLA-Adapter**<br/>
+> **Github: https://github.com/OpenHelix-Team/VLA-Adapter**
 
 <br/>
 
