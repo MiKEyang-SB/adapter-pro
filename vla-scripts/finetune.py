@@ -54,7 +54,7 @@ from prismatic.vla.constants import (
     PROPRIO_DIM,
     NUM_TOKENS
 )
-from prismatic.vla.datasets import RLDSDataset, RLDSBatchTransform_V1
+from prismatic.vla.datasets import RLDSDataset, RLDSBatchTransform
 from prismatic.vla.datasets.rlds.utils.data_utils import save_dataset_statistics
 from prismatic.models import load, load_vla
 
@@ -949,7 +949,7 @@ def finetune(cfg: FinetuneConfig) -> None:
     use_wrist_image = cfg.num_images_in_input > 1
 
     # Create training and optional validation datasets
-    batch_transform = RLDSBatchTransform_V1(
+    batch_transform = RLDSBatchTransform(
         action_tokenizer,
         processor.tokenizer,
         image_transform=processor.image_processor.apply_transform,
