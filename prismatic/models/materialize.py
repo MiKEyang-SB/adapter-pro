@@ -118,7 +118,7 @@ def get_vision_backbone_and_transform(
 #     *,
 #     checkpoint_path: Optional[str] = None,
 #     pretrained: Optional[bool] = None,
-#     **extra_kwargs: Any,  # 兜底，避免未来再加参数还要改这里
+#     **extra_kwargs: Any,  
 # ) -> Tuple[VisionBackbone, ImageTransform]:
 #     """Instantiate a Vision Backbone, returning both the nn.Module wrapper class and default Image Transform."""
 #     if vision_backbone_id not in VISION_BACKBONES:
@@ -126,7 +126,7 @@ def get_vision_backbone_and_transform(
 
 #     vision_cfg = VISION_BACKBONES[vision_backbone_id]
 
-#     # 合并默认 kwargs 与调用时传入的覆盖项（忽略 None）
+
 #     merged_kwargs: Dict[str, Any] = dict(vision_cfg["kwargs"])
 #     if pretrained is not None:
 #         merged_kwargs["pretrained"] = pretrained
