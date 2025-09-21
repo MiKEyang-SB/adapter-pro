@@ -388,162 +388,6 @@ import numpy as np
 from moviepy.editor import ImageSequenceClip
 from termcolor import colored
 
-def rollout_act_style(
-    env,
-    model,
-    task_oracle,
-    subtask,
-    val_annotations,
-    debug,
-    eval_dir,
-    subtask_i,
-    sequence_i,
-    ep_len,
-    chunk_size=8,           # H：每次模型预测的动作块长度
-    stride=1,               # K：每次执行的步数（建议 1）
-    window_type='cosine',   # 融合窗：'linear' 或 'cosine'
-    clamp_action=None,      # 例如 (-1, 1)；None 则不裁剪
-    fps=50,                 # 导出视频帧率
-    codec='libx264',        # 视频编码器
-    bitrate='5000k',        # 比特率
-    write_audio=False       # 设为 False 避免音频处理问题
-):
-    """
-    ACT 风格的 rollout：
-    - 每个时间步根据当前观测预测一个动作块 new_chunk（长度 H=chunk_size）
-    - 使用时间相关的加权窗将 prev_chunk 与 new_chunk 在重叠区融合，得到 fused_chunk
-    - 执行 fused_chunk 的前 K（stride）步动作
-    - 将 fused_chunk 左移 K 位作为下一步的 prev_chunk
-    - 每一步执行后检查任务成功；成功或 done 则提前结束
-    """
-
-    assert chunk_size >= 2, "chunk_size 应 >= 2"
-    assert 1 <= stride <= chunk_size, "stride 应在 [1, chunk_size] 区间"
-    if window_type not in ('linear', 'cosine'):
-        raise ValueError("window_type 仅支持 'linear' 或 'cosine'")
-
-    if debug:
-        print(f"{subtask} ", end="")
-        time.sleep(0.2)
-
-    # 初始化环境与模型
-    obs = env.get_obs()
-    lang_annotation = val_annotations[subtask][0]
-    model.reset()
-    start_info = env.get_info()
-
-    # 视频帧缓存（整个 episode 级别）
-    img_dict = {
-        'static': [],
-        'gripper': [],
-    }
-
-    # 构造融合窗权重（长度为 H，越靠近现在 prev 更重，越靠未来 new 更重）
-    H = chunk_size
-    if window_type == 'linear':
-        w_new = np.linspace(0.0, 1.0, H, dtype=np.float32)  # 0 -> 1
-    else:  # cosine
-        x = np.linspace(0.0, np.pi, H, dtype=np.float32)
-        w_new = (1.0 - np.cos(x)) / 2.0
-    w_prev = 1.0 - w_new
-    # 为广播到 [H, act_dim] 做准备
-    w_new = w_new[:, None]
-    w_prev = w_prev[:, None]
-
-    prev_chunk = None  # 上一轮融合后的“未来动作块”，形状 [H, act_dim]
-    success = False
-
-    # 每个外层循环会执行最多 stride 步
-    t = 0
-    while t < ep_len:
-        # 1) 基于当前观测预测新块
-        new_chunk = model.step(obs, lang_annotation, t)
-        new_chunk = np.asarray(new_chunk, dtype=np.float32)
-        if new_chunk.ndim == 1:
-            # 容错：若模型误返回单步动作，扩展为 1xA，并在下方 pad 成 HxA
-            new_chunk = new_chunk[None, :]
-        assert new_chunk.shape[0] <= H, "model.step 返回序列长度不能超过 chunk_size"
-        act_dim = new_chunk.shape[1]
-
-        # 若模型输出不足 H，尾部用最后一个动作重复填满 H
-        if new_chunk.shape[0] < H:
-            tail = np.repeat(new_chunk[-1:,:], H - new_chunk.shape[0], axis=0)
-            new_chunk = np.concatenate([new_chunk, tail], axis=0)
-
-        # 2) 与 prev_chunk 融合
-        if prev_chunk is None or prev_chunk.shape != new_chunk.shape:
-            fused_chunk = new_chunk
-        else:
-            # 时间位置加权融合
-            fused_chunk = w_prev * prev_chunk + w_new * new_chunk
-
-        # 3) 执行 fused_chunk 的前 K（stride）步
-        steps_this_iter = min(stride, ep_len - t)
-        for k in range(steps_this_iter):
-            current_action = fused_chunk[k]
-
-            # 可选：裁剪到动作空间
-            if clamp_action is not None:
-                low, high = clamp_action
-                current_action = np.clip(current_action, low, high)
-
-            # 处理并执行
-            processed_action = process_action(current_action, "openvla")
-            obs, reward, done, current_info = env.step(processed_action.tolist())
-
-            # 记录图像帧
-            # 使用 np.copy 比 deepcopy 更高效，假设 obs['rgb_obs'][...] 是 numpy 数组
-            img_dict['static'].append(np.copy(obs['rgb_obs']['rgb_static']))
-            img_dict['gripper'].append(np.copy(obs['rgb_obs']['rgb_gripper']))
-
-            # 成功检测
-            current_task_info = task_oracle.get_task_info_for_set(start_info, current_info, {subtask})
-            if len(current_task_info) > 0:
-                success = True
-                break
-
-            # 如果环境 done 也提前结束
-            if done:
-                break
-
-        # 步计数推进
-        t += steps_this_iter
-
-        # 若成功或 done，跳出主循环
-        if success or done:
-            break
-
-        # 4) 更新 prev_chunk：将 fused_chunk 左移 K 位，末尾用最后一个值填充，保持长度 H
-        if steps_this_iter < H:
-            # 左移
-            tail_fill = np.repeat(fused_chunk[-1:, :], steps_this_iter, axis=0)
-            shifted = np.concatenate([fused_chunk[steps_this_iter:], tail_fill], axis=0)
-            prev_chunk = shifted
-        else:
-            # steps_this_iter == H：整块已执行完，下一轮从新块开始
-            prev_chunk = None
-
-    # 写出结果视频
-    try:
-        status = "succ" if success else "fail"
-        color = "green" if success else "red"
-        print(colored(status, color), end=" ")
-
-        # 导出两路相机视频
-        for key in img_dict.keys():
-            if len(img_dict[key]) > 0:
-                clip = ImageSequenceClip(img_dict[key], fps=fps)
-                out_path = os.path.join(
-                    eval_dir,
-                    f'{sequence_i}-{subtask_i}-{subtask}-{key}-{status}.mp4'
-                )
-                clip.write_videofile(out_path, fps=fps, codec=codec, bitrate=bitrate, audio=write_audio, logger=None)
-    except Exception as e:
-        # 不影响返回值，但打印告警
-        print(colored(f"[video export error] {e}", "yellow"))
-
-    return success
-
 
 def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_dir, subtask_i, sequence_i, ep_len):
     if debug:
@@ -561,10 +405,8 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
     }
 
     for step in range(80):
-        # 初始化3×8的动作缓冲区
         action_buffers = [None, None, None]
 
-        # 第0步，生成q0
         action_buffers[0] = model.step(obs, lang_annotation, 0)  # 8个动作
         action = action_buffers[0][0]
         action = process_action(action, "openvla")
@@ -573,7 +415,6 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
         img_dict['static'].append(copy.deepcopy(obs['rgb_obs']['rgb_static']))
         img_dict['gripper'].append(copy.deepcopy(obs['rgb_obs']['rgb_gripper']))
 
-        # 检查任务完成
         current_task_info = task_oracle.get_task_info_for_set(start_info, current_info, {subtask})
         if len(current_task_info) > 0:
             print(colored("success", "green"), end=" ")
@@ -582,7 +423,6 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
                 clip.write_videofile(os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-succ.mp4'), fps=50, codec='libx264', bitrate="5000k")
             return True
 
-        # 第1步，生成q1
         action_buffers[1] = model.step(obs, lang_annotation, 1)
         action = (action_buffers[0][1] + action_buffers[1][0]) / 2
         action = process_action(action, "openvla")
@@ -599,7 +439,6 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
                 clip.write_videofile(os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-succ.mp4'), fps=50, codec='libx264', bitrate="5000k")
             return True
 
-        # 第2步，生成q2
         action_buffers[2] = model.step(obs, lang_annotation, 2)
         action = (action_buffers[0][2] + action_buffers[1][1] + action_buffers[2][0]) / 3
         action = process_action(action, "openvla")
@@ -616,7 +455,6 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
                 clip.write_videofile(os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-succ.mp4'), fps=50, codec='libx264', bitrate="5000k")
             return True
 
-        # 第3~8步：常规三队列平均
         for t in range(2, 7):
             action = (action_buffers[0][t] + action_buffers[1][t-1] + action_buffers[2][t-2]) / 3
             action = process_action(action, "openvla")
@@ -633,7 +471,6 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
                     clip.write_videofile(os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-succ.mp4'), fps=50, codec='libx264', bitrate="5000k")
                 return True
 
-        # 第9步：两项平均
         action = (action_buffers[1][7] + action_buffers[2][6]) / 2
         action = process_action(action, "openvla")
         obs, reward, done, current_info = env.step(action.tolist())
@@ -649,7 +486,6 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
                 clip.write_videofile(os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-succ.mp4'), fps=50, codec='libx264', bitrate="5000k")
             return True
 
-        # 第10步：直接用最后一个动作
         action = action_buffers[2][7]
         action = process_action(action, "openvla")
         obs, reward, done, current_info = env.step(action.tolist())
@@ -665,170 +501,13 @@ def rollout_hi3(env, model, task_oracle, subtask, val_annotations, debug, eval_d
                 clip.write_videofile(os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-succ.mp4'), fps=50, codec='libx264', bitrate="5000k")
             return True
 
-    # 全部失败
     print(colored("fail", "red"), end=" ")
     for key in img_dict.keys():
         clip = ImageSequenceClip(img_dict[key], fps=50)
         clip.write_videofile(os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-fail.mp4'), fps=50, codec='libx264', bitrate="5000k")
     return False
 
-def rollout_hi4(env, model, task_oracle, subtask, val_annotations, debug, eval_dir, subtask_i, sequence_i, ep_len):
-    if debug:
-        print(f"{subtask} ", end="")
-        time.sleep(0.5)
 
-    os.makedirs(eval_dir, exist_ok=True)
-
-    def tolist(a):
-        return np.asarray(a).tolist()
-
-    def save_video(tag, img_dict):
-        for key in img_dict.keys():
-            clip = ImageSequenceClip(img_dict[key], fps=50)
-            out = os.path.join(eval_dir, f'{sequence_i}-{subtask_i}-{subtask}-{key}-{tag}.mp4')
-            clip.write_videofile(out, fps=50, codec='libx264', bitrate="5000k", verbose=False, logger=None)
-            clip.close()
-
-    obs = env.get_obs()
-    lang_annotation = val_annotations[subtask][0]
-    model.reset()
-    start_info = env.get_info()
-
-    img_dict = {
-        'static': [],
-        'gripper': [],
-    }
-
-    def record_obs(o):
-        img_dict['static'].append(copy.deepcopy(o['rgb_obs']['rgb_static']))
-        img_dict['gripper'].append(copy.deepcopy(o['rgb_obs']['rgb_gripper']))
-
-    def succeeded(current_info):
-        current_task_info = task_oracle.get_task_info_for_set(start_info, current_info, {subtask})
-        return len(current_task_info) > 0
-
-    record_obs(obs)
-
-    # 每个 block 里尝试“4队列×8动作”的组合，总共执行 13 步（0..12）
-    # 外层最多尝试 50 个 block
-    for block in range(50):
-        action_buffers = [None, None, None, None]  # 4 个队列
-
-        # 步0：生成 q0，执行 q0[0]
-        action_buffers[0] = model.step(obs, lang_annotation, 0)
-        action = action_buffers[0][0]
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 步1：生成 q1，执行 (q0[1] + q1[0]) / 2
-        action_buffers[1] = model.step(obs, lang_annotation, 1)
-        action = (action_buffers[0][1] + action_buffers[1][0]) / 2
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 步2：生成 q2，执行 (q0[2] + q1[1] + q2[0]) / 3
-        action_buffers[2] = model.step(obs, lang_annotation, 2)
-        action = (action_buffers[0][2] + action_buffers[1][1] + action_buffers[2][0]) / 3
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 步3：生成 q3，执行 (q0[3] + q1[2] + q2[1] + q3[0]) / 4
-        action_buffers[3] = model.step(obs, lang_annotation, 3)
-        action = (action_buffers[0][3] + action_buffers[1][2] + action_buffers[2][1] + action_buffers[3][0]) / 4
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 常规“四队列滑动平均”：t = 3..6（共4步）
-        # 执行 (q0[t] + q1[t-1] + q2[t-2] + q3[t-3]) / 4
-        for t in range(3, 7):
-            action = (action_buffers[0][t] + action_buffers[1][t-1] + action_buffers[2][t-2] + action_buffers[3][t-3]) / 4
-            action = process_action(action, "openvla")
-            obs, reward, done, current_info = env.step(tolist(action))
-            record_obs(obs)
-            if succeeded(current_info):
-                print(colored("success", "green"), end=" ")
-                save_video('succ', img_dict)
-                return True
-
-        # 后尾部收束（与三队列版本的“第9步、第10步”类似），逐步减少参与平均的队列数量
-        # 步8：使用 q1[7], q2[6], q3[5] 三项平均
-        action = (action_buffers[1][7] + action_buffers[2][6] + action_buffers[3][5]) / 3
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 步9：使用 q2[7], q3[6] 两项平均
-        action = (action_buffers[2][7] + action_buffers[3][6]) / 2
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 步10：使用 q3[7] 直接执行
-        action = action_buffers[3][7]
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 可选：再多两步“外推”以充分利用已执行后的观测（若希望固定为 13 步，也可以在上一步结束）
-        # 这里保持与三队列版的总步数扩展为 13 步（0..12），用保守策略重复最后动作两次或做平滑过渡
-        # 步11：重复 q3[7]（或进行一次小幅平滑）
-        action = action_buffers[3][7]
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-        # 步12：再次重复 q3[7]
-        action = action_buffers[3][7]
-        action = process_action(action, "openvla")
-        obs, reward, done, current_info = env.step(tolist(action))
-        record_obs(obs)
-        if succeeded(current_info):
-            print(colored("success", "green"), end=" ")
-            save_video('succ', img_dict)
-            return True
-
-    # 全部失败
-    print(colored("fail", "red"), end=" ")
-    save_video('fail', img_dict)
-    return False
-
-# 辅助函数
 def update_image_data(img_dict, obs):
     img_dict['static'].append(copy.deepcopy(obs['rgb_obs']['rgb_static']))
     img_dict['gripper'].append(copy.deepcopy(obs['rgb_obs']['rgb_gripper']))
