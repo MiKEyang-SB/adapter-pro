@@ -693,4 +693,4 @@ All our results are inferred on `H100`. You can find the inference `log` file in
 
 ## :heart: Acknowledgment
 
-We thank [OpenVLA-OFT](https://github.com/moojink/openvla-oft) and [RoboDual](https://github.com/OpenDriveLab/RoboDual) for their open-sourced work!
+We thank [OpenVLA-OFT](https://github.com/moojink/openvla-oft), [MiniVLA](https://github.com/Stanford-ILIAD/openvla-mini), and [RoboDual](https://github.com/OpenDriveLab/RoboDual) for their open-sourced work!
