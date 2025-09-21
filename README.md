@@ -4,7 +4,7 @@
 
 <br/>
 
-- The official implementation of **VLA-Adapter**
+- The official implementation of **VLA-Adapter**. If you want to discuss the VLA-Adapter, please feel free to join our **WeChat group**. The QR code is [here](https://github.com/OpenHelix-Team/VLA-Adapter/issues/1).
 
 <div id="top" align="center">
 <p align="center">
