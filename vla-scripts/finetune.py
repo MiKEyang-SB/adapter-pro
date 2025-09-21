@@ -844,22 +844,9 @@ def finetune(cfg: FinetuneConfig) -> None:
         vla.print_trainable_parameters()
 
     else:
-        # LoRA setup
-        if cfg.use_lora:
-            lora_config = LoraConfig(
-                r=cfg.lora_rank,
-                lora_alpha=2 * cfg.lora_rank,
-                lora_dropout=cfg.lora_dropout,
-                target_modules="all-linear",
-                init_lora_weights="gaussian",
-            )
-            vla = get_peft_model(vla, lora_config)
-            vla.print_trainable_parameters()
-
-        elif cfg.use_fz:
-            for name, param in vla.named_parameters():
-                if "action_queries" in name:
-                    param.requires_grad = True
+        for name, param in vla.named_parameters():
+            if "action_queries" in name:
+                param.requires_grad = True
 
     # FiLM setup
     if cfg.use_film:
