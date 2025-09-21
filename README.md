@@ -1,4 +1,4 @@
-# <img src="figure/LOGO2.png" width="50%" style="vertical-align:-7px;" />
+# <img src="figure/LOGO2.png" width="60%" style="vertical-align:-7px;" />
 
 - The official implementation of **VLA-Adapter: An Effective Paradigm for Tiny-Scale Vision-Language-Action Model**
 
