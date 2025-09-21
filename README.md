@@ -28,11 +28,15 @@
 
 ## :black_nib: TODO List<a name="todo"></a>
 
-- A more powerful version, **VLA-Adapter++**, and a detailed **technical report** 📝 will be released soon. This will include better performance, more experimental scenarios, and more real-world systems supported.<br/>
-- Continue to update the code to adapt to various `real-world systems` deployments, including the configuration of our paper, `Franka`, `UR-5`, and `AGILE piper`.<br/>
-- It will soon be compatible with various foundation models, including but not limited to [VPP](https://arxiv.org/abs/2412.14803), [π0.5](https://arxiv.org/abs/2504.16054).<br/>
-- We will update the `diffusion transformers` and `flow matching` policy networks in the future, and the results will be updated in the subsequent VLA-Adapter++ technical report.
-- We will also update and give more experiments on `Frozen backbone` in the future, and the results will be updated in the VLA-Adapter++ technical report.
+- [x]  Release **checkpoints** for reproduction.
+- [ ]  A more **powerful version**, **VLA-Adapter++**, and a detailed **technical report** 📝 will be released soon.<br/>
+- [ ]  Continue to update the code to adapt to various **real-world systems** deployments, including the configuration of our paper, `Franka`, `UR-5`, and `AGILE piper`.<br/>
+- [ ]  It will soon be compatible with **various foundation models**, including but not limited to [VPP](https://arxiv.org/abs/2412.14803), [π0.5](https://arxiv.org/abs/2504.16054).<br/>
+- [ ]  We will update the **diffusion transformers** and **flow matching** policy networks in the future, and the results will be updated in the subsequent VLA-Adapter++ technical report.
+- [ ]  We will also update and give more experiments on **Frozen backbone**.
+- [ ]  We will expand its **generalization** further in the future. Work is in progress! So please stay tuned!
+- [ ]  **RL post-training** is also in progress. Interested researchers are welcome to join us in building this foundation!
+- [ ]  **The dual-system compatibility** of VLA-Adapter is under exploration!
 
 
 <br/>
