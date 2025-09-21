@@ -73,10 +73,8 @@ conda activate vla-adapter
 pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0
 
 # Clone vla-adapter repo and pip install to download dependencies
-git clone https://github.com/VLA-Adapter/code-for-adatper.git
+git clone https://github.com/OpenHelix-Team/VLA-Adapter.git
 cd vla-adapter
-
-# Installation may fail on some machines. If it fails, you can solve it by lowering the `setuptools` version: `pip install setuptools==57.5.0`
 pip install -e .
 
 pip install packaging ninja
@@ -95,7 +93,7 @@ pip install "flash-attn==2.5.5" --no-build-isolation
 
 ## 📚 2. Data Preparation <a name="data-preparation"></a>
 
-### 2.1 LIBERO Benchmark.
+### 2.1 LIBERO Benchmark (Optional).
 
 Clone and install the [LIBERO repo](https://github.com/Lifelong-Robot-Learning/LIBERO) and required packages:
 
@@ -111,12 +109,21 @@ To download the [LIBERO datasets](https://huggingface.co/datasets/openvla/modifi
 git clone git@hf.co:datasets/openvla/modified_libero_rlds
 ```
 
-### 2.2 CALVIN Benchmark.
+When using LIBERO, you may get an error message like `AttributeError: 'NoneType' object has no attribute 'eglQueryString'`. You can use:
+
+```bash
+sudo apt-get update
+sudo apt-get install libgl1-mesa-dev libegl1-mesa-dev libgles2-mesa-dev libglew-dev
+```
+
+### 2.2 CALVIN Benchmark (Optional).
 
 ```bash
 git clone --recurse-submodules https://github.com/mees/calvin.git
 export CALVIN_ROOT=$(pwd)/calvin
 cd $CALVIN_ROOT
+
+# Installation of `pyhash` may fail on some machines. If it fails, you can solve it by lowering the `setuptools` version: `pip install setuptools==57.5.0`
 sh install.sh
 ```
 
@@ -129,8 +136,20 @@ sh download_data.sh ABC
 
 If you want to download the RLDS format, you can visit [here](https://huggingface.co/datasets/zhouhongyi/calvin_abc_rlds) to download it. This dataset require `~50GB` of memory.
 
+When using CALVIN, you may get an error message like `AttributeError: 'NoneType' object has no attribute 'eglQueryString'`. You can use:
 
-### 2.3 Benchmark Location.
+```bash
+sudo apt-get update
+sudo apt-get install libgl1-mesa-dev libegl1-mesa-dev libgles2-mesa-dev libglew-dev
+```
+
+
+### 2.3 Our dependencies (including LIBERO and CALVIN).
+
+At this point, the environment is fully installed. If you want to confirm whether the environment is correct, you can see the `requirements.txt` file we released.
+
+
+### 2.4 Benchmark Location.
 
 The downloaded dataset can be placed in the `/data` folder. The overall directory structure is as follows:
 
@@ -412,7 +431,7 @@ The four VLA-Adapter checkpoints for LIBERO are available on Hugging Face:
 In addition, we also provide a `Pro` version, we used `4*H100` GPUs for training, `--batch_size 16`, `--lora rank 64`, and the `--max_steps 100000`. The Pro checkpoints is:
 
 * [VLA-Adapter/LIBERO-Spatial-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Spatial-Pro) `(97.8 -> 99.4)`
-* [VLA-Adapter/LIBERO-Object-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Object) `(99.2 -> 99.4)`
+* [VLA-Adapter/LIBERO-Object-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Object) `(99.2 -> 99.6)`
 * [VLA-Adapter/LIBERO-Goal-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Goal) `(97.2 -> 97.8)`
 * [VLA-Adapter/LIBERO-Long-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Long-Pro) `(95.0 -> 96.4)`
 * [VLA-Adapter/CALVIN-ABC-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Long-Pro) `(4.42 -> 4.50)`
@@ -424,11 +443,11 @@ These files need to be placed in the `/output` folder. If you trained your own m
 
 
 ### 📘 4.3 How to Eval?
-**We strongly recommend that you use our open source Pro version of the model, which has stronger performance.** To start evaluations with one of these checkpoints, run one of the commands below. Each will automatically download the appropriate checkpoint listed above. If you want to use the original version of the model, you only need to adjust the `-- use_pro_version` parameter to `False` and pass the original version of the model to the `--pretrained_checkpoint` parameter. Finally, the inference results will be displayed in the `/eval_logs` folder, and the inference video will be displayed in the `/rollouts/vla-adapter` folder. 
+**We strongly recommend that you use our open source `Pro` version of the model, which has stronger performance.** To start evaluations with one of these checkpoints, run one of the commands below. Each will automatically download the appropriate checkpoint listed above. If you want to use the original version of the model, you only need to adjust the `-- use_pro_version` parameter to `False` and pass the original version of the model to the `--pretrained_checkpoint` parameter. Finally, the inference results will be displayed in the `/eval_logs` folder, and the inference video will be displayed in the `/rollouts/vla-adapter` folder. 
 
 
 ```bash
-# Launch LIBERO-Spatial evals
+# Launch LIBERO-Spatial-Pro evals (Background running)
 CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   --use_proprio True \
   --num_images_in_input 2 \
@@ -439,7 +458,7 @@ CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   > eval_logs/Spatial--chkpt.log 2>&1 &
 
 
-# Launch LIBERO-Object evals
+# Launch LIBERO-Object-Pro evals (Background running)
 CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   --use_proprio True \
   --num_images_in_input 2 \
@@ -450,7 +469,7 @@ CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   > eval_logs/Object--chkpt.log 2>&1 &
 
 
-# Launch LIBERO-Goal evals
+# Launch LIBERO-Goal-Pro evals (Background running)
 CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   --use_proprio True \
   --num_images_in_input 2 \
@@ -461,7 +480,7 @@ CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   > eval_logs/Goal--chkpt.log 2>&1 &
 
 
-# Launch LIBERO-Long (LIBERO-10) evals
+# Launch LIBERO-Long-Pro (LIBERO-10) evals (Background running)
 CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   --use_proprio True \
   --num_images_in_input 2 \
@@ -472,156 +491,151 @@ CUDA_VISIBLE_DEVICES=0 python experiments/robot/libero/run_libero_eval.py \
   > eval_logs/Long--chkpt.log 2>&1 &
 
 
-# Launch CALVIN ABC→D evals
+# Launch CALVIN ABC→D-Pro evals (Background running)
 CUDA_VISIBLE_DEVICES=0 python vla-scripts/evaluate_calvin.py \
-  --pretrained_checkpoint outputs/CALVIN \
-  --use_diffusion False \
-  --use_x0_prediction False \
-  --use_pro_version True \
+  --pretrained_checkpoint outputs/CALVIN-ABC-Pro \
   > eval_logs/CALVIN--ABC.log 2>&1 &
 ```
 
-The evaluation script will run 500 trials by default (10 tasks x 50 episodes each) in LIBERO and 1000 task sequences in CALVIN. Note that results may vary slightly if you use a different GPU than the H100. 
+The evaluation script will run 500 trials by default (10 tasks x 50 episodes each) in LIBERO and 1,000 task sequences in CALVIN. Use the same card for training and inference whenever possible. **Note that results may vary slightly if you use a different GPU than the H100.** 
+
 
 If you want to get the inference **throughput**, you can run it in the `run_libero_eval.py` file. You can add  `start = time.time()` and `end = time.time()` before and after `lines 334--345` and calculate the difference between the two. This difference is the time it takes to generate `8 chunks`. This gives you the inference throughput. We measured it multiple times and took the average value of `0.036s`.
 
 
 ## Success Rate Comparison
 
+### Performance on LIBERO benchmark. 
+
+<b style="border: 1px solid black; padding-left: 0px; text-align: left;">XX</b> represents the best performance, <b>XX</b> represents the second best performance, and <i><u>XX*</u></i> represents the third best performance.
 <table>
   <tr>
-  <td><strong>Category</strong>
-   </td>
-   <td><strong>Methods</strong>
-   </td>
-   <td><strong>Scale</strong>
-   </td>
-   <td><strong>Spatial</strong>
-   </td>
-   <td><strong>Object</strong>
-   </td>
-   <td><strong>Goal</strong>
-   </td>
-   <td><strong>Long</strong>
-   </td>
-  <td><strong>Avg.</strong>
-   </td>
-  </tr>
-  <tr>
-    <td rowspan="10">Large-scale</td>
-   <td>FlowVLA (Zhong et al., 2025)</td>
-   <td>8.5B</td><td>93.2</td><td>95.0</td><td>91.6</td><td>72.6</td><td>88.1</td>
+   <td><strong>LIBERO</strong></td>  <td><strong>Methods</strong></td>
+   <td><strong>Scale</strong></td>  <td><strong>Spatial</strong></td>
+   <td><strong>Object</strong></td>  <td><strong>Goal</strong></td>
+   <td><strong>Long</strong></td>  <td><strong>Avg.</strong></td>
   </tr>
 
-   <tr>
-   <td>UnifiedVLA (Wang et al., 2025)</td>
-   <td>8.5B</td><td>95.4</td><td> <i><u>98.8*</u></i></td><td> 93.6 </td><td>94.0 </td><td>95.5</td>
-  </tr>
+  <tr><td rowspan="10">Large-scale</td><td>FlowVLA (Zhong et al., 2025)</td>
+   <td>8.5B</td><td>93.2</td><td>95.0</td><td>91.6</td><td>72.6</td><td>88.1</td></tr>
 
-  <tr>
-   <td>OpenVLA (Kim et al., 2024)</td>
-   <td>7B</td><td>84.7</td><td>88.4</td><td>79.2</td><td>53.7</td><td>76.5</td>
-  </tr>
+  <tr><td>UnifiedVLA (Wang et al., 2025)</td>
+   <td>8.5B</td><td>95.4</td><td><i><u>98.8*</u></i></td><td> 93.6 </td><td>94.0 </td><td>95.5</td></tr>
 
-  <tr>
-   <td>OpenVLA-OFT (Kim et al., 2025)</td>
-   <td>7B</td><td><i><u>97.6*</u></i></td><td>98.4</td><td><b>97.9</b></td><td><i><u>94.5*</u></i></td><td><i><u>97.1*</u></i></td>
-  </tr>
+  <tr><td>OpenVLA (Kim et al., 2024)</td>
+   <td>7B</td><td>84.7</td><td>88.4</td><td>79.2</td><td>53.7</td><td>76.5</td></tr>
 
-  <tr>
-   <td>UniVLA (Bu et al., 2025)</td>
-   <td>7B</td><td>96.5</td><td> 96.8</td><td> 95.6 </td><td>92.0 </td><td>95.2</td>
-  </tr>
+  <tr><td>OpenVLA-OFT (Kim et al., 2025)</td>
+   <td>7B</td><td><i><u>97.6*</u></i></td><td>98.4</td><td><b>97.9</b></td><td><i><u>94.5*</u></i></td><td><i><u>97.1*</u></i></td></tr>
 
-  <tr>
-   <td>CoT-VLA (Zhao et al., 2025)</td>
-   <td>7B</td><td>87.5 </td><td>91.6 </td><td>87.6</td><td> 69.0</td><td> 81.1</td>
-  </tr>
+  <tr><td>UniVLA (Bu et al., 2025)</td>
+   <td>7B</td><td>96.5</td><td> 96.8</td><td> 95.6 </td><td>92.0 </td><td>95.2</td></tr>
 
-  <tr>
-   <td>WorldVLA (Cen et al., 2025)</td>
-   <td>7B</td><td>87.6</td><td> 96.2</td><td> 83.4</td><td> 60.0</td><td> 81.8</td>
-  </tr>
+  <tr><td>CoT-VLA (Zhao et al., 2025)</td>
+   <td>7B</td><td>87.5 </td><td>91.6 </td><td>87.6</td><td> 69.0</td><td> 81.1</td></tr>
 
-  <tr>
-   <td>TraceVLA (Zheng et al., 2025)</td>
-   <td>7B</td><td>84.6</td><td> 85.2</td><td> 75.1</td><td> 54.1</td><td> 74.8</td>
-  </tr>
+  <tr><td>WorldVLA (Cen et al., 2025)</td>
+   <td>7B</td><td>87.6</td><td> 96.2</td><td> 83.4</td><td> 60.0</td><td> 81.8</td></tr>
 
-  <tr>
-   <td>MolmoAct (Lee et al., 2025)</td>
-   <td>7B</td><td>87.0</td><td> 95.4 </td><td>87.6</td><td> 77.2 </td><td>86.6</td>
-  </tr>
+  <tr><td>TraceVLA (Zheng et al., 2025)</td>
+   <td>7B</td><td>84.6</td><td> 85.2</td><td> 75.1</td><td> 54.1</td><td> 74.8</td></tr>
 
-  <tr>
-   <td>ThinkAct (Huang et al., 2025)</td>
-   <td>7B</td><td>88.3 </td><td>91.4</td><td> 87.1</td><td> 70.9</td><td> 84.4</td>
-  </tr>
+  <tr><td>MolmoAct (Lee et al., 2025)</td>
+   <td>7B</td><td>87.0</td><td> 95.4 </td><td>87.6</td><td> 77.2 </td><td>86.6</td></tr>
 
-  <tr>
-  <td rowspan="7">Small-scale</td>
-   <td>4D-VLA (Zhang et al., 2025)</td>
-   <td>4B</td><td>88.9</td><td> 95.2</td><td> 90.9</td><td> 79.1 </td><td>88.6</td>
-  </tr>
+  <tr><td>ThinkAct (Huang et al., 2025)</td>
+   <td>7B</td><td>88.3 </td><td>91.4</td><td> 87.1</td><td> 70.9</td><td> 84.4</td></tr>
 
-  <tr>
-   <td>SpatialVLA (Qu et al., 2025)</td>
-   <td>4B</td><td>88.2</td><td> 89.9</td><td> 78.6</td><td> 55.5 </td><td>78.1</td>
-  </tr>
+  <tr><td rowspan="7">Small-scale</td><td>4D-VLA (Zhang et al., 2025)</td>
+   <td>4B</td><td>88.9</td><td> 95.2</td><td> 90.9</td><td> 79.1 </td><td>88.6</td></tr>
 
-  <tr>
-   <td>π0 (Black et al., 2024)</td>
-   <td>3B</td><td>96.8</td><td> <i><u>98.8*</u></i> </td><td>95.8</td><td> 85.2</td><td> 94.2</td>
-  </tr>
+  <tr><td>SpatialVLA (Qu et al., 2025)</td>
+   <td>4B</td><td>88.2</td><td> 89.9</td><td> 78.6</td><td> 55.5 </td><td>78.1</td></tr>
 
-  <tr>
-   <td>π0-FAST (Pertsch et al., 2025)</td>
-   <td>3B</td><td>96.4</td><td> 96.8 </td><td>88.6</td><td> 60.2</td><td> 85.5</td>
-  </tr>
+  <tr><td>π0 (Black et al., 2024)</td>
+   <td>3B</td><td>96.8</td><td><i><u>98.8*</u></i></td><td>95.8</td><td> 85.2</td><td> 94.2</td></tr>
 
-  <tr>
-   <td>NORA (Hung et al., 2025)</td>
-   <td>3B</td><td>92.2 </td><td>95.4 </td><td>89.4</td><td> 74.6 </td><td>87.9</td>
-  </tr>
+  <tr><td>π0-FAST (Pertsch et al., 2025)</td>
+   <td>3B</td><td>96.4</td><td> 96.8 </td><td>88.6</td><td> 60.2</td><td> 85.5</td></tr>
 
-  <tr>
-   <td>SmolVLA (Shukor et al., 2025)</td>
-   <td>2.2B</td><td>93.0</td><td> 94.0 </td><td>91.0</td><td> 77.0 </td><td>88.8</td>
-  </tr>
+  <tr><td>NORA (Hung et al., 2025)</td>
+   <td>3B</td><td>92.2 </td><td>95.4 </td><td>89.4</td><td> 74.6 </td><td>87.9</td></tr>
 
-  <tr>
-   <td>GR00T N1 (NVIDIA et al., 2025)</td>
-   <td>2B</td><td>94.4</td><td> 97.6 </td><td>93.0 </td><td>90.6</td><td> 93.9</td>
-  </tr>
+  <tr><td>SmolVLA (Shukor et al., 2025)</td>
+   <td>2.2B</td><td>93.0</td><td> 94.0 </td><td>91.0</td><td> 77.0 </td><td>88.8</td></tr>
 
-  <tr>
-    <td rowspan="5">Tiny-scale</td>
-   <td>Seer (Tian et al., 2025)</td>
-   <td>0.57B</td><td>-</td><td> - </td><td>- </td><td>78.7</td><td> 78.7</td>
-  </tr>
+  <tr><td>GR00T N1 (NVIDIA et al., 2025)</td>
+   <td>2B</td><td>94.4</td><td> 97.6 </td><td>93.0 </td><td>90.6</td><td> 93.9</td></tr>
 
-  <tr>
-   <td>VLA-OS (Gao et al., 2025)</td>
-   <td>0.5B</td><td>87.0 </td><td>96.5</td><td> 92.7 </td><td>66.0</td><td> 85.6</td>
-  </tr>
+  <tr><td rowspan="5">Tiny-scale</td><td>Seer (Tian et al., 2025)</td>
+   <td>0.57B</td><td>-</td><td> - </td><td>- </td><td>78.7</td><td> 78.7</td></tr>
 
-  <tr>
-   <td>Diffusion Policy (Chi et al., 2023)</td>
-   <td>-</td><td>78.3</td><td> 92.5</td><td> 68.3 </td><td>50.5 </td><td>72.4</td>
-  </tr>
+  <tr><td>VLA-OS (Gao et al., 2025)</td>
+   <td>0.5B</td><td>87.0 </td><td>96.5</td><td> 92.7 </td><td>66.0</td><td> 85.6</td></tr>
 
-  <tr>
-   <td><b>VLA-Adapter (Ours)</b></td>
-   <td><b>0.5B</b></td><td><b>97.8</b></td><td> <b>99.2</b> </td><td><i><u>97.2*</u></i></td><td> <b>95.0 </b></td><td><b>97.3</b></td>
-  </tr>
+  <tr><td>Diffusion Policy (Chi et al., 2023)</td>
+   <td>-</td><td>78.3</td><td> 92.5</td><td> 68.3 </td><td>50.5 </td><td>72.4</td></tr>
 
-  <tr>
-   <td><b>VLA-Adapter (Pro)</b></td>
-   <td><b>0.5B</b></td><td><b>99.4</b></td><td> <b>99.4</b> </td><td><i><u>97.8*</u></i></td><td> <b>96.4</b></td><td><b>98.3</b></td>
-  </tr>
+  <tr><td><b>VLA-Adapter (Ours)</b></td>
+   <td><b>0.5B</b></td><td><b>97.8</b></td><td><b>99.2</b></td><td><i><u>97.2*</u></i></td><td> <b>95.0 </b></td><td><b>97.3</b></td></tr>
+
+  <tr><td><b>VLA-Adapter-Pro (Ours)</b></td>
+   <td><b>0.5B</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">99.6</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">99.6</b> </td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">98.2</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">96.4</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">98.5</b></td></tr>
   
 </table>
 
+### Performance on CALVIN ABC→D benchmark. 
+
+<b style="border: 1px solid black; padding-left: 0px; text-align: left;">XX</b> represents the best performance, <b>XX</b> represents the second best performance, and <i><u>XX*</u></i> represents the third best performance.
+
+<table>
+  <tr>
+   <td><strong>CALVIN</strong></td>  <td><strong>Methods</strong></td>
+   <td><strong>Scale</strong></td>  <td><strong>1</strong></td>
+   <td><strong>2</strong></td>  <td><strong>3</strong></td>
+   <td><strong>4</strong></td>  <td><strong>5</strong></td> <td><strong>Avg. len</strong></td>
+  </tr>
+
+  <tr><td rowspan="8">Large-scale</td><td>UniVLA (Bu et al., 2025) </td><td>7B </td><td>95.5 </td><td>85.8 </td><td>75.4</td><td> 66.9 </td><td>56.5 </td><td>3.80</tr>
+
+  <tr><td>OpenVLA (Kim et al., 2024) </td><td> 7B</td><td> 91.3</td><td> 77.8 </td><td>62.0 </td><td>52.1 </td><td>43.5</td><td> 3.27</td></tr>
+
+  <tr><td>OpenVLA-OFT (Kim et al., 2025)</td><td> 7B</td><td> 96.3</td><td> 89.1 </td><td>82.4</td><td> 75.8</td><td> 66.5</td><td> 4.10</td></tr>
+
+  <tr><td>VLAS (Zhao et al., 2025b) </td><td> 7B</td><td> 87.2 </td><td>64.2</td><td> 40.9 </td><td>28.1</td><td> 19.6 </td><td>2.40</td></tr>
+
+  <tr><td>LCB (Shentu et al., 2024) </td><td> 7B</td><td> 73.6 </td><td>50.2 </td><td>28.5 </td><td>16.0 </td><td>9.9 </td><td>1.78</td></tr>
+
+  <tr><td>RoboDual (Bu et al., 2024a) </td><td> 7B</td><td> 94.4</td><td> 82.7</td><td> 72.1</td><td> 62.4 </td><td>54.4</td><td> 3.66</td></tr>
+
+  <tr><td>OpenHelix (Cui et al., 2025)  </td><td> 7B</td><td> <i><u>97.1*</u></i> </td><td>91.4 </td><td>82.8</td><td> 72.6</td><td> 64.1 </td><td>4.08</td></tr>
+
+  <tr><td>ReconVLA (Song et al., 2025c)  </td><td> 7B</td><td> 95.6 </td><td>87.6 </td><td>76.9</td><td> 69.3</td><td> 64.1 </td><td>3.95</td></tr>
+
+  <tr><td rowspan="4">Small-scale</td><td>DeeR (Yue et al., 2024) </td><td> 3B</td><td> 86.2</td><td> 70.1 </td><td>51.8</td><td> 41.5</td><td> 30.4 </td><td>2.82</td></tr>
+
+  <tr><td>RoboFlamingo (Li et al., 2024b) </td><td> 3B</td><td> 82.4 </td><td>61.9</td><td> 46.6 </td><td>33.1</td><td> 23.5</td><td> 2.48</td></tr>
+
+  <tr><td>VPP (Hu et al., 2025)</td><td>  1.5B</td><td>  95.7</td><td>  91.2</td><td>  <i><u>86.3*</u></i></td><td>  <i><u>81.0*</u></i></td><td>  <i><u>75.0*</u></i></td><td>  <i><u>4.33*</u></i></td></tr>
+
+  <tr><td>SuSIE (Black et al., 2024)</td><td>1.3B</td><td> 87.0</td><td> 69.0</td><td> 49.0 </td><td>38.0</td><td> 26.0</td><td> 2.69</td></tr>
+
+  <tr><td rowspan="5">Tiny-scale</td><td>Seer-Large (Tian et al., 2025)</td><td>0.57B</td><td> 96.3 </td><td><i><u>91.6*</u></i></td><td> 86.1 </td><td>80.3 </td><td>74.0</td><td> 4.28</td></tr>
+
+  <tr><td>MoDE (Reuss et al., 2025) </td><td> 0.44B </td><td>96.2</td><td> 88.9</td><td> 81.1</td><td> 71.8 </td><td>63.5 </td><td>4.01</td></tr>
+
+  <tr><td>Seer (Tian et al., 2025) </td><td> 0.32B</td><td> 94.4 </td><td>87.2 </td><td>79.9 </td><td>72.2 </td><td>64.3</td><td> 3.98</td></tr>
+
+  <tr><td><b>VLA-Adapter (Ours)</b></td>
+   <td><b>0.5B</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">99.1</b> </td><td><b>94.6</b> </td><td><b>88.8</b></td><td> <b>82.8</b> </td><td><b>76.5</b> </td><td><b>4.42</b></td></tr>
+
+  <tr><td><b>VLA-Adapter-Pro (Ours)</b></td>
+   <td><b>0.5B</b></td><td><b>98.5</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">95.0</b> </td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">90.5</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">85.3</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">80.0</b></td><td><b style="border: 1px solid black; padding-left: 0px; text-align: left;">4.50</b></td></tr>
+  
+</table>
+
+
+<br/>
 
 ## Effectiveness Comparison
 
@@ -645,4 +659,4 @@ If you want to get the inference **throughput**, you can run it in the `run_libe
 
 ## 📚 Acknowledgment <a name="acknowledgment"></a>
 
-We thank [OpenVLA-OFT](https://github.com/moojink/openvla-oft) for their open-sourced work!
+We thank [OpenVLA-OFT](https://github.com/moojink/openvla-oft) and [RoboDual](https://github.com/OpenDriveLab/RoboDual) for their open-sourced work!
