@@ -154,7 +154,7 @@ sudo apt-get install libgl1-mesa-dev libegl1-mesa-dev libgles2-mesa-dev libglew-
 
 - **(including LIBERO and CALVIN)**
 
-At this point, the environment is fully installed. If you want to confirm whether the environment is correct, you can see the `requirements.txt` file we released.
+At this point, the environment is fully installed. If you want to confirm whether the environment is correct, you can see the `our_envs.txt` file we released.
 
 
 ### :pushpin: Benchmark Location
@@ -445,11 +445,11 @@ The four VLA-Adapter checkpoints for LIBERO are available on Hugging Face:
 
 In addition, we also provide a `Pro` version, we used `4*H100` GPUs for training, `--batch_size 16`, `--lora rank 64`, and the `--max_steps 100000`. The Pro checkpoints is:
 
-* [VLA-Adapter/LIBERO-Spatial-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Spatial-Pro) `(97.8 -> 99.4)`
-* [VLA-Adapter/LIBERO-Object-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Object) `(99.2 -> 99.6)`
-* [VLA-Adapter/LIBERO-Goal-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Goal) `(97.2 -> 97.8)`
+* [VLA-Adapter/LIBERO-Spatial-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Spatial-Pro) `(97.8 -> 99.6)`
+* [VLA-Adapter/LIBERO-Object-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Object-Pro) `(99.2 -> 99.6)`
+* [VLA-Adapter/LIBERO-Goal-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Goal-Pro) `(97.2 -> 98.2)`
 * [VLA-Adapter/LIBERO-Long-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Long-Pro) `(95.0 -> 96.4)`
-* [VLA-Adapter/CALVIN-ABC-Pro](https://huggingface.co/VLA-Adapter/LIBERO-Long-Pro) `(4.42 -> 4.50)`
+* [VLA-Adapter/CALVIN-ABC-Pro](https://huggingface.co/VLA-Adapter/CALVIN-ABC-Pro) `(4.42 -> 4.50)`
 
 These files need to be placed in the `/output` folder. If you trained your own models, it will also be stored here. The subsequent eval code will call the model in this folder for inference.
 
