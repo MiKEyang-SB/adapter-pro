@@ -40,6 +40,7 @@
   - [CALVIN Benchmark](#calvin-benchmark)
   - [:video_game: Our Dependencies](#video_game-our-dependencies)
   - [:pushpin: Benchmark Location](#pushpin-benchmark-location)
+- [⚓ VLM backbone](#vlm)
 - [:fire: Training for Different Configurations](#fire-training-for-different-configurations) &emsp; => Provides **training configurations** for GPUs ranging from **10GB** to **80GB** of VRAM.
   - [:books: Related File for Training](#books-related-file-for-training)
   - [:ledger: How to Train on Extremely Limited VRAM GPUs](#ledger-how-to-train-on-extremely-limited-vram-gpus) &emsp; => A card with 10GB-12GB *(e.g. NVIDIA GeForce RTX 2080Ti, 3060, 3080, 4070, 4080, and 5070)*
@@ -178,8 +179,21 @@ The downloaded dataset can be placed in the `/data` folder. The overall director
     │   └── 1.0.0  (It contains some json files, 512 train tfrecord files, and 32 valid tfrecord files)
     │
     └── other benchmarks ...
+```
+
+<br/>
+<br/>
+
+## ⚓ VLM backbone <a name="vlm"></a>
+We use the `Prismatic-VLMs` architecture. Since the file is large, please download it from [here](https://huggingface.co/Stanford-ILIAD/prism-qwen25-extra-dinosiglip-224px-0_5b). Then put it in the `/pretrained_models` folder. The file structure is:
 
 ```
+·
+├── pretrained_models
+·   ├── configs
+    └── prism-qwen25-extra-dinosiglip-224px-0_5b
+```
+
 
 <br/>
 <br/>
