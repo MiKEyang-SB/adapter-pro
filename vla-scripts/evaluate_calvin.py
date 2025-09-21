@@ -757,13 +757,6 @@ def check_unnorm_key(cfg: GenerateConfig, model) -> None:
     # Set the unnorm_key in cfg
     cfg.unnorm_key = unnorm_key
 
-# ====================================================================================================
-# 目的：加载与VLA模型相关的 proprio_projector，proprio指有关机器人的位置信息、动作、姿态等信息
-# 输入：cfg (pretrained_checkpoint)、llm_dim、proprio_dim
-# 输出：初始化并加载了预训练权重的 ProprioProjector 对象
-
-
-
 
 DATE_TIME = time.strftime("%Y_%m_%d-%H_%M_%S")
 logging.basicConfig(
@@ -887,33 +880,6 @@ def main(cfg: GenerateConfig):
     validate_config(cfg)
     
     model, action_head, proprio_projector, noisy_action_projector, processor = initialize_model(cfg)
-
-
-    # # Load generalist policy
-    # processor = AutoProcessor.from_pretrained(args.VLM_backbone, trust_remote_code=False)
-    # model = AutoModelForVision2Seq.from_pretrained(
-    #     args.VLM_backbone,
-    #     torch_dtype=torch.bfloat16,
-    #     quantization_config=None,
-    #     trust_remote_code=False,
-    #     low_cpu_mem_usage=True,
-    # )
-
-    # model.vision_backbone.set_num_images_in_input(2)  # OFT-add!
-    # model.eval()
-    # model = model.to(device)
-    # _load_dataset_stats(model, args.VLM_backbone)
-
-    # # Load proprio projector and action head if needed
-    # proprio_projector = get_proprio_projector(        # OFT-add!
-    #     args.VLM_backbone,
-    #     model.llm_dim,
-    #     proprio_dim=8
-    # )
-    # action_head = get_action_head(                    # OFT-add!
-    #     args.VLM_backbone,
-    #     model.llm_dim
-    # )
 
     current_time=time.strftime("%Y-%m-%d_%H-%M-%S")
 
