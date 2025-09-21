@@ -418,7 +418,7 @@ In addition, we recently released an enhanced version `Pro` of the VLA-Adapter. 
 ```bash
 data_name=libero_spatial_no_noops
 
-CUDA_VISIBLE_DEVICES=X torchrun --standalone --nnodes 1 --nproc-per-node X vla-scripts/finetune.py \
+CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --standalone --nnodes 1 --nproc-per-node 4 vla-scripts/finetune.py \
 --vlm_path pretrained_models/prism-qwen25-extra-dinosiglip-224px-0_5b \
 --config_file_path pretrained_models/configs \
 --data_root_dir data/libero \
