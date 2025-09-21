@@ -95,7 +95,7 @@ class GenerateConfig:
     # Model-specific parameters
     #################################################################################################################
     model_family: str = "openvla"                    # Model family
-    pretrained_checkpoint: Union[str, Path] = "/ssdwork/Pengxiang/code/openvla-oft/outputs/calvin/openvla-7b+calvin_abc_rlds+b20+lr-0.0001+lora-r64+dropout-0.0--image_aug--oft_calvin_parallel_dec--8_acts_chunk--continuous_acts--L1_regression--rank64--lr1e-4--lora--3rd_person_img--2025-05-26_05-39-02--40000_chkpt"     # Pretrained checkpoint path
+    pretrained_checkpoint: Union[str, Path] = "../outputs/calvin-abc"     # Pretrained checkpoint path
 
     use_minivla: bool = False                   # If True, 
 
