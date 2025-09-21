@@ -3,7 +3,7 @@
 </div>
 
 
->## The official implementation of **VLA-Adapter**. If you want to discuss the VLA-Adapter, please feel free to join our **WeChat group**. The QR code is [here](https://github.com/OpenHelix-Team/VLA-Adapter/issues/1)!
+>### The official implementation of **VLA-Adapter**. If you want to discuss the VLA-Adapter, please feel free to join our **WeChat group**. The QR code is [here](https://github.com/OpenHelix-Team/VLA-Adapter/issues/1)!
 <br/>
 
 <div id="top" align="center">
