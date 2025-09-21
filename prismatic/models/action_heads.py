@@ -324,6 +324,7 @@ class MLPResNetBlock_Pro(nn.Module):
         self.rope = RotaryPositionEmbedding(self.head_dim)
 
         # ---- FiLM ----
+        # FiLM is useless; to avoid conflict with chkpt, it can be kept as is for now.
         self.film_gen = nn.Sequential(
             nn.Linear(dim, dim * 2),  # output γ and β
             )
