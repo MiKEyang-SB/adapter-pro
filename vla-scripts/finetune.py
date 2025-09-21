@@ -816,61 +816,13 @@ def finetune(cfg: FinetuneConfig) -> None:
         del old_state_dict
 
     else:
-        if cfg.use_minivlm:
-            if cfg.resume:
-                vla = AutoModelForVision2Seq.from_pretrained(
-                    cfg.resum_vla_path,
-                    torch_dtype=torch.bfloat16,
-                    low_cpu_mem_usage=False,
-                    trust_remote_code=False,
-                    ).to(device_id)
-            else:
-                hf_token = ''
-                if 'prism-qwen25-extra-dinosiglip-224px-0_5b' in cfg.vlm_path:
-                    vlm = load(cfg.vlm_path, hf_token=hf_token, load_for_training=True)
-                else:
-                    vlm = load_vla(
-                        cfg.vlm_path,
-                        hf_token=hf_token,
-                        load_for_training=True,
-                        )
-                config = AutoConfig.from_pretrained("pretrained_models/configs/config.json")
-                vla = AutoModelForVision2Seq.from_config(config, torch_dtype=torch.bfloat16).to(device_id)  # Create a new model with configuration, the parameters are randomly initialized
-                # for name, param in model.named_parameters():
-                #     print(f"{name}: {param.shape}")
-                replace_map = [
-                    ("vision_backbone.dino_featurizer", "vision_backbone.featurizer"),
-                    ("vision_backbone.siglip_featurizer", "vision_backbone.fused_featurizer"),
-                    ("llm_backbone.llm", "language_model"),
-                    ("projector.projector.0", "projector.fc1"),
-                    ("projector.projector.2", "projector.fc2"),
-                    ("projector.projector.4", "projector.fc3"),
-                    ("gamma", "scale_factor"),
-                ]
-
-                def rename_state_dict_keys(state_dict, replace_map):
-                    new_state_dict = {}
-                    for k, v in state_dict.items():
-                        new_k = k
-                        for old, new in replace_map:
-                            if old in new_k:
-                                new_k = new_k.replace(old, new)
-                        new_state_dict[new_k] = v
-                    return new_state_dict
-                
-                old_state_dict = vlm.state_dict()
-                RAW_STATE_DICT = rename_state_dict_keys(old_state_dict, replace_map)
-            
-                missing_keys, unexpected_keys = vla.load_state_dict(RAW_STATE_DICT, strict=False)
-                del old_state_dict
-        else:
-            RAW_STATE_DICT ={}
-            vla = AutoModelForVision2Seq.from_pretrained(
-                cfg.config_file_path,
-                torch_dtype=torch.bfloat16,
-                low_cpu_mem_usage=False,
-                trust_remote_code=False,
-                ).to(device_id)
+        RAW_STATE_DICT ={}
+        vla = AutoModelForVision2Seq.from_pretrained(
+            cfg.config_file_path,
+            torch_dtype=torch.bfloat16,
+            low_cpu_mem_usage=False,
+            trust_remote_code=False,
+            ).to(device_id)
 
     # Set number of images in VLA input
     vla.vision_backbone.set_num_images_in_input(cfg.num_images_in_input)
