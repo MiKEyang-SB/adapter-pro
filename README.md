@@ -29,7 +29,7 @@
 ## :black_nib: TODO List<a name="todo"></a>
 
 - A more powerful version, **VLA-Adapter++**, and a detailed **technical report** 📝 will be released soon. This will include better performance, more experimental scenarios, and more real-world systems supported.<br/>
-- Continue to update the code to adapt to various `real-world systems` deployments!<br/>
+- Continue to update the code to adapt to various `real-world systems` deployments, including the configuration of our paper, `Franka`, `UR-5`, and `AGILE piper`.<br/>
 - It will soon be compatible with various foundation models, including but not limited to [VPP](https://arxiv.org/abs/2412.14803), [π0.5](https://arxiv.org/abs/2504.16054).
 
 
