@@ -1,4 +1,4 @@
-# <img src="figure/LOGO2.png" width="40%" style="vertical-align:-7px;" />
+# <img src="figure/LOGO2.png" width="50%" style="vertical-align:-7px;" />
 
 ⚓ The official implementation of **VLA-Adapter: An Effective Paradigm for Tiny-Scale Vision-Language-Action Model**
 
@@ -14,7 +14,7 @@
 
 <br/>
 
-## 📢 News!
+## :loudspeaker: News!
 - **[2025/09/21]** We released our codes! An enhanced **Pro** version is also released (this version conforms to the pipeline in the original paper, but is optimized in implementation). Everyone is welcome to use it!🎉
 - **[2025/09/13]** Our paper won the 🥇**first place** in the [daily list](https://huggingface.co/papers/date/2025-09-12) and the 🥈**second place** in the [weekly list](https://huggingface.co/papers/week/2025-W37) in HF! 
 - **[2025/09/12]** We released the original version of the VLA-Adapter for four LIBERO models on [HuggingFace](https://huggingface.co/VLA-Adapter).
@@ -22,7 +22,7 @@
 
 <br/>
 
-## 📆 TODO List<a name="todo"></a>
+## :pencil: TODO List<a name="todo"></a>
 
 - A more powerful version, **VLA-Adapter++**, and a detailed **technical report** will be released soon. This will include better performance, more experimental scenarios, and more real-world systems supported.
 - It will soon be compatible with various foundation models, including but not limited to [VPP](https://arxiv.org/abs/2412.14803), [π0.5](https://arxiv.org/abs/2504.16054).
@@ -47,14 +47,14 @@
     - [Room2Room](#3-room2room)
     - [SimplerEnv](#4-simplerenv)
 - [:rocket: UniVLA's Performance](#rocket-univlas-performance) -->
-- [🚀 Quick Start](#quick-start)  &emsp; => The **conda environment** and **dependencies** of VLA-Adapter are given.
+- [:rocket: Quick Start](#rocket-quick-start)  &emsp; => The **conda environment** and **dependencies** of VLA-Adapter are given.
   - [1.1 Conda Environment of VLA-Adapter.](#1.1—conda-environment-of-vla-adapter.)
 - [📚 Data Preparation](#data-preparation) &emsp; => Provides the **installation process** and **file structure** of LIBERO and CALVIN environments.
 - [Acknowledgment](#acknowledgment)
 
 <br/>
 
-## 🚀 Quick Start
+## :rocket: Quick Start
 
 
 ### 1.1 Conda Environment of VLA-Adapter.
