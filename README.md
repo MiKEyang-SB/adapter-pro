@@ -1,4 +1,6 @@
-# <img src="figure/LOGO2.png" width="60%" style="vertical-align:-7px;" />
+<div align="center">
+  <img src="figure/LOGO2.png" width="70%" style="vertical-align:-7px;" />
+</div>
 
 - The official implementation of **VLA-Adapter**
 
