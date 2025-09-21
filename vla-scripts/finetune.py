@@ -66,7 +66,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 @dataclass
 class FinetuneConfig:
     # fmt: off
-    config_file_path: str = "openvla/openvla-7b"     # Path to OpenVLA model (on HuggingFace Hub or stored locally)
+    config_file_path: str = "openvla/openvla-7b"     # Path to necessary config files of LA-Adapter
     vlm_path: str = "openvla/openvla-7b"             # Path to OpenVLA model (on HuggingFace Hub or stored locally)
     use_minivlm: bool = False                        # 
     resum_vla_path: str = "openvla/openvla-7b"       # Path to OpenVLA model (on HuggingFace Hub or stored locally)
