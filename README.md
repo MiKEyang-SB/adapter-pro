@@ -536,6 +536,8 @@ If you want to get the inference **throughput**, you can run it in the `run_libe
 
 ## 🌈 Success Rate Comparison <a name="results"></a>
 
+All our results are inferred on `H100`. You can find the inference `log` file in the model released on [HF](https://huggingface.co/VLA-Adapter) for viewing.
+
 ### Performance on LIBERO benchmark. 
 
 <b><i>XX</i></b> represents the best performance, <b>XX</b> represents the second best performance, and <i><u>XX*</u></i> represents the third best performance.
