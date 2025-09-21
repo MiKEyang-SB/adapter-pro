@@ -61,8 +61,8 @@ def main(cfg: ConvertConfig) -> None:
             hf_token=hf_token,
             load_for_training=True,
             )
-        config = AutoConfig.from_pretrained("/ssdwork/Pengxiang/code/openvla-oft/pretrained_models/minivla/config.json")
-        vla = AutoModelForVision2Seq.from_config(config, torch_dtype=torch.bfloat16)  # 用配置新建模型，参数是随机初始化的
+        config = AutoConfig.from_pretrained("../pretrained_models/configs/config.json")
+        vla = AutoModelForVision2Seq.from_config(config, torch_dtype=torch.bfloat16)
         # for name, param in model.named_parameters():
         #     print(f"{name}: {param.shape}")
         replace_map = [
