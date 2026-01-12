@@ -155,6 +155,9 @@ class PaddedCollatorForActionPrediction:
         actions = [torch.from_numpy(np.copy(instance["actions"])) for instance in instances]
         actions = torch.stack(actions)
 
+        discretized_action = [torch.from_numpy(np.copy(instance["discretized_action"])) for instance in instances]
+        discretized_action = torch.stack(discretized_action)
+
         # Stack proprio
         if "proprio" in instances[0]:
             proprio = [instance["proprio"] for instance in instances]
@@ -169,6 +172,7 @@ class PaddedCollatorForActionPrediction:
             attention_mask=attention_mask,
             labels=labels,
             actions=actions,
+            discretized_action=discretized_action,
         )
         if dataset_names is not None:
             output["dataset_names"] = dataset_names

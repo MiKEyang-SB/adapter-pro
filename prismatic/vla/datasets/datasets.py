@@ -59,6 +59,14 @@ class RLDSBatchTransform:
             current_action_string = self.action_tokenizer(current_action,self.use_minivlm)
 
             action_chunk_string = [current_action_string] + future_actions_string
+
+            #ADD TO MASKVLA
+            tokenizer_len = self.action_tokenizer.tokenizer_len
+            # discretized_action = tokenizer_len - action_chunk_string
+            # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]
+            arr = np.array(action_chunk_string)
+            discretized_action = tokenizer_len - arr #array
+ 
             flattened_action_chunk_string = [item for sublist in action_chunk_string for item in sublist]
             action_chunk_len = len(flattened_action_chunk_string) 
 
@@ -71,13 +79,13 @@ class RLDSBatchTransform:
                 prompt_builder.add_turn(turn["from"], turn["value"])
 
             prompt = prompt_builder.get_prompt() #e.g. 'In: What action should the robot take to put both the cream cheese box and the butter in the basket?\nOut: 希</s>'
-            input_ids = self.base_tokenizer(prompt_builder.get_prompt(), add_special_tokens=True).input_ids
+            input_ids = self.base_tokenizer(prompt_builder.get_prompt(), add_special_tokens=True).input_ids #(55,)
 
             if len(input_ids) >= 3:
                 del input_ids[-3] 
                 del input_ids[-2] 
                 del input_ids[-1] 
-
+            #len(input_ids) = 52
             if NUM_TOKENS<len(flattened_action_chunk_string):
                 input_ids = input_ids + flattened_action_chunk_string[:NUM_TOKENS]
             else:
@@ -85,7 +93,7 @@ class RLDSBatchTransform:
                 extended_array = random.choices(flattened_action_chunk_string, k=remaining_length)
                 
                 input_ids = input_ids + flattened_action_chunk_string + extended_array
-            labels = list(input_ids)
+            labels = list(input_ids) #(116)
             action_chunk_len = NUM_TOKENS
 
         else:
@@ -118,7 +126,7 @@ class RLDSBatchTransform:
         # Tensorize =>> Run Image Transform to get `pixel_values` =>> Return
         #   =>> IMPORTANT :: IF WE'RE USING HF LLM.forward(..., labels=labels), SHIFTING HAPPENS _INSIDE_ MODEL!
         input_ids, labels = torch.tensor(input_ids), torch.tensor(labels)
-        pixel_values = self.image_transform(img)
+        pixel_values = self.image_transform(img) #(6, 224, 224)
 
         # [CRITICAL] We do not want to take the loss for anything but the predicted action tokens!
         labels[: -(action_chunk_len + 1)] = IGNORE_INDEX
@@ -139,7 +147,7 @@ class RLDSBatchTransform:
         if self.use_proprio and "proprio" in rlds_batch["observation"]:
             proprio = rlds_batch["observation"]["proprio"]
             return_dict["proprio"] = proprio
-
+        return_dict["discretized_action"] = discretized_action
         return return_dict
     
     

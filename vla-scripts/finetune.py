@@ -66,15 +66,17 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 @dataclass
 class FinetuneConfig:
     # fmt: off
-    config_file_path: str = "openvla/openvla-7b"     # Path to necessary config files of LA-Adapter
-    vlm_path: str = "openvla/openvla-7b"             # Path to OpenVLA model (on HuggingFace Hub or stored locally)
-    use_minivlm: bool = False                        # 
+
+    config_file_path: str = "pretrained_models/configs"     # Path to necessary config files of LA-Adapter
+    vlm_path: str = "pretrained_models/prism-qwen25-extra-dinosiglip-224px-0_5b"             # Path to OpenVLA model (on HuggingFace Hub or stored locally)
+    use_minivlm: bool = True                        # 
     resum_vla_path: str = "openvla/openvla-7b"       # Path to OpenVLA model (on HuggingFace Hub or stored locally)
 
     # Dataset
-    data_root_dir: Path = Path("datasets/rlds")      # Directory containing RLDS datasets
-    dataset_name: str = "aloha_scoop_x_into_bowl"    # Name of fine-tuning dataset (e.g., `aloha_scoop_x_into_bowl`)
-    run_root_dir: Path = Path("runs")                # Path to directory to store logs & checkpoints
+    # data_root_dir: Path = Path("datasets/rlds")      # Directory containing RLDS datasets
+    data_root_dir: Path = Path("data/libero")
+    run_root_dir: Path = Path("outputs")                # Path to directory to store logs & checkpoints
+    dataset_name: str = "libero_spatial_no_noops"    # Name of fine-tuning dataset (e.g., `aloha_scoop_x_into_bowl`)
     shuffle_buffer_size: int = 100_000               # Dataloader shuffle buffer size (can reduce if OOM errors occur)
 
     # Algorithm and architecture
@@ -82,21 +84,21 @@ class FinetuneConfig:
     use_diffusion: bool = False                      # If True, trains continuous action head with diffusion modeling objective (DDIM)
     num_diffusion_steps: int = 50                    # (When `diffusion==True`) Number of diffusion steps for training 
     use_film: bool = False                           # If True, uses FiLM to infuse language inputs into visual features
-    num_images_in_input: int = 1                     # Number of images in the VLA input (default: 1)
-    use_proprio: bool = False                        # If True, includes robot proprioceptive state in input
+    num_images_in_input: int = 2                     # Number of images in the VLA input (default: 1)
+    use_proprio: bool = True                        # If True, includes robot proprioceptive state in input
     phase1_path: str = "None"
 
     # Training configuration
-    batch_size: int = 8                              # Batch size per device (total batch size = batch_size * num GPUs)
+    batch_size: int = 4                              # Batch size per device (total batch size = batch_size * num GPUs)
     learning_rate: float = 5e-4                      # Learning rate
     lr_warmup_steps: int = 0.1                       # Number of steps to warm up learning rate (from 10% to 100%)
-    num_steps_before_decay: int = 100000             # Number of steps before LR decays by 10x
-    grad_accumulation_steps: int = 1                 # Number of gradient accumulation steps
-    max_steps: int = 200000                          # Max number of training steps
+    num_steps_before_decay: int = 200000             # Number of steps before LR decays by 10x
+    grad_accumulation_steps: int = 4                 # Number of gradient accumulation steps
+    max_steps: int = 200005                          # Max number of training steps
     use_val_set: bool = False                        # If True, uses validation set and log validation metrics
     val_freq: int = 10_000                           # (When `use_val_set==True`) Validation set logging frequency in steps
     val_time_limit: int = 180                        # (When `use_val_set==True`) Time limit for computing validation metrics
-    save_freq: int = 10_000                          # Checkpoint saving frequency in steps
+    save_freq: int = 5000                          # Checkpoint saving frequency in steps
     save_latest_checkpoint_only: bool = False        # If True, saves only 1 checkpoint, overwriting latest checkpoint
                                                      #   (If False, saves all checkpoints)
     resume: bool = False                             # If True, resumes from checkpoint
@@ -105,10 +107,10 @@ class FinetuneConfig:
     diffusion_sample_freq: int = 50                  # (When `use_diffusion==True`) Frequency for sampling in steps
 
     # LoRA
-    use_lora: bool = False                           # If True, uses LoRA fine-tuning
-    lora_rank: int = 32                              # Rank of LoRA weight matrix
+    use_lora: bool = True                           # If True, uses LoRA fine-tuning
+    lora_rank: int = 64                              # Rank of LoRA weight matrix
     lora_dropout: float = 0.0                        # Dropout applied to LoRA weights
-    merge_lora_during_training: bool = False         # If True, merges LoRA weights and saves result during training
+    merge_lora_during_training: bool = True         # If True, merges LoRA weights and saves result during training
                                                      #   Note: Merging can be very slow on some machines. If so, set to
                                                      #         False and merge final checkpoint offline!
 
@@ -328,7 +330,7 @@ def run_forward_pass(
     metrics = {}
 
     # Get ground-truth action labels
-    ground_truth_actions = batch["actions"].to(device_id).to(torch.bfloat16)
+    ground_truth_actions = batch["actions"].to(device_id).to(torch.bfloat16) #(b, T, action_dim)
     noise, noisy_actions, diffusion_timestep_embeddings = None, None, None
 
     # VLA forward pass
@@ -346,12 +348,13 @@ def run_forward_pass(
             diffusion_timestep_embeddings=None,
             use_film=use_film,
             )
-
+    #每个隐藏层：(b, 632, 896)
     # Get action masks needed for logging
-    ground_truth_token_ids = batch["labels"][:,1:].to(device_id)
-    current_action_mask = get_current_action_mask(ground_truth_token_ids)
-    next_actions_mask = get_next_actions_mask(ground_truth_token_ids)
-
+    ground_truth_token_ids = batch["labels"][:,1:].to(device_id)#(b, 116)
+    current_action_mask = get_current_action_mask(ground_truth_token_ids)#当前位置为true #(b, 119)
+    next_actions_mask = get_next_actions_mask(ground_truth_token_ids)#下面位置都是true #(b, 119)
+    action_id = ground_truth_token_ids[current_action_mask | next_actions_mask]
+    action_ids = action_id.reshape(batch["input_ids"].shape[0], 1,NUM_TOKENS, -1)
     # Compute metrics for discrete action representation (next-token prediction)
     if not (use_l1_regression):
         loss = output.loss
@@ -398,16 +401,17 @@ def run_forward_pass(
         for item in output.hidden_states[0:]:
             # last_hidden_states = output.hidden_states[-1]  # (B, seq_len, D)
             # Get hidden states for text portion of prompt+response (after the vision patches)
-            text_hidden_states = item[:, num_patches:-1]
+            text_hidden_states = item[:, num_patches:-1] #text + action #(b, 119, 896)
             # Get hidden states for action portion of response
             batch_size = batch["input_ids"].shape[0]
             # actions_hidden_states = text_hidden_states[:, -1, :].reshape(batch_size, 1, -1).to(torch.bfloat16)
             actions_hidden_states = text_hidden_states[current_action_mask | next_actions_mask].reshape(batch_size, 1,NUM_TOKENS, -1).to(torch.bfloat16)
-            task_latten_states = item[:, :num_patches].reshape(batch_size, 1, num_patches , -1)
-            all_hidden_states = torch.cat((task_latten_states, actions_hidden_states),2)
+            #(B, T_text, D)->(B, 1, 64, 896)
+            task_latten_states = item[:, :num_patches].reshape(batch_size, 1, num_patches , -1) #(B, 1, 512, 896)
+            all_hidden_states = torch.cat((task_latten_states, actions_hidden_states),2)#(B, 1, 576, 896)
             multi_layer_hidden_states.append(all_hidden_states)
         multi_layer_hidden_states = torch.cat(multi_layer_hidden_states, dim = 1)
-
+        #(b, 25, 576, 896) (b, Layer, Seq, Dim)
         predicted_actions = action_head.module.predict_action(
             multi_layer_hidden_states,
             proprio=batch["proprio"] if use_proprio else None,
@@ -768,13 +772,14 @@ def finetune(cfg: FinetuneConfig) -> None:
         check_model_logic_mismatch(cfg.config_file_path)
 
     # Wait for model files to be synced
-    dist.barrier()
+    if dist.is_available() and dist.is_initialized():
+        dist.barrier()
 
     # Load processor and VLA
     AutoProcessor.register(OpenVLAConfig, PrismaticProcessor)
     processor = AutoProcessor.from_pretrained(cfg.config_file_path, trust_remote_code=True)
 
-    if cfg.use_minivlm:
+    if cfg.use_minivlm:#使用旧的vla权重加载进来，改成新的名字，并迁移 vlm->vla
         hf_token = ''
         if 'prism-qwen25-extra-dinosiglip-224px-0_5b' in cfg.vlm_path:
             
@@ -825,7 +830,7 @@ def finetune(cfg: FinetuneConfig) -> None:
             ).to(device_id)
 
     # Set number of images in VLA input
-    vla.vision_backbone.set_num_images_in_input(cfg.num_images_in_input)
+    vla.vision_backbone.set_num_images_in_input(cfg.num_images_in_input)#1
 
     # vla.set_version(cfg.version)
 
@@ -841,7 +846,7 @@ def finetune(cfg: FinetuneConfig) -> None:
         for name, param in vla.named_parameters():
             if "action_queries" in name:
                 param.requires_grad = True
-        vla.print_trainable_parameters()
+        vla.print_trainable_parameters() #103M
 
     else:
         for name, param in vla.named_parameters():
@@ -880,7 +885,7 @@ def finetune(cfg: FinetuneConfig) -> None:
         )
 
     # If applicable, instantiate continuous action head for L1 regression
-    if cfg.use_l1_regression:
+    if cfg.use_l1_regression: #构建
         action_head = init_module(
         L1RegressionActionHead,
         "action_head",
