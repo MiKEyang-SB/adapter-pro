@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1765358093881,
@@ -44,6 +44,14 @@
                 {
                     "date": 1765369586525,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -146,9 +146,9 @@\n             return_dict[\"pixel_values_wrist\"] = torch.cat(all_wrist_pixels, dim=0)\n         if self.use_proprio and \"proprio\" in rlds_batch[\"observation\"]:\n             proprio = rlds_batch[\"observation\"][\"proprio\"]\n             return_dict[\"proprio\"] = proprio\n-\n+        return_dict[\"discretized_action\"] = discretized_action\n         return return_dict\n     \n     \n \n"
+                },
+                {
+                    "date": 1768656239242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,9 @@\n \n @dataclass\n class RLDSBatchTransform:\n     action_tokenizer: ActionTokenizer\n+    ddaction_tokenizer: DDActionTokenizer\n     base_tokenizer: PreTrainedTokenizerBase\n     image_transform: ImageTransform\n     prompt_builder_fn: Type[PromptBuilder]\n     predict_stop_token: bool = True\n@@ -59,14 +60,14 @@\n             current_action_string = self.action_tokenizer(current_action,self.use_minivlm)\n \n             action_chunk_string = [current_action_string] + future_actions_string\n \n-            #ADD TO MASKVLA\n-            tokenizer_len = self.action_tokenizer.tokenizer_len\n-            # discretized_action = tokenizer_len - action_chunk_string\n-            # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]\n-            arr = np.array(action_chunk_string)\n-            discretized_action = tokenizer_len - arr #array\n+            # #ADD TO MASKVLA\n+            # tokenizer_len = self.action_tokenizer.tokenizer_len\n+            # # discretized_action = tokenizer_len - action_chunk_string\n+            # # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]\n+            # arr = np.array(action_chunk_string)\n+            # discretized_action = tokenizer_len - arr #array\n  \n             flattened_action_chunk_string = [item for sublist in action_chunk_string for item in sublist]\n             action_chunk_len = len(flattened_action_chunk_string) \n \n"
+                },
+                {
+                    "date": 1768656327338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n from prismatic.models.backbones.llm.prompting import PromptBuilder, QwenPromptBuilder\n from prismatic.models.backbones.vision import ImageTransform\n from prismatic.util.data_utils import tree_map\n-from prismatic.vla.action_tokenizer import ActionTokenizer\n+from prismatic.vla.action_tokenizer import ActionTokenizer, DDActionTokenizer\n from prismatic.vla.constants import ACTION_DIM, ACTION_PROPRIO_NORMALIZATION_TYPE, ACTION_TOKEN_BEGIN_IDX, IGNORE_INDEX, NUM_ACTIONS_CHUNK, PROPRIO_DIM, STOP_INDEX, NUM_TOKENS\n from prismatic.vla.datasets.rlds import make_interleaved_dataset, make_single_dataset\n from prismatic.vla.datasets.rlds.oxe import OXE_NAMED_MIXTURES, get_oxe_dataset_kwargs_and_weights\n \n"
                 }
             ],
             "date": 1765358093881,

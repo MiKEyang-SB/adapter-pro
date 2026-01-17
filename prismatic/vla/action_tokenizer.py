@@ -190,6 +190,95 @@ class VQActionTokenizer(ActionTokenizer):
         # the number of future action horizon elements
         return self.vq_vae.input_dim_h - 1
 
+# ============ Action Tokenizer ============
+class DDActionTokenizer:
+    """
+    Discretizes continuous robot actions into N bins per dimension.
+
+    Example:
+        - Continuous action: [-0.5, 0.3, 0.8] (3D action)
+        - Bins: 256
+        - Range: [-1, 1]
+        - Output: [64, 166, 230] (discrete bin indices)
+    """
+    def __init__(self, bins: int = 256, min_action: float = -1.0, max_action: float = 1.0):
+        """
+        Args:
+            bins: Number of bins for discretization (typically 256)
+            min_action: Minimum action value (lower bound)
+            max_action: Maximum action value (upper bound)
+        """
+        self.n_bins = bins
+        self.min_action = min_action
+        self.max_action = max_action
+
+        # Create uniform bins and compute bin centers
+        # Note: we need 256 bin edges to create 255 intervals, but np.digitize returns [1, 256]
+        # So we use 256 edges here to match the VLA convention
+        self.bins = np.linspace(min_action, max_action, bins)  # 256 bin edges
+        self.bin_centers = (self.bins[:-1] + self.bins[1:]) / 2.0  # 255 bin centers
+
+    def encode(self, actions: np.ndarray) -> np.ndarray:
+        """
+        Encode continuous actions to discrete token IDs.
+
+        Args:
+            actions: (B, T, A) or (T, A) continuous actions in range [min_action, max_action]
+                    B = batch size, T = time steps, A = action dimensions
+
+        Returns:
+            token_ids: (B, T*A) or (T*A,) discrete token IDs in range [0, bins-1]
+        """
+        # Clip to valid range
+        actions_clipped = np.clip(actions, a_min=self.min_action, a_max=self.max_action)
+
+        # Digitize: returns bin indices in [1, n_bins]
+        discretized = np.digitize(actions_clipped, self.bins)
+
+        # Subtract 1 to get [0, n_bins-1], then clip to [0, n_bins-1]
+        discretized = np.clip(discretized - 1, a_min=0, a_max=self.n_bins - 1)
+
+        # Flatten the last dimension(s) if needed
+        original_shape = discretized.shape
+        if len(original_shape) > 1:
+            # (B, T, A) -> (B, T*A) or (T, A) -> (T*A,)
+            discretized = discretized.reshape(*original_shape[:-2], -1) if len(original_shape) > 2 else discretized.flatten()
+
+        return discretized.astype(np.int64)
+
+    def decode(self, token_ids: np.ndarray, action_dim: int) -> np.ndarray:
+        """
+        Decode discrete token IDs back to continuous actions.
+
+        Args:
+            token_ids: (B, T*A) or (T*A,) discrete token IDs in range [0, bins-1]
+            action_dim: dimension of actions (e.g., 7 for robot arm)
+
+        Returns:
+            actions: (B, T, A) or (T, A) continuous actions
+        """
+        # Clip token IDs to valid range [0, n_bins-1]
+        # Note: bin_centers has length (n_bins - 1), so valid indices are [0, n_bins-2]
+        # Token IDs 254 and 255 will both map to bin_centers[254] (the last bin center)
+        token_ids_clipped = np.clip(token_ids, a_min=0, a_max=len(self.bin_centers) - 1)
+
+        # Map to bin centers
+        continuous_actions = self.bin_centers[token_ids_clipped]
+
+        # Reshape back to (B, T, A) or (T, A)
+        if len(token_ids.shape) == 1:
+            # (T*A,) -> (T, A)
+            num_tokens = token_ids.shape[0]
+            num_steps = num_tokens // action_dim
+            continuous_actions = continuous_actions.reshape(num_steps, action_dim)
+        else:
+            # (B, T*A) -> (B, T, A)
+            batch_size, num_tokens = token_ids.shape
+            num_steps = num_tokens // action_dim
+            continuous_actions = continuous_actions.reshape(batch_size, num_steps, action_dim)
+
+        return continuous_actions
+
 
 ACTION_TOKENIZERS = {
     "action_tokenizer": ActionTokenizer,

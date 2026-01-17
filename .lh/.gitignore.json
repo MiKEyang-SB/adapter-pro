@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1768222407968,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1768222676160,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -151,5 +151,6 @@\n # Rollout videos and wandb logs\n rollouts/\n wandb/\n \n-LIBERO\n+LIBERO/\n+pretrained_models/\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1768222690580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,5 +152,6 @@\n rollouts/\n wandb/\n \n LIBERO/\n-pretrained_models/\n\\ No newline at end of file\n+pretrained_models/\n+outputs/\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1768656475701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -153,5 +153,6 @@\n wandb/\n \n LIBERO/\n pretrained_models/\n-outputs/\n\\ No newline at end of file\n+outputs/\n+openvla/\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1768222407968,

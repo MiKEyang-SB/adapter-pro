@@ -26,7 +26,6 @@ from torch.utils.data import DataLoader
 from transformers import AutoConfig, AutoImageProcessor, AutoModelForVision2Seq, AutoProcessor
 from transformers.modeling_outputs import CausalLMOutputWithPast
 import wandb
-
 from experiments.robot.openvla_utils import (
     check_model_logic_mismatch,
     model_is_on_hf_hub,
@@ -35,7 +34,7 @@ from experiments.robot.openvla_utils import (
 from prismatic.extern.hf.configuration_prismatic import OpenVLAConfig
 from prismatic.extern.hf.modeling_prismatic import OpenVLAForActionPrediction
 from prismatic.extern.hf.processing_prismatic import PrismaticImageProcessor, PrismaticProcessor
-from prismatic.models.action_heads import L1RegressionActionHead
+from prismatic.models.action_heads import L1RegressionActionHead, DiscreteDiffusionActionHead
 from prismatic.models.backbones.llm.prompting import PurePromptBuilder
 from prismatic.models.film_vit_wrapper import FiLMedPrismaticVisionBackbone
 from prismatic.models.projectors import ProprioProjector
@@ -46,7 +45,7 @@ from prismatic.training.train_utils import (
     get_next_actions_mask
 )
 from prismatic.util.data_utils import PaddedCollatorForActionPrediction
-from prismatic.vla.action_tokenizer import ActionTokenizer
+from prismatic.vla.action_tokenizer import ActionTokenizer, DDActionTokenizer
 from prismatic.vla.constants import (
     ACTION_DIM,
     ACTION_PROPRIO_NORMALIZATION_TYPE,
@@ -350,11 +349,11 @@ def run_forward_pass(
             )
     #每个隐藏层：(b, 632, 896)
     # Get action masks needed for logging
-    ground_truth_token_ids = batch["labels"][:,1:].to(device_id)#(b, 116)
+    ground_truth_token_ids = batch["labels"][:,1:].to(device_id)#(b, 119)
     current_action_mask = get_current_action_mask(ground_truth_token_ids)#当前位置为true #(b, 119)
     next_actions_mask = get_next_actions_mask(ground_truth_token_ids)#下面位置都是true #(b, 119)
-    action_id = ground_truth_token_ids[current_action_mask | next_actions_mask]
-    action_ids = action_id.reshape(batch["input_ids"].shape[0], 1,NUM_TOKENS, -1)
+    action_id = ground_truth_token_ids[current_action_mask | next_actions_mask] #(256)
+    action_ids = action_id.reshape(batch["input_ids"].shape[0], 1,NUM_TOKENS, -1)#torch.Size([4, 1, 64, 1])
     # Compute metrics for discrete action representation (next-token prediction)
     if not (use_l1_regression):
         loss = output.loss
@@ -399,7 +398,7 @@ def run_forward_pass(
         multi_layer_hidden_states = []
         
         for item in output.hidden_states[0:]:
-            # last_hidden_states = output.hidden_states[-1]  # (B, seq_len, D)
+            # last_hidden_states = output.hidden_states[-1]  # (B, seq_len, D)  item:torch.Size([4, 632, 896])
             # Get hidden states for text portion of prompt+response (after the vision patches)
             text_hidden_states = item[:, num_patches:-1] #text + action #(b, 119, 896)
             # Get hidden states for action portion of response
@@ -412,14 +411,20 @@ def run_forward_pass(
             multi_layer_hidden_states.append(all_hidden_states)
         multi_layer_hidden_states = torch.cat(multi_layer_hidden_states, dim = 1)
         #(b, 25, 576, 896) (b, Layer, Seq, Dim)
-        predicted_actions = action_head.module.predict_action(
-            multi_layer_hidden_states,
-            proprio=batch["proprio"] if use_proprio else None,
-            proprio_projector=proprio_projector if use_proprio else None,
-            phase=cfg.phase,
-            )
+        # predicted_actions = action_head.module.predict_action(
+        #     multi_layer_hidden_states,
+        #     proprio=batch["proprio"] if use_proprio else None,
+        #     proprio_projector=proprio_projector if use_proprio else None,
+        #     phase=cfg.phase,
+        #     )
+        # loss = torch.nn.L1Loss()(predicted_actions, ground_truth_actions)
 
-        loss = torch.nn.L1Loss()(predicted_actions, ground_truth_actions)
+        loss = action_head.compute_loss(
+            multi_layer_hidden_states=multi_layer_hidden_states,
+            target_actions=target_tokens,  # (B, 56) 离散 token IDs
+            proprio=batch["proprio"],      # (B, 8)
+            mask_ratio_range=(0.0, 1.0),   # 随机 mask 0-100%
+        )
 
         metrics.update(
             {
@@ -899,6 +904,18 @@ def finetune(cfg: FinetuneConfig) -> None:
             },
         to_bf16=True,
         )
+    ddaction_head = DiscreteDiffusionActionHead(
+        hidden_dim=896,              # VLA hidden state 维度
+        action_head_dim=896,         # action decoder 内部维度
+        num_blocks=24,               # MLPResNetBlock_Pro 层数
+        num_heads=8,                 # 注意力头数
+        num_action_tokens=56,        # 8 chunks × 7 dims = 56 tokens
+        vocab_size=256,              # 离散词汇表大小
+        mask_token_id=256,           # mask token ID (通常是 vocab_size - 1)
+        num_diffusion_iters=12,      # 推理时的迭代解码步数
+        use_proprio=True,            # 是否使用 proprio
+        proprio_dim=8,               # proprio 维度
+    )
 
     # Get number of vision patches
     NUM_PATCHES = vla.module.vision_backbone.get_num_patches() * vla.module.vision_backbone.get_num_images_in_input()
@@ -933,7 +950,7 @@ def finetune(cfg: FinetuneConfig) -> None:
 
     # Create Action Tokenizer
     action_tokenizer = ActionTokenizer(processor.tokenizer)
-
+    ddaction_tokenizer = DDActionTokenizer()
     # Load Fine-tuning Dataset =>> note that we use an RLDS-formatted dataset following Open X-Embodiment by default.
     #   =>> If you want to use a non-RLDS dataset (e.g., a standard PyTorch Dataset) see the following commented block.
     #   =>> Note that our training code does not loop over epochs because the RLDS loader does this implicitly; if using
@@ -956,6 +973,7 @@ def finetune(cfg: FinetuneConfig) -> None:
     # Create training and optional validation datasets
     batch_transform = RLDSBatchTransform(
         action_tokenizer,
+        ddaction_tokenizer, 
         processor.tokenizer,
         image_transform=processor.image_processor.apply_transform,
         prompt_builder_fn=PurePromptBuilder,

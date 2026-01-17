@@ -152,4 +152,7 @@ data/
 rollouts/
 wandb/
 
-LIBERO
+LIBERO/
+pretrained_models/
+outputs/
+openvla/

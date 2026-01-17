@@ -19,7 +19,7 @@ from transformers import PreTrainedTokenizerBase
 from prismatic.models.backbones.llm.prompting import PromptBuilder, QwenPromptBuilder
 from prismatic.models.backbones.vision import ImageTransform
 from prismatic.util.data_utils import tree_map
-from prismatic.vla.action_tokenizer import ActionTokenizer
+from prismatic.vla.action_tokenizer import ActionTokenizer, DDActionTokenizer
 from prismatic.vla.constants import ACTION_DIM, ACTION_PROPRIO_NORMALIZATION_TYPE, ACTION_TOKEN_BEGIN_IDX, IGNORE_INDEX, NUM_ACTIONS_CHUNK, PROPRIO_DIM, STOP_INDEX, NUM_TOKENS
 from prismatic.vla.datasets.rlds import make_interleaved_dataset, make_single_dataset
 from prismatic.vla.datasets.rlds.oxe import OXE_NAMED_MIXTURES, get_oxe_dataset_kwargs_and_weights
@@ -29,6 +29,7 @@ from prismatic.vla.datasets.rlds.oxe import OXE_NAMED_MIXTURES, get_oxe_dataset_
 @dataclass
 class RLDSBatchTransform:
     action_tokenizer: ActionTokenizer
+    ddaction_tokenizer: DDActionTokenizer
     base_tokenizer: PreTrainedTokenizerBase
     image_transform: ImageTransform
     prompt_builder_fn: Type[PromptBuilder]
@@ -60,12 +61,12 @@ class RLDSBatchTransform:
 
             action_chunk_string = [current_action_string] + future_actions_string
 
-            #ADD TO MASKVLA
-            tokenizer_len = self.action_tokenizer.tokenizer_len
-            # discretized_action = tokenizer_len - action_chunk_string
-            # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]
-            arr = np.array(action_chunk_string)
-            discretized_action = tokenizer_len - arr #array
+            # #ADD TO MASKVLA
+            # tokenizer_len = self.action_tokenizer.tokenizer_len
+            # # discretized_action = tokenizer_len - action_chunk_string
+            # # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]
+            # arr = np.array(action_chunk_string)
+            # discretized_action = tokenizer_len - arr #array
  
             flattened_action_chunk_string = [item for sublist in action_chunk_string for item in sublist]
             action_chunk_len = len(flattened_action_chunk_string) 

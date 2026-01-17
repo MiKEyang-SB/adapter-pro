@@ -6,6 +6,7 @@ Implementations of various action heads, which serve as alternatives to VLM sequ
 
 import math
 from turtle import forward
+import numpy as np
 import torch
 import torch.nn as nn
 from prismatic.vla.constants import ACTION_DIM, ACTION_TOKEN_BEGIN_IDX, IGNORE_INDEX, NUM_ACTIONS_CHUNK, PROPRIO_DIM, STOP_INDEX, NUM_TOKENS
@@ -45,7 +46,7 @@ class L1RegressionActionHead(nn.Module):
 
     def predict_action(
             self, 
-            actions_hidden_states, #(b, 25, 576, 896)
+            actions_hidden_states, #(b, 25, 576, 896) (b, 层, 512图+64动作, 896)
             proprio=None, #(b, 8)
             proprio_projector=None,
             phase="Inference"
@@ -81,7 +82,7 @@ class L1RegressionActionHead(nn.Module):
             h_t=task_hidden_states #视觉语言 torch.Size([b, 25, 512, 896])
             )
 
-        return action
+        return action #(batch, chunk_len, action_dim)
     
 
 class MLPResNet(nn.Module):
@@ -605,9 +606,9 @@ class MLPResNetBlock_Pro(nn.Module):
         ratio_g = torch.tanh(g)
 
         # concat h_a and p
-        h_adapter = torch.cat((h_a, p),dim=1)
+        h_adapter = torch.cat((h_a, p),dim=1) #torch.Size([4, 65, 896])
 
-        h_task = h_t
+        h_task = h_t #torch.Size([4, 512, 896])
         B, T, C = x.shape
         K_a = h_adapter.size(1) if h_a is not None else 0
         K_t = h_task.size(1) if h_task is not None else 0
@@ -669,3 +670,584 @@ class MLPResNetBlock_Pro(nn.Module):
         # residual + FFN
         x = self.ffn(output + x)
         return x
+
+
+# ============================================================================
+# Discrete Diffusion Action Head with MLPResNetBlock_Pro Architecture
+# 融合 VLA-Adapter 的多层注入结构 和 DiscreteDiffusionVLA 的 mask-remask 机制
+# ============================================================================
+
+
+
+# ============ Mask Schedule (from DiscreteDiffusionVLA) ============
+def cosine_schedule(ratio, unknown_init):
+    """
+    Cosine mask scheduling: ratio [0, 1] -> mask_ratio
+    Args:
+        ratio: (scalar or tensor) current progress [0, 1]
+        unknown_init: (B,) initial number of masked tokens per sample
+    Returns:
+        mask_ratio: (B,) ratio of tokens to keep masked
+    """
+    return torch.cos(ratio * torch.pi / 2)
+
+
+# ============ Mask by Random Top-K (from DiscreteDiffusionVLA) ============
+def mask_by_random_topk(probs, mask_len, temperature=1.0):
+    """
+    Args:
+        probs: (B, L) confidence scores for each position
+        mask_len: (B,) number of tokens to mask per sample
+        temperature: float, Gumbel noise temperature
+    Returns:
+        mask: (B, L) boolean tensor, True = keep masked
+    """
+    # Gumbel noise
+    gumbel = -torch.log(-torch.log(torch.rand_like(probs) + 1e-20) + 1e-20)
+    confidence = torch.log(probs + 1e-20) + temperature * gumbel  # (B, L)
+
+    # Find k-th smallest threshold
+    sorted_conf, _ = confidence.sort(dim=1)
+    B, L = probs.shape
+    k = mask_len.clamp(min=1, max=L-1)
+    batch_idx = torch.arange(B, device=probs.device)
+    threshold = sorted_conf[batch_idx, k]
+
+    # Positions below threshold are masked
+    return confidence < threshold.unsqueeze(1)
+
+
+# ============ Main Action Head ============
+class DiscreteDiffusionActionHead(nn.Module):
+    """
+    Discrete Diffusion Action Head with MLPResNetBlock_Pro architecture
+
+    Key features:
+    - Multi-layer injection from VLA backbone hidden states
+    - MaskGIT-style iterative decoding
+    - Outputs discrete token logits (not continuous actions)
+    - Uses MLPResNetBlock_Pro with RoPE and independent projections
+    """
+    def __init__(
+        self,
+        hidden_dim=896,               # VLA hidden state dimension
+        action_head_dim=896,          # Internal dimension for action decoder
+        num_blocks=24,                # Number of MLPResNetBlock_Pro layers
+        num_heads=8,                  # Multi-head attention heads
+        num_action_tokens=56,         # NUM_ACTIONS_CHUNK * ACTION_DIM (e.g., 8*7=56)
+        vocab_size=256,               # Discrete action vocabulary size (256 bins)
+        mask_token_id=256,            # Special token ID for <mask>
+        num_diffusion_iters=12,       # Number of iterative decoding steps
+        use_proprio=False,            # Whether to use proprioception
+        proprio_dim=8,                # Proprioception dimension
+    ):
+        super().__init__()
+        self.hidden_dim = hidden_dim
+        self.action_head_dim = action_head_dim
+        self.num_blocks = num_blocks
+        self.num_action_tokens = num_action_tokens
+        self.vocab_size = vocab_size
+        self.mask_token_id = mask_token_id
+        self.num_diffusion_iters = num_diffusion_iters
+        self.use_proprio = use_proprio
+
+        # ========== Input Projection ==========
+        # Learnable action query embeddings
+        self.action_query_embed = nn.Parameter(
+            torch.randn(1, num_action_tokens, action_head_dim)
+        )
+
+        # Proprio projector (if needed)
+        if use_proprio:
+            self.proprio_projector = nn.Linear(proprio_dim, action_head_dim)
+
+        # Token embedding layer (for masked tokens during iterative decoding)
+        self.token_embedding = nn.Embedding(vocab_size + 1, action_head_dim)  # +1 for mask token
+
+        # ========== 24 MLPResNetBlock_Pro layers ==========
+        self.blocks = nn.ModuleList([
+            MLPResNetBlock_Pro(dim=action_head_dim, num_heads=num_heads)
+            for _ in range(num_blocks)
+        ])
+
+        # ========== Output head: predict discrete token logits ==========
+        self.output_head = nn.Sequential(
+            nn.LayerNorm(action_head_dim),
+            nn.Linear(action_head_dim, vocab_size)
+        )
+
+    def forward(
+        self,
+        multi_layer_hidden_states,  # (B, num_layers, num_tokens, hidden_dim)
+        proprio=None,                # (B, proprio_dim) or None
+        input_tokens=None,           # (B, num_action_tokens) optional input tokens for conditioning
+    ):
+        """
+        Forward pass through the action decoder
+
+        Args:
+            multi_layer_hidden_states: (B, L_layers, num_tokens, hidden_dim)
+                - L_layers: number of VLA backbone layers (e.g., 25)
+                - num_tokens: task tokens (visual patches) + action tokens
+            proprio: (B, proprio_dim) proprioception features
+            input_tokens: (B, num_action_tokens) optional discrete token IDs for conditioning
+
+        Returns:
+            logits: (B, num_action_tokens, vocab_size) discrete token logits
+        """
+        B = multi_layer_hidden_states.size(0)
+        device = multi_layer_hidden_states.device
+
+        # ========== Extract task and adapter features ==========
+        # Assume multi_layer_hidden_states shape: (B, num_layers, num_total_tokens, hidden_dim)
+        # We need to separate visual tokens and action tokens
+        # For VLA-Adapter, this is typically done via masking in the training script
+
+        # Here we assume the structure matches VLA-Adapter's extraction:
+        # - First 512 tokens: visual features (h_t)
+        # - Remaining tokens: action hidden states (h_a)
+        num_visual_tokens = 512  # Adjust based on your vision encoder (e.g., 576 for OpenVLA)
+
+        h_task = multi_layer_hidden_states[:, :, :num_visual_tokens, :]   # (B, L, 512, hidden_dim)
+        h_adapter = multi_layer_hidden_states[:, :, num_visual_tokens:, :]  # (B, L, K, hidden_dim)
+
+        # Process proprio
+        if self.use_proprio and proprio is not None:
+            p = self.proprio_projector(proprio).unsqueeze(1)  # (B, 1, action_head_dim)
+        else:
+            p = None
+
+        # ========== Initialize action queries ==========
+        if input_tokens is not None:
+            # If input tokens provided, embed them
+            x = self.token_embedding(input_tokens)  # (B, num_action_tokens, action_head_dim)
+        else:
+            # Use learnable query embeddings
+            x = self.action_query_embed.expand(B, -1, -1)  # (B, num_action_tokens, action_head_dim)
+
+        # ========== Pass through MLPResNetBlock_Pro layers ==========
+        for i, block in enumerate(self.blocks):
+            # Extract corresponding layer features
+            h_t_i = h_task[:, i, :, :]      # (B, num_visual_tokens, hidden_dim)
+            h_a_i = h_adapter[:, i, :, :]   # (B, K, hidden_dim)
+
+            # Project to action_head_dim if needed
+            if h_t_i.size(-1) != self.action_head_dim:
+                # For dimension mismatch, we need projection layers
+                # TODO: Add projection layers in __init__ if needed
+                pass
+
+            x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)
+
+        # ========== Output discrete token logits ==========
+        logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)
+
+        return logits
+
+    def predict_action(
+        self,
+        multi_layer_hidden_states,
+        proprio=None,
+        num_diffusion_iters=None,
+        temperature=1.0,
+        use_remask=False,
+    ):
+        """
+        Inference: MaskGIT-style iterative decoding
+
+        Args:
+            multi_layer_hidden_states: (B, num_layers, num_tokens, hidden_dim)
+            proprio: (B, proprio_dim)
+            num_diffusion_iters: number of decoding iterations (default: self.num_diffusion_iters)
+            temperature: sampling temperature
+            use_remask: whether to allow remasking of previously decoded tokens
+
+        Returns:
+            final_actions: (B, num_action_tokens) discrete token IDs
+        """
+        if num_diffusion_iters is None:
+            num_diffusion_iters = self.num_diffusion_iters
+
+        B = multi_layer_hidden_states.size(0)
+        device = multi_layer_hidden_states.device
+
+        # Initialize with all masked tokens
+        cur_seqs = torch.full(
+            (B, self.num_action_tokens),
+            self.mask_token_id,
+            dtype=torch.long,
+            device=device
+        )
+
+        unknown_init = (cur_seqs == self.mask_token_id).sum(dim=1)  # (B,) = num_action_tokens
+
+        # ========== Iterative decoding ==========
+        for step in range(num_diffusion_iters):
+            # 1) Forward pass to get logits
+            logits = self.forward(
+                multi_layer_hidden_states,
+                proprio=proprio,
+                input_tokens=cur_seqs
+            )  # (B, L, vocab_size)
+
+            probs = torch.softmax(logits, dim=-1)  # (B, L, vocab_size)
+
+            # 2) Sample from categorical distribution
+            flat_probs = probs.view(-1, probs.size(-1))  # (B*L, vocab_size)
+            sampled_flat = torch.multinomial(flat_probs, 1)  # (B*L, 1)
+            sampled = sampled_flat.view(B, self.num_action_tokens)  # (B, L)
+
+            # 3) Only update masked positions
+            unknown_map = cur_seqs == self.mask_token_id
+            sampled = torch.where(unknown_map, sampled, cur_seqs)
+
+            # 4) Calculate mask ratio for next iteration
+            ratio = float(step + 1) / num_diffusion_iters
+            mask_ratio = cosine_schedule(torch.tensor(ratio, device=device), unknown_init)
+            mask_len = torch.floor(unknown_init.float() * mask_ratio).long()
+            mask_len = torch.clamp(mask_len, min=0, max=(unknown_init - 1).clamp(min=0))
+
+            # Early stop if no more tokens to mask
+            if mask_len.max() == 0:
+                break
+
+            # 5) Calculate confidence scores
+            selected_probs = probs.gather(2, sampled.unsqueeze(-1)).squeeze(-1)  # (B, L)
+
+            if use_remask:
+                # Allow remasking with decreasing probability
+                p_remask = 1.0 - ratio
+                selected_probs = torch.where(
+                    unknown_map,
+                    selected_probs,
+                    selected_probs * p_remask
+                )
+            else:
+                # Already decoded tokens have infinite confidence
+                selected_probs = torch.where(
+                    unknown_map,
+                    selected_probs,
+                    torch.tensor(float('inf'), device=device)
+                )
+
+            # 6) Select tokens to remask using Gumbel top-k
+            masking = mask_by_random_topk(
+                selected_probs,
+                mask_len,
+                temperature=temperature * (1.0 - ratio)
+            )
+
+            # 7) Update sequence: remask low-confidence positions
+            next_seqs = torch.where(masking, self.mask_token_id, sampled)
+            cur_seqs = next_seqs
+
+        # ========== Final sampling ==========
+        logits = self.forward(
+            multi_layer_hidden_states,
+            proprio=proprio,
+            input_tokens=cur_seqs
+        )
+        probs = torch.softmax(logits, dim=-1)
+        flat_probs = probs.view(-1, probs.size(-1))
+        final_tokens = torch.multinomial(flat_probs, 1).view(B, self.num_action_tokens)
+
+        return final_tokens
+
+    def compute_loss(
+        self,
+        multi_layer_hidden_states,
+        target_actions,  # (B, num_action_tokens) discrete token IDs
+        proprio=None,
+        mask_ratio_range=(0.0, 1.0),  # Random masking ratio range (deprecated, use cosine schedule instead)
+        no_mask_token_prob=0.0,        # Probability to unmask some masked tokens
+        use_cosine_schedule=True,      # Use cosine schedule like DiscreteDiffusionVLA
+    ):
+        """
+        Training loss: randomly mask some tokens and predict them
+
+        Uses cosine schedule (like DiscreteDiffusionVLA) to determine mask ratio
+
+        Args:
+            multi_layer_hidden_states: (B, num_layers, num_tokens, hidden_dim)
+            target_actions: (B, num_action_tokens) ground truth discrete token IDs
+            proprio: (B, proprio_dim)
+            mask_ratio_range: (deprecated) tuple (min_ratio, max_ratio) for random masking
+            no_mask_token_prob: probability to unmask some already-masked tokens
+            use_cosine_schedule: if True, use cosine schedule; if False, use random uniform
+
+        Returns:
+            loss: scalar cross-entropy loss
+        """
+        B = target_actions.size(0)
+        device = target_actions.device
+
+        # ========== Step 1: Calculate total maskable tokens ==========
+        # All tokens are maskable in our case
+        total_unknown = torch.full((B,), self.num_action_tokens, dtype=torch.float32, device=device)  # (B,)
+
+        if use_cosine_schedule:
+            # ========== Step 2: Sample random time ratio in [0, 1) ==========
+            rand_time = torch.rand(B, device=device)  # (B,)
+
+            # ========== Step 3: Use cosine schedule to compute mask ratio ==========
+            # mask_ratios: (B,), values in (0, 1]
+            mask_ratios = cosine_schedule(rand_time, total_unknown)  # (B,)
+
+            # ========== Step 4: Compute number of tokens to mask per sample ==========
+            num_mask = torch.clamp((total_unknown * mask_ratios).round(), min=1).long()  # (B,)
+        else:
+            # Use old random uniform masking
+            mask_ratio = torch.rand(1, device=device) * (mask_ratio_range[1] - mask_ratio_range[0]) + mask_ratio_range[0]
+            num_mask = torch.full((B,), int(self.num_action_tokens * mask_ratio.item()), dtype=torch.long, device=device)
+
+        # ========== Step 5: Generate random scores for each position ==========
+        vals = torch.rand(B, self.num_action_tokens, device=device)  # (B, num_action_tokens)
+
+        # ========== Step 6: Sort and select top-k positions to mask ==========
+        perm = vals.argsort(dim=1)                    # (B, num_action_tokens) - indices after sorting
+        ranks = perm.argsort(dim=1)                   # (B, num_action_tokens) - rank of each position
+        masked_mask = ranks < num_mask[:, None]       # (B, num_action_tokens) - True if masked
+
+        # ========== Step 7: Optional: unmask some positions with no_mask_token_prob ==========
+        # 再次随机取消一部分已 mask 的位置
+        if no_mask_token_prob > 0:
+            # Generate random probabilities
+            prob = torch.rand(B, self.num_action_tokens, device=device)
+            # Unmask positions where prob < no_mask_token_prob AND already masked
+            unmask = (prob < no_mask_token_prob) & masked_mask
+            masked_mask = masked_mask & (~unmask)
+
+        # ========== Step 8: Create input tokens with masked positions ==========
+        input_tokens = target_actions.clone()
+        input_tokens[masked_mask] = self.mask_token_id
+
+        # ========== Step 9: Get predictions ==========
+        logits = self.forward(
+            multi_layer_hidden_states,
+            proprio=proprio,
+            input_tokens=input_tokens
+        )  # (B, num_action_tokens, vocab_size)
+
+        # ========== Step 10: Compute loss only on masked positions ==========
+        loss = torch.nn.functional.cross_entropy(
+            logits[masked_mask].view(-1, self.vocab_size),
+            target_actions[masked_mask].view(-1),
+            reduction='mean'
+        )
+
+        return loss
+
+
+# ============================================================================
+# Usage Example: How to use ActionTokenizer with DiscreteDiffusionActionHead
+# ============================================================================
+"""
+完整使用流程示例:
+
+## 1. 初始化 Tokenizer 和 Action Head
+
+```python
+from prismatic.models.action_heads import ActionTokenizer, DiscreteDiffusionActionHead
+
+# 初始化 action tokenizer
+action_tokenizer = ActionTokenizer(
+    bins=256,           # 256 个离散 bins
+    min_action=-1.0,    # action 范围下界
+    max_action=1.0      # action 范围上界
+)
+
+# 初始化 discrete diffusion action head
+action_head = DiscreteDiffusionActionHead(
+    hidden_dim=896,              # VLA hidden state 维度
+    action_head_dim=896,         # action decoder 内部维度
+    num_blocks=24,               # MLPResNetBlock_Pro 层数
+    num_heads=8,                 # 注意力头数
+    num_action_tokens=56,        # 8 chunks × 7 dims = 56 tokens
+    vocab_size=256,              # 离散词汇表大小
+    mask_token_id=255,           # mask token ID (通常是 vocab_size - 1)
+    num_diffusion_iters=12,      # 推理时的迭代解码步数
+    use_proprio=True,            # 是否使用 proprio
+    proprio_dim=7,               # proprio 维度
+)
+```
+
+## 2. 训练时的数据流
+
+```python
+# ========== Step 1: 获取 ground truth actions ==========
+# 假设从数据集中获取连续 actions
+gt_actions = batch["actions"]  # (B, NUM_CHUNKS, ACTION_DIM) = (4, 8, 7)
+                                # 值范围: [-1, 1]
+
+# ========== Step 2: Tokenize 连续 actions → 离散 tokens ==========
+# 转换为 numpy 进行 tokenization
+gt_actions_np = gt_actions.cpu().numpy()  # (4, 8, 7)
+
+# Encode: (4, 8, 7) → (4, 56)
+target_tokens_np = action_tokenizer.encode(gt_actions_np)
+# target_tokens_np shape: (4, 56), 值范围: [0, 255]
+
+# 转回 torch tensor
+target_tokens = torch.from_numpy(target_tokens_np).to(device)  # (4, 56)
+
+# ========== Step 3: 前向传播 + Loss 计算 ==========
+# 获取 VLA backbone 的 multi-layer hidden states
+output = vla_model(
+    images=batch["images"],
+    input_ids=batch["input_ids"],
+    attention_mask=batch["attention_mask"],
+    output_hidden_states=True,  # 关键: 必须输出所有层的 hidden states
+)
+
+# 提取所有层的 hidden states
+all_hidden_states = output.hidden_states  # tuple of (B, num_tokens, 896)
+multi_layer_hidden_states = torch.stack(all_hidden_states, dim=1)  # (B, 25, num_tokens, 896)
+
+# 计算 loss
+loss = action_head.compute_loss(
+    multi_layer_hidden_states=multi_layer_hidden_states,
+    target_actions=target_tokens,  # (B, 56) 离散 token IDs
+    proprio=batch["proprio"],      # (B, 7)
+    mask_ratio_range=(0.0, 1.0),   # 随机 mask 0-100%
+)
+
+loss.backward()
+optimizer.step()
+```
+
+## 3. 推理时的数据流
+
+```python
+# ========== Step 1: 获取 VLA hidden states ==========
+with torch.no_grad():
+    output = vla_model(
+        images=observation_images,
+        input_ids=text_input_ids,
+        attention_mask=text_attention_mask,
+        output_hidden_states=True,
+    )
+
+    all_hidden_states = output.hidden_states
+    multi_layer_hidden_states = torch.stack(all_hidden_states, dim=1)  # (1, 25, num_tokens, 896)
+
+# ========== Step 2: MaskGIT 迭代解码 ==========
+predicted_tokens = action_head.predict_action(
+    multi_layer_hidden_states=multi_layer_hidden_states,
+    proprio=current_proprio,      # (1, 7)
+    num_diffusion_iters=12,       # 12 步迭代解码
+    temperature=1.0,              # 采样温度
+    use_remask=False,             # 是否允许 remask
+)
+# predicted_tokens shape: (1, 56), 值范围: [0, 255]
+
+# ========== Step 3: Detokenize 离散 tokens → 连续 actions ==========
+# 转换为 numpy
+predicted_tokens_np = predicted_tokens.cpu().numpy()  # (1, 56)
+
+# Decode: (1, 56) → (1, 8, 7)
+predicted_actions_np = action_tokenizer.decode(
+    token_ids=predicted_tokens_np,
+    action_dim=7  # ACTION_DIM
+)
+# predicted_actions_np shape: (1, 8, 7), 值范围: [-1, 1]
+
+# 转回 torch tensor
+predicted_actions = torch.from_numpy(predicted_actions_np).to(device)  # (1, 8, 7)
+
+# ========== Step 4: 执行 actions ==========
+# 通常只执行第一个 chunk
+current_action = predicted_actions[0, 0, :]  # (7,)
+robot.execute_action(current_action.cpu().numpy())
+```
+
+## 4. 关键点总结
+
+### 4.1 Tokenization 流程
+```
+连续 actions (B, 8, 7)
+    ↓ [action_tokenizer.encode()]
+离散 tokens (B, 56) [值: 0-255]
+    ↓ [action_head.forward()]
+logits (B, 56, 256)
+    ↓ [cross_entropy_loss]
+loss (scalar)
+```
+
+### 4.2 Detokenization 流程 (推理)
+```
+初始: 全 mask tokens (B, 56) [全部为 255]
+    ↓ [12 步 MaskGIT 迭代解码]
+最终 tokens (B, 56) [值: 0-255]
+    ↓ [action_tokenizer.decode()]
+连续 actions (B, 8, 7) [值: -1 到 1]
+```
+
+### 4.3 与 VLA-Adapter 原版的区别
+
+| 特性 | VLA-Adapter 原版 | DiscreteDiffusionActionHead |
+|------|------------------|----------------------------|
+| **输入** | 连续 actions (B, 8, 7) | 离散 tokens (B, 56) |
+| **输出** | 连续 actions (B, 8, 7) | logits (B, 56, 256) |
+| **Loss** | L1 Loss | Cross-Entropy Loss |
+| **推理** | 单步前向 | 12 步 MaskGIT 迭代 |
+| **Tokenization** | 不需要 | 需要 encode/decode |
+
+### 4.4 注意事项
+
+1. **mask_token_id 通常设置为 vocab_size - 1**:
+   - vocab_size = 256 → mask_token_id = 255
+
+2. **训练时的 random masking**:
+   - mask_ratio_range=(0.0, 1.0) 表示随机 mask 0-100% 的 tokens
+   - 类似 BERT 的 MLM (Masked Language Modeling)
+
+3. **推理时的迭代解码**:
+   - 初始: 所有 tokens 都是 <mask> (255)
+   - 每步: 解码一部分 tokens,重新 mask 低置信度的 tokens
+   - 最终: 得到完整的 action token 序列
+
+4. **Tokenization 的作用**:
+   - 将连续 action space 离散化为 256 个 bins
+   - 使得可以用 classification (CE loss) 代替 regression (L1 loss)
+   - 支持 MaskGIT 风格的迭代解码
+
+## 5. 完整训练脚本示例片段
+
+```python
+# 在 finetune.py 中的修改
+
+from prismatic.models.action_heads import ActionTokenizer, DiscreteDiffusionActionHead
+
+# 初始化
+action_tokenizer = ActionTokenizer(bins=256, min_action=-1.0, max_action=1.0)
+action_head = DiscreteDiffusionActionHead(
+    hidden_dim=896,
+    num_action_tokens=NUM_ACTIONS_CHUNK * ACTION_DIM,
+    vocab_size=256,
+    mask_token_id=255,
+).to(device)
+
+# 训练循环
+for batch in dataloader:
+    # 1. Tokenize ground truth actions
+    gt_actions_np = batch["actions"].cpu().numpy()  # (B, 8, 7)
+    target_tokens_np = action_tokenizer.encode(gt_actions_np)  # (B, 56)
+    target_tokens = torch.from_numpy(target_tokens_np).to(device)
+
+    # 2. VLA forward
+    output = vla_model(..., output_hidden_states=True)
+    multi_layer_hidden_states = torch.stack(output.hidden_states, dim=1)
+
+    # 3. Compute loss
+    loss = action_head.compute_loss(
+        multi_layer_hidden_states,
+        target_tokens,
+        proprio=batch["proprio"]
+    )
+
+    # 4. Backward
+    loss.backward()
+    optimizer.step()
+```
+"""
+
