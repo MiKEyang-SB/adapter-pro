@@ -153,7 +153,7 @@ rollouts/
 wandb/
 
 LIBERO/
-pretrained_models/
+pretrained_models/prism-qwen25-extra-dinosiglip-224px-0_5b
 outputs/
 openvla/
 debug_cache/

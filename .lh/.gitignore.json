@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1768222407968,
@@ -32,6 +32,10 @@
                 {
                     "date": 1768826299860,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -154,5 +154,6 @@\n \n LIBERO/\n pretrained_models/\n outputs/\n-openvla/\n\\ No newline at end of file\n+openvla/\n+debug_cache/\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1768832393065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,8 +152,8 @@\n rollouts/\n wandb/\n \n LIBERO/\n-pretrained_models/\n+pretrained_models/prism-qwen25-extra-dinosiglip-224px-0_5b\n outputs/\n openvla/\n debug_cache/\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1768222407968,
