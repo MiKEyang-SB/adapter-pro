@@ -48,7 +48,7 @@ class RLDSBatchTransform:
 
         # Construct Chat-based Prompt =>> Input is default query + language instruction, output are the action tokens
         prompt_builder = self.prompt_builder_fn("openvla")
-
+        discretized_action = self.ddaction_tokenizer.encode(actions)
         # Get future action chunk
         future_actions = rlds_batch["action"][1:]
 
@@ -67,7 +67,8 @@ class RLDSBatchTransform:
             # # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]
             # arr = np.array(action_chunk_string)
             # discretized_action = tokenizer_len - arr #array
- 
+            
+
             flattened_action_chunk_string = [item for sublist in action_chunk_string for item in sublist]
             action_chunk_len = len(flattened_action_chunk_string) 
 
@@ -126,6 +127,7 @@ class RLDSBatchTransform:
 
         # Tensorize =>> Run Image Transform to get `pixel_values` =>> Return
         #   =>> IMPORTANT :: IF WE'RE USING HF LLM.forward(..., labels=labels), SHIFTING HAPPENS _INSIDE_ MODEL!
+       
         input_ids, labels = torch.tensor(input_ids), torch.tensor(labels)
         pixel_values = self.image_transform(img) #(6, 224, 224)
 
@@ -148,7 +150,8 @@ class RLDSBatchTransform:
         if self.use_proprio and "proprio" in rlds_batch["observation"]:
             proprio = rlds_batch["observation"]["proprio"]
             return_dict["proprio"] = proprio
-        return_dict["discretized_action"] = discretized_action
+        # Convert discretized_action from numpy to torch tensor
+        return_dict["discretized_action"] = torch.from_numpy(discretized_action).long()
         return return_dict
     
     

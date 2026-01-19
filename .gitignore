@@ -156,3 +156,4 @@ LIBERO/
 pretrained_models/
 outputs/
 openvla/
+debug_cache/

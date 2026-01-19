@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 125,
+            "activePatchIndex": 143,
             "patches": [
                 {
                     "date": 1765107839596,
@@ -508,6 +508,78 @@
                 {
                     "date": 1768652982299,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -738,9 +738,9 @@\n         vocab_size=256,               # Discrete action vocabulary size (256 bins)\n         mask_token_id=256,            # Special token ID for <mask>\n         num_diffusion_iters=12,       # Number of iterative decoding steps\n         use_proprio=False,            # Whether to use proprioception\n-        proprio_dim=7,                # Proprioception dimension\n+        proprio_dim=8,                # Proprioception dimension\n     ):\n         super().__init__()\n         self.hidden_dim = hidden_dim\n         self.action_head_dim = action_head_dim\n"
+                },
+                {
+                    "date": 1768742989449,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1025,9 +1025,9 @@\n         logits = self.forward(\n             multi_layer_hidden_states,\n             proprio=proprio,\n             input_tokens=input_tokens\n-        )  # (B, num_action_tokens, vocab_size)\n+        )  # (B, num_action_tokens, vocab_size) all in cuda\n \n         # ========== Step 10: Compute loss only on masked positions ==========\n         loss = torch.nn.functional.cross_entropy(\n             logits[masked_mask].view(-1, self.vocab_size),\n"
+                },
+                {
+                    "date": 1768743117380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1017,9 +1017,9 @@\n             unmask = (prob < no_mask_token_prob) & masked_mask\n             masked_mask = masked_mask & (~unmask)\n \n         # ========== Step 8: Create input tokens with masked positions ==========\n-        input_tokens = target_actions.clone()\n+        input_tokens = target_actions.clone().to(device)\n         input_tokens[masked_mask] = self.mask_token_id\n \n         # ========== Step 9: Get predictions ==========\n         logits = self.forward(\n"
+                },
+                {
+                    "date": 1768794458489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -819,9 +819,9 @@\n \n         # ========== Initialize action queries ==========\n         if input_tokens is not None:\n             # If input tokens provided, embed them\n-            x = self.token_embedding(input_tokens)  # (B, num_action_tokens, action_head_dim)\n+            x = self.token_embedding(input_tokens)  # (B, num_action_tokens, action_head_dim) (B, 56, 896)\n         else:\n             # Use learnable query embeddings\n             x = self.action_query_embed.expand(B, -1, -1)  # (B, num_action_tokens, action_head_dim)\n \n"
+                },
+                {
+                    "date": 1768795367904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,9 +93,9 @@\n             input_dim, \n             hidden_dim, \n             output_dim,\n             use_pro_version=False\n-            ):\n+            ):#\n         \n         super().__init__()\n         self.layer_norm1 = nn.LayerNorm(input_dim)\n         self.fc1 = nn.Linear(input_dim, hidden_dim)\n@@ -596,12 +596,12 @@\n \n \n     def forward(self, x, h_a=None, h_t=None, p=None):\n         \"\"\"\n-        x: (B, 8, 896)\n-        h_a: adapter tokens #(b, 64, 896)\n+        x: (B, 8, 896)   ddx:(b, 8*7, 896)\n+        h_a: adapter tokens #(b, 64, 896)  \n         h_t: task tokens #(b, 512, 896)\n-        p:   possible conditioning vector (for FiLM) #(b, 1, )\n+        p:   possible conditioning vector (for FiLM) #(b, 1, 896)\n         \"\"\"\n         g = self.gating_factor\n         ratio_g = torch.tanh(g)\n \n"
+                },
+                {
+                    "date": 1768795506308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n         ).detach()  #(B, action_dim * NUM_ACTIONS_CHUNK, hidden_dim)\n \n         rearranged_actions_hidden_states = cond_actions_hidden_states.reshape(\n             batch_size, NUM_ACTIONS_CHUNK, -1\n-        )  # (batch, chunk_len, action_dim * hidden_dim)\n+        )  # (batch, chunk_len, action_dim * hidden_dim) ???这里要和dd对其\n \n         if phase == \"Training\":\n             batch_size, seq_len, dim = rearranged_actions_hidden_states.shape\n             random_perturbations = learnable_random_perturbations(seq_len, dim, device=rearranged_actions_hidden_states.device, dtype=rearranged_actions_hidden_states.dtype) \n"
+                },
+                {
+                    "date": 1768799787223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n         ).detach()  #(B, action_dim * NUM_ACTIONS_CHUNK, hidden_dim)\n \n         rearranged_actions_hidden_states = cond_actions_hidden_states.reshape(\n             batch_size, NUM_ACTIONS_CHUNK, -1\n-        )  # (batch, chunk_len, action_dim * hidden_dim) ???这里要和dd对其\n+        )  # (batch, chunk_len, action_dim * hidden_dim) ???这里要和dd对齐\n \n         if phase == \"Training\":\n             batch_size, seq_len, dim = rearranged_actions_hidden_states.shape\n             random_perturbations = learnable_random_perturbations(seq_len, dim, device=rearranged_actions_hidden_states.device, dtype=rearranged_actions_hidden_states.dtype) \n"
+                },
+                {
+                    "date": 1768800438139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,9 +89,9 @@\n     \"\"\"MLP with residual connection blocks.\"\"\"\n     def __init__(\n             self, \n             num_blocks, \n-            input_dim, \n+            input_dim,  #7*896\n             hidden_dim, \n             output_dim,\n             use_pro_version=False\n             ):#\n"
+                },
+                {
+                    "date": 1768801456376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -769,8 +769,13 @@\n             MLPResNetBlock_Pro(dim=action_head_dim, num_heads=num_heads)\n             for _ in range(num_blocks)\n         ])\n \n+        self.input_head = nn.Sequential(\n+            nn.LayerNorm(action_head_dim),\n+            nn.Linear(action_head_dim, action_head_dim)\n+            nn.ReLU()\n+        )\n         # ========== Output head: predict discrete token logits ==========\n         self.output_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n             nn.Linear(action_head_dim, vocab_size)\n@@ -830,13 +835,13 @@\n             # Extract corresponding layer features\n             h_t_i = h_task[:, i, :, :]      # (B, num_visual_tokens, hidden_dim)\n             h_a_i = h_adapter[:, i, :, :]   # (B, K, hidden_dim)\n \n-            # Project to action_head_dim if needed\n-            if h_t_i.size(-1) != self.action_head_dim:\n-                # For dimension mismatch, we need projection layers\n-                # TODO: Add projection layers in __init__ if needed\n-                pass\n+            # # Project to action_head_dim if needed\n+            # if h_t_i.size(-1) != self.action_head_dim:\n+            #     # For dimension mismatch, we need projection layers\n+            #     # TODO: Add projection layers in __init__ if needed\n+            #     pass\n \n             x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)\n \n         # ========== Output discrete token logits ==========\n"
+                },
+                {
+                    "date": 1768801577916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -771,9 +771,9 @@\n         ])\n \n         self.input_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n-            nn.Linear(action_head_dim, action_head_dim)\n+            nn.Linear(action_head_dim, action_head_dim),\n             nn.ReLU()\n         )\n         # ========== Output head: predict discrete token logits ==========\n         self.output_head = nn.Sequential(\n@@ -829,8 +829,9 @@\n         else:\n             # Use learnable query embeddings\n             x = self.action_query_embed.expand(B, -1, -1)  # (B, num_action_tokens, action_head_dim)\n \n+        x = self.input_head(x)\n         # ========== Pass through MLPResNetBlock_Pro layers ==========\n         for i, block in enumerate(self.blocks):\n             # Extract corresponding layer features\n             h_t_i = h_task[:, i, :, :]      # (B, num_visual_tokens, hidden_dim)\n"
+                },
+                {
+                    "date": 1768801607295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -835,15 +835,8 @@\n         for i, block in enumerate(self.blocks):\n             # Extract corresponding layer features\n             h_t_i = h_task[:, i, :, :]      # (B, num_visual_tokens, hidden_dim)\n             h_a_i = h_adapter[:, i, :, :]   # (B, K, hidden_dim)\n-\n-            # # Project to action_head_dim if needed\n-            # if h_t_i.size(-1) != self.action_head_dim:\n-            #     # For dimension mismatch, we need projection layers\n-            #     # TODO: Add projection layers in __init__ if needed\n-            #     pass\n-\n             x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)\n \n         # ========== Output discrete token logits ==========\n         logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)\n"
+                },
+                {
+                    "date": 1768802762585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -772,9 +772,9 @@\n \n         self.input_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n             nn.Linear(action_head_dim, action_head_dim),\n-            nn.ReLU()\n+            # nn.ReLU()\n         )\n         # ========== Output head: predict discrete token logits ==========\n         self.output_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n"
+                },
+                {
+                    "date": 1768802777360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -772,9 +772,9 @@\n \n         self.input_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n             nn.Linear(action_head_dim, action_head_dim),\n-            # nn.ReLU()\n+            # nn.ReLU() #这个relu的作用\n         )\n         # ========== Output head: predict discrete token logits ==========\n         self.output_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n"
+                },
+                {
+                    "date": 1768802782799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -772,9 +772,9 @@\n \n         self.input_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n             nn.Linear(action_head_dim, action_head_dim),\n-            # nn.ReLU() #这个relu的作用\n+            # nn.ReLU() #这个relu的作用，对比vla-adapter\n         )\n         # ========== Output head: predict discrete token logits ==========\n         self.output_head = nn.Sequential(\n             nn.LayerNorm(action_head_dim),\n"
+                },
+                {
+                    "date": 1768803705577,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -833,10 +833,10 @@\n         x = self.input_head(x)\n         # ========== Pass through MLPResNetBlock_Pro layers ==========\n         for i, block in enumerate(self.blocks):\n             # Extract corresponding layer features\n-            h_t_i = h_task[:, i, :, :]      # (B, num_visual_tokens, hidden_dim)\n-            h_a_i = h_adapter[:, i, :, :]   # (B, K, hidden_dim)\n+            h_t_i = h_task[:, i+1, :, :]      # (B, num_visual_tokens, hidden_dim)\n+            h_a_i = h_adapter[:, i+1, :, :]   # (B, K, hidden_dim)\n             x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)\n \n         # ========== Output discrete token logits ==========\n         logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)\n"
+                },
+                {
+                    "date": 1768808895687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -839,8 +839,11 @@\n             x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)\n \n         # ========== Output discrete token logits ==========\n         logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)\n+        probs = torch.softmax(logits, dim=-1)\n+        flat_probs = probs.view(-1, probs.size(-1))\n+        final_tokens = torch.multinomial(flat_probs, 1).view(B, self.num_action_tokens)\n \n         return logits\n \n     def predict_action(\n"
+                },
+                {
+                    "date": 1768808906467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -839,13 +839,14 @@\n             x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)\n \n         # ========== Output discrete token logits ==========\n         logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)\n+        \n         probs = torch.softmax(logits, dim=-1)\n         flat_probs = probs.view(-1, probs.size(-1))\n         final_tokens = torch.multinomial(flat_probs, 1).view(B, self.num_action_tokens)\n \n-        return logits\n+        return logits, final_tokens\n \n     def predict_action(\n         self,\n         multi_layer_hidden_states,\n"
+                },
+                {
+                    "date": 1768808923760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1024,9 +1024,9 @@\n         input_tokens = target_actions.clone().to(device)\n         input_tokens[masked_mask] = self.mask_token_id\n \n         # ========== Step 9: Get predictions ==========\n-        logits = self.forward(\n+        logits, final_tokens = self.forward(\n             multi_layer_hidden_states,\n             proprio=proprio,\n             input_tokens=input_tokens\n         )  # (B, num_action_tokens, vocab_size) all in cuda\n"
+                },
+                {
+                    "date": 1768808939940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1037,9 +1037,9 @@\n             target_actions[masked_mask].view(-1),\n             reduction='mean'\n         )\n \n-        return loss\n+        return loss, final_tokens\n \n \n # ============================================================================\n # Usage Example: How to use ActionTokenizer with DiscreteDiffusionActionHead\n"
                 }
             ],
             "date": 1765107839596,

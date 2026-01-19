@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1765358093881,
@@ -52,6 +52,22 @@
                 {
                     "date": 1768656327338,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n from prismatic.models.backbones.llm.prompting import PromptBuilder, QwenPromptBuilder\n from prismatic.models.backbones.vision import ImageTransform\n from prismatic.util.data_utils import tree_map\n-from prismatic.vla.action_tokenizer import ActionTokenizer\n+from prismatic.vla.action_tokenizer import ActionTokenizer, DDActionTokenizer\n from prismatic.vla.constants import ACTION_DIM, ACTION_PROPRIO_NORMALIZATION_TYPE, ACTION_TOKEN_BEGIN_IDX, IGNORE_INDEX, NUM_ACTIONS_CHUNK, PROPRIO_DIM, STOP_INDEX, NUM_TOKENS\n from prismatic.vla.datasets.rlds import make_interleaved_dataset, make_single_dataset\n from prismatic.vla.datasets.rlds.oxe import OXE_NAMED_MIXTURES, get_oxe_dataset_kwargs_and_weights\n \n"
+                },
+                {
+                    "date": 1768657029668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,10 @@\n             # # discretized_action = tokenizer_len - action_chunk_string\n             # # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]\n             # arr = np.array(action_chunk_string)\n             # discretized_action = tokenizer_len - arr #array\n- \n+            discretized_action = ddaction_tokenizer.encode(actions)\n+\n             flattened_action_chunk_string = [item for sublist in action_chunk_string for item in sublist]\n             action_chunk_len = len(flattened_action_chunk_string) \n \n             conversation = [\n"
+                },
+                {
+                    "date": 1768657044015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n             # # discretized_action = tokenizer_len - action_chunk_string\n             # # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]\n             # arr = np.array(action_chunk_string)\n             # discretized_action = tokenizer_len - arr #array\n-            discretized_action = ddaction_tokenizer.encode(actions)\n+            discretized_action = self.ddaction_tokenizer.encode(actions)\n \n             flattened_action_chunk_string = [item for sublist in action_chunk_string for item in sublist]\n             action_chunk_len = len(flattened_action_chunk_string) \n \n"
+                },
+                {
+                    "date": 1768657206468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n             # # discretized_action = tokenizer_len - action_chunk_string\n             # # discretized_action = [[tokenizer_len - x for x in row] for row in action_chunk_string]\n             # arr = np.array(action_chunk_string)\n             # discretized_action = tokenizer_len - arr #array\n-            discretized_action = self.ddaction_tokenizer.encode(actions)\n+            \n \n             flattened_action_chunk_string = [item for sublist in action_chunk_string for item in sublist]\n             action_chunk_len = len(flattened_action_chunk_string) \n \n@@ -126,8 +126,9 @@\n             labels = list(input_ids)\n \n         # Tensorize =>> Run Image Transform to get `pixel_values` =>> Return\n         #   =>> IMPORTANT :: IF WE'RE USING HF LLM.forward(..., labels=labels), SHIFTING HAPPENS _INSIDE_ MODEL!\n+        discretized_action = self.ddaction_tokenizer.encode(actions)\n         input_ids, labels = torch.tensor(input_ids), torch.tensor(labels)\n         pixel_values = self.image_transform(img) #(6, 224, 224)\n \n         # [CRITICAL] We do not want to take the loss for anything but the predicted action tokens!\n"
+                },
+                {
+                    "date": 1768657253504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n         actions = rlds_batch[\"action\"]\n \n         # Construct Chat-based Prompt =>> Input is default query + language instruction, output are the action tokens\n         prompt_builder = self.prompt_builder_fn(\"openvla\")\n-\n+        discretized_action = self.ddaction_tokenizer.encode(actions)\n         # Get future action chunk\n         future_actions = rlds_batch[\"action\"][1:]\n \n         if self.use_minivlm:\n@@ -126,9 +126,9 @@\n             labels = list(input_ids)\n \n         # Tensorize =>> Run Image Transform to get `pixel_values` =>> Return\n         #   =>> IMPORTANT :: IF WE'RE USING HF LLM.forward(..., labels=labels), SHIFTING HAPPENS _INSIDE_ MODEL!\n-        discretized_action = self.ddaction_tokenizer.encode(actions)\n+       \n         input_ids, labels = torch.tensor(input_ids), torch.tensor(labels)\n         pixel_values = self.image_transform(img) #(6, 224, 224)\n \n         # [CRITICAL] We do not want to take the loss for anything but the predicted action tokens!\n"
                 }
             ],
             "date": 1765358093881,

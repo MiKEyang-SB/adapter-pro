@@ -68,7 +68,7 @@ class L1RegressionActionHead(nn.Module):
 
         rearranged_actions_hidden_states = cond_actions_hidden_states.reshape(
             batch_size, NUM_ACTIONS_CHUNK, -1
-        )  # (batch, chunk_len, action_dim * hidden_dim)
+        )  # (batch, chunk_len, action_dim * hidden_dim) ???这里要和dd对齐
 
         if phase == "Training":
             batch_size, seq_len, dim = rearranged_actions_hidden_states.shape
@@ -90,11 +90,11 @@ class MLPResNet(nn.Module):
     def __init__(
             self, 
             num_blocks, 
-            input_dim, 
+            input_dim,  #7*896
             hidden_dim, 
             output_dim,
             use_pro_version=False
-            ):
+            ):#
         
         super().__init__()
         self.layer_norm1 = nn.LayerNorm(input_dim)
@@ -597,10 +597,10 @@ class MLPResNetBlock_Pro(nn.Module):
 
     def forward(self, x, h_a=None, h_t=None, p=None):
         """
-        x: (B, 8, 896)
-        h_a: adapter tokens #(b, 64, 896)
+        x: (B, 8, 896)   ddx:(b, 8*7, 896)
+        h_a: adapter tokens #(b, 64, 896)  
         h_t: task tokens #(b, 512, 896)
-        p:   possible conditioning vector (for FiLM) #(b, 1, )
+        p:   possible conditioning vector (for FiLM) #(b, 1, 896)
         """
         g = self.gating_factor
         ratio_g = torch.tanh(g)
@@ -770,6 +770,11 @@ class DiscreteDiffusionActionHead(nn.Module):
             for _ in range(num_blocks)
         ])
 
+        self.input_head = nn.Sequential(
+            nn.LayerNorm(action_head_dim),
+            nn.Linear(action_head_dim, action_head_dim),
+            # nn.ReLU() #这个relu的作用，对比vla-adapter
+        )
         # ========== Output head: predict discrete token logits ==========
         self.output_head = nn.Sequential(
             nn.LayerNorm(action_head_dim),
@@ -820,29 +825,27 @@ class DiscreteDiffusionActionHead(nn.Module):
         # ========== Initialize action queries ==========
         if input_tokens is not None:
             # If input tokens provided, embed them
-            x = self.token_embedding(input_tokens)  # (B, num_action_tokens, action_head_dim)
+            x = self.token_embedding(input_tokens)  # (B, num_action_tokens, action_head_dim) (B, 56, 896)
         else:
             # Use learnable query embeddings
             x = self.action_query_embed.expand(B, -1, -1)  # (B, num_action_tokens, action_head_dim)
 
+        x = self.input_head(x)
         # ========== Pass through MLPResNetBlock_Pro layers ==========
         for i, block in enumerate(self.blocks):
             # Extract corresponding layer features
-            h_t_i = h_task[:, i, :, :]      # (B, num_visual_tokens, hidden_dim)
-            h_a_i = h_adapter[:, i, :, :]   # (B, K, hidden_dim)
-
-            # Project to action_head_dim if needed
-            if h_t_i.size(-1) != self.action_head_dim:
-                # For dimension mismatch, we need projection layers
-                # TODO: Add projection layers in __init__ if needed
-                pass
-
+            h_t_i = h_task[:, i+1, :, :]      # (B, num_visual_tokens, hidden_dim)
+            h_a_i = h_adapter[:, i+1, :, :]   # (B, K, hidden_dim)
             x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)
 
         # ========== Output discrete token logits ==========
         logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)
+        
+        probs = torch.softmax(logits, dim=-1)
+        flat_probs = probs.view(-1, probs.size(-1))
+        final_tokens = torch.multinomial(flat_probs, 1).view(B, self.num_action_tokens)
 
-        return logits
+        return logits, final_tokens
 
     def predict_action(
         self,
@@ -1018,15 +1021,15 @@ class DiscreteDiffusionActionHead(nn.Module):
             masked_mask = masked_mask & (~unmask)
 
         # ========== Step 8: Create input tokens with masked positions ==========
-        input_tokens = target_actions.clone()
+        input_tokens = target_actions.clone().to(device)
         input_tokens[masked_mask] = self.mask_token_id
 
         # ========== Step 9: Get predictions ==========
-        logits = self.forward(
+        logits, final_tokens = self.forward(
             multi_layer_hidden_states,
             proprio=proprio,
             input_tokens=input_tokens
-        )  # (B, num_action_tokens, vocab_size)
+        )  # (B, num_action_tokens, vocab_size) all in cuda
 
         # ========== Step 10: Compute loss only on masked positions ==========
         loss = torch.nn.functional.cross_entropy(
@@ -1035,7 +1038,7 @@ class DiscreteDiffusionActionHead(nn.Module):
             reduction='mean'
         )
 
-        return loss
+        return loss, final_tokens
 
 
 # ============================================================================

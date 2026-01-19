@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1765367438201,
@@ -44,6 +44,10 @@
                 {
                     "date": 1768648307130,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,9 +190,9 @@\n         # the number of future action horizon elements\n         return self.vq_vae.input_dim_h - 1\n \n # ============ Action Tokenizer ============\n-class ActionTokenizer:\n+class DDActionTokenizer:\n     \"\"\"\n     Discretizes continuous robot actions into N bins per dimension.\n \n     Example:\n"
+                },
+                {
+                    "date": 1768656973813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -212,10 +212,12 @@\n         self.min_action = min_action\n         self.max_action = max_action\n \n         # Create uniform bins and compute bin centers\n-        self.bins = np.linspace(min_action, max_action, bins + 1)  # bins+1 edges for bins intervals\n-        self.bin_centers = (self.bins[:-1] + self.bins[1:]) / 2.0  # bins centers\n+        # Note: we need 256 bin edges to create 255 intervals, but np.digitize returns [1, 256]\n+        # So we use 256 edges here to match the VLA convention\n+        self.bins = np.linspace(min_action, max_action, bins)  # 256 bin edges\n+        self.bin_centers = (self.bins[:-1] + self.bins[1:]) / 2.0  # 255 bin centers\n \n     def encode(self, actions: np.ndarray) -> np.ndarray:\n         \"\"\"\n         Encode continuous actions to discrete token IDs.\n@@ -254,10 +256,12 @@\n \n         Returns:\n             actions: (B, T, A) or (T, A) continuous actions\n         \"\"\"\n-        # Clip token IDs to valid range\n-        token_ids_clipped = np.clip(token_ids, a_min=0, a_max=self.n_bins - 1)\n+        # Clip token IDs to valid range [0, n_bins-1]\n+        # Note: bin_centers has length (n_bins - 1), so valid indices are [0, n_bins-2]\n+        # Token IDs 254 and 255 will both map to bin_centers[254] (the last bin center)\n+        token_ids_clipped = np.clip(token_ids, a_min=0, a_max=len(self.bin_centers) - 1)\n \n         # Map to bin centers\n         continuous_actions = self.bin_centers[token_ids_clipped]\n \n"
                 }
             ],
             "date": 1765367438201,

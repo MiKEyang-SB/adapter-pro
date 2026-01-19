@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1768222407968,
@@ -20,6 +20,18 @@
                 {
                     "date": 1768656475701,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -153,5 +153,6 @@\n wandb/\n \n LIBERO/\n pretrained_models/\n-outputs/\n\\ No newline at end of file\n+outputs/\n+openvla/\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1768826248694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -149,10 +149,10 @@\n data/\n \n # Rollout videos and wandb logs\n rollouts/\n-wandb/\n \n+\n LIBERO/\n pretrained_models/\n outputs/\n openvla/\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1768826291606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -149,10 +149,10 @@\n data/\n \n # Rollout videos and wandb logs\n rollouts/\n+wandb/\n \n-\n LIBERO/\n pretrained_models/\n outputs/\n openvla/\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1768826299860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -154,5 +154,6 @@\n \n LIBERO/\n pretrained_models/\n outputs/\n-openvla/\n\\ No newline at end of file\n+openvla/\n+debug_cache/\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1768222407968,

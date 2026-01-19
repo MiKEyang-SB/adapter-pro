@@ -15,6 +15,7 @@ import draccus
 import torch
 import torch.distributed as dist
 import torch.nn as nn
+import sys
 import tqdm
 from accelerate import PartialState
 from huggingface_hub import HfApi, snapshot_download
@@ -57,11 +58,18 @@ from prismatic.vla.datasets import RLDSDataset, RLDSBatchTransform
 from prismatic.vla.datasets.rlds.utils.data_utils import save_dataset_statistics
 from prismatic.models import load, load_vla
 
-
+import pickle
+import os
+from pathlib import Path
+DEBUG_CACHE = os.getenv("DEBUG_CACHE", "0") == "1"
+CACHE_DIR = Path("./debug_cache")
+CACHE_DIR.mkdir(exist_ok=True)
 
 # Sane Defaults
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["HF_HUB_OFFLINE"] = "True"
 
+os.environ["WANDB_API_KEY"] = "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"
 @dataclass
 class FinetuneConfig:
     # fmt: off
@@ -331,7 +339,7 @@ def run_forward_pass(
     # Get ground-truth action labels
     ground_truth_actions = batch["actions"].to(device_id).to(torch.bfloat16) #(b, T, action_dim)
     noise, noisy_actions, diffusion_timestep_embeddings = None, None, None
-
+    # discretized_action = batch["discretized_action"].to(device_id)
     # VLA forward pass
     with torch.autocast("cuda", dtype=torch.bfloat16):
         output: CausalLMOutputWithPast = vla(
@@ -409,7 +417,7 @@ def run_forward_pass(
             task_latten_states = item[:, :num_patches].reshape(batch_size, 1, num_patches , -1) #(B, 1, 512, 896)
             all_hidden_states = torch.cat((task_latten_states, actions_hidden_states),2)#(B, 1, 576, 896)
             multi_layer_hidden_states.append(all_hidden_states)
-        multi_layer_hidden_states = torch.cat(multi_layer_hidden_states, dim = 1)
+        multi_layer_hidden_states = torch.cat(multi_layer_hidden_states, dim = 1) #cuda
         #(b, 25, 576, 896) (b, Layer, Seq, Dim)
         # predicted_actions = action_head.module.predict_action(
         #     multi_layer_hidden_states,
@@ -419,10 +427,10 @@ def run_forward_pass(
         #     )
         # loss = torch.nn.L1Loss()(predicted_actions, ground_truth_actions)
 
-        loss = action_head.compute_loss(
+        loss, final_tokens = action_head.compute_loss(
             multi_layer_hidden_states=multi_layer_hidden_states,
-            target_actions=target_tokens,  # (B, 56) 离散 token IDs
-            proprio=batch["proprio"],      # (B, 8)
+            target_actions=batch["discretized_action"].to(device_id),  # (B, 56) 离散 token IDs
+            proprio=batch["proprio"].to(device_id, dtype=torch.bfloat16),      # (B, 8)
             mask_ratio_range=(0.0, 1.0),   # 随机 mask 0-100%
         )
 
@@ -433,12 +441,12 @@ def run_forward_pass(
         )
 
         # Get detailed L1 losses for logging
-        should_log_l1_loss = use_l1_regression
+        should_log_l1_loss = use_l1_regression #计算一下离散动作的l1 loss,看一下大小，用于检测回归状态
         if should_log_l1_loss:
-            ground_truth_curr_action = ground_truth_actions[:, 0]
-            predicted_curr_action = predicted_actions[:, 0]
-            ground_truth_next_actions = ground_truth_actions[:, 1:]
-            predicted_next_actions = predicted_actions[:, 1:]
+            ground_truth_curr_action = batch["discretized_action"][:, 0].to(device_id).to(torch.float32)
+            predicted_curr_action = final_tokens[:, 0].to(torch.float32)
+            ground_truth_next_actions = batch["discretized_action"][:, 1:].to(device_id).to(torch.float32)
+            predicted_next_actions = final_tokens[:, 1:].to(torch.float32)
             curr_action_l1_loss = torch.nn.L1Loss()(ground_truth_curr_action, predicted_curr_action)
             next_actions_l1_loss = torch.nn.L1Loss()(ground_truth_next_actions, predicted_next_actions)
             if compute_diffusion_l1:
@@ -737,7 +745,7 @@ def finetune(cfg: FinetuneConfig) -> None:
 
     # Initialize wandb logging
     if distributed_state.is_main_process:
-        wandb.init(project=cfg.wandb_project, name=f"ft+{run_id}", mode="offline")
+        wandb.init(project=cfg.wandb_project, name=f"ft+{run_id}", mode="online")
 
     # Print detected constants
     print(
@@ -758,17 +766,17 @@ def finetune(cfg: FinetuneConfig) -> None:
     # the file to the downloaded or locally stored checkpoint directory so
     # that the user's changes to the VLA class logic go into effect
 
-    if model_is_on_hf_hub(cfg.config_file_path):
-        # Download model directly from Hugging Face Hub
-        vla_download_path = snapshot_download(repo_id=cfg.config_file_path)
-        # Overwrite VLA path
-        cfg.config_file_path = vla_download_path
-    else:
+    # if model_is_on_hf_hub(cfg.config_file_path):
+    #     # Download model directly from Hugging Face Hub
+    #     vla_download_path = snapshot_download(repo_id=cfg.config_file_path)
+    #     # Overwrite VLA path
+    #     cfg.config_file_path = vla_download_path
+    # else:
         # Register OpenVLA model to HF Auto Classes (not needed if the model is on HF Hub)
-        AutoConfig.register("openvla", OpenVLAConfig)
-        AutoImageProcessor.register(OpenVLAConfig, PrismaticImageProcessor)
-        AutoProcessor.register(OpenVLAConfig, PrismaticProcessor)
-        AutoModelForVision2Seq.register(OpenVLAConfig, OpenVLAForActionPrediction)
+    AutoConfig.register("openvla", OpenVLAConfig)
+    AutoImageProcessor.register(OpenVLAConfig, PrismaticImageProcessor)
+    AutoProcessor.register(OpenVLAConfig, PrismaticProcessor)
+    AutoModelForVision2Seq.register(OpenVLAConfig, OpenVLAForActionPrediction)
 
 
     # Update config.json and sync model files
@@ -784,17 +792,69 @@ def finetune(cfg: FinetuneConfig) -> None:
     AutoProcessor.register(OpenVLAConfig, PrismaticProcessor)
     processor = AutoProcessor.from_pretrained(cfg.config_file_path, trust_remote_code=True)
 
-    if cfg.use_minivlm:#使用旧的vla权重加载进来，改成新的名字，并迁移 vlm->vla
-        hf_token = ''
-        if 'prism-qwen25-extra-dinosiglip-224px-0_5b' in cfg.vlm_path:
+    def _is_debug_run() -> bool:
+        # VSCode / debugpy 常见标志
+        if os.environ.get("DEBUGPY_RUNNING") == "1":
+            return True
+        # debugpy 启动时通常会带这个模块
+        return "debugpy" in sys.modules
+
+    # ------------------ your code ------------------
+    if cfg.use_minivlm:  # 使用旧的vla权重加载进来，改成新的名字，并迁移 vlm->vla
+        # hf_token = ''
+        # if 'prism-qwen25-extra-dinosiglip-224px-0_5b' in cfg.vlm_path:
             
-            vlm = load(cfg.vlm_path, hf_token=hf_token, load_for_training=True)
+        #     vlm = load(cfg.vlm_path, hf_token=hf_token, load_for_training=True)
+        # else:
+        #     vlm = load_vla(
+        #         cfg.vlm_path,
+        #         hf_token=hf_token,
+        #         load_for_training=True,
+        #         )
+            
+        hf_token = ""
+
+        # 用 torch checkpoint 缓存，而不是 pickle
+        vlm_cache_path = CACHE_DIR / "vlm_cached.pt"
+
+        # Debug 时：只要缓存存在，就一定加载
+        DEBUG_RUN = _is_debug_run()
+
+        def _build_vlm():
+            if 'prism-qwen25-extra-dinosiglip-224px-0_5b' in cfg.vlm_path:
+                
+                vlm = load(cfg.vlm_path, hf_token=hf_token, load_for_training=True)
+            else:
+                vlm = load_vla(
+                    cfg.vlm_path,
+                    hf_token=hf_token,
+                    load_for_training=True,
+                    )
+            return vlm
+        if vlm_cache_path.exists() and (DEBUG_RUN or DEBUG_CACHE):
+            print("⚡ Loading VLM from torch cache...")
+            import time
+            t0 = time.time()
+
+            ckpt = torch.load(vlm_cache_path, map_location="cpu")
+            vlm = _build_vlm()  # 先构建模型结构
+            vlm.load_state_dict(ckpt["model"], strict=True)
+
+            # 如果你 debug 直接跑 GPU，这里再搬上去（按你项目逻辑来）
+            # vlm = vlm.to(device)
+
+            print(f"✓ Loaded from cache in {time.time()-t0:.1f}s!")
         else:
-            vlm = load_vla(
-                cfg.vlm_path,
-                hf_token=hf_token,
-                load_for_training=True,
-                )
+            print("Loading VLM from scratch...")
+            vlm = _build_vlm()
+
+            # Debug 或 DEBUG_CACHE 时：保存一次，后面 debug 直接复用
+            if DEBUG_RUN or DEBUG_CACHE:
+                print("Saving VLM to torch cache...")
+                vlm_cache_path.parent.mkdir(parents=True, exist_ok=True)
+                torch.save({"model": vlm.state_dict()}, vlm_cache_path)
+                print("✓ Cached for next run!")
+
         config = AutoConfig.from_pretrained("pretrained_models/configs/config.json")
         vla = AutoModelForVision2Seq.from_config(config, torch_dtype=torch.bfloat16).to(device_id)  # Create a new model with configuration, the parameters are randomly initialized
         # for name, param in model.named_parameters():
@@ -897,13 +957,15 @@ def finetune(cfg: FinetuneConfig) -> None:
         cfg,
         device_id,
         {
-            "input_dim": vla.module.llm_dim, 
-            "hidden_dim": vla.module.llm_dim, 
+            "input_dim": vla.module.llm_dim,
+            "hidden_dim": vla.module.llm_dim,
             "action_dim": ACTION_DIM,
             "use_pro_version": cfg.use_pro_version,
             },
         to_bf16=True,
         )
+
+    # Instantiate discrete diffusion action head
     ddaction_head = DiscreteDiffusionActionHead(
         hidden_dim=896,              # VLA hidden state 维度
         action_head_dim=896,         # action decoder 内部维度
@@ -917,6 +979,10 @@ def finetune(cfg: FinetuneConfig) -> None:
         proprio_dim=8,               # proprio 维度
     )
 
+    # Move ddaction_head to GPU and convert to bfloat16
+    count_parameters(ddaction_head, "ddaction_head")
+    ddaction_head = ddaction_head.to(torch.bfloat16).to(device_id)
+
     # Get number of vision patches
     NUM_PATCHES = vla.module.vision_backbone.get_num_patches() * vla.module.vision_backbone.get_num_images_in_input()
     # If we have proprio inputs, a single proprio embedding is appended to the end of the vision patch embeddings
@@ -924,7 +990,7 @@ def finetune(cfg: FinetuneConfig) -> None:
     # Instantiate optimizer
     trainable_params = [param for param in vla.parameters() if param.requires_grad]
     if cfg.use_l1_regression:
-        trainable_params += [param for param in action_head.parameters() if param.requires_grad]
+        trainable_params += [param for param in ddaction_head.parameters() if param.requires_grad]
 
     if cfg.use_proprio:
         trainable_params += [param for param in proprio_projector.parameters() if param.requires_grad]
@@ -1044,7 +1110,7 @@ def finetune(cfg: FinetuneConfig) -> None:
             compute_diffusion_l1 = (cfg.use_l1_regression and batch_idx % cfg.diffusion_sample_freq == 0) or (cfg.use_diffusion and batch_idx % cfg.diffusion_sample_freq == 0)
             loss, metrics = run_forward_pass(
                 vla=vla,
-                action_head=action_head,
+                action_head=ddaction_head,
                 proprio_projector=proprio_projector if cfg.use_proprio else None,
                 batch=batch,
                 action_tokenizer=action_tokenizer,
@@ -1114,7 +1180,7 @@ def finetune(cfg: FinetuneConfig) -> None:
                     processor=processor,
                     proprio_projector=proprio_projector if cfg.use_proprio else None,
                     noisy_action_projector=None,
-                    action_head=action_head,
+                    action_head=ddaction_head,
                     train_dataset=train_dataset,
                     distributed_state=distributed_state,
                     new_state_dict=RAW_STATE_DICT,
@@ -1124,7 +1190,7 @@ def finetune(cfg: FinetuneConfig) -> None:
             if cfg.use_val_set and log_step > 0 and log_step % cfg.val_freq == 0:
                 run_validation(
                     vla=vla,
-                    action_head=action_head,
+                    action_head=ddaction_head,
                     noisy_action_projector=None,
                     proprio_projector=proprio_projector if cfg.use_proprio else None,
                     val_dataloader=val_dataloader,
