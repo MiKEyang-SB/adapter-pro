@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 143,
+            "activePatchIndex": 144,
             "patches": [
                 {
                     "date": 1765107839596,
@@ -580,6 +580,10 @@
                 {
                     "date": 1768808939940,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1037,9 +1037,9 @@\n             target_actions[masked_mask].view(-1),\n             reduction='mean'\n         )\n \n-        return loss\n+        return loss, final_tokens\n \n \n # ============================================================================\n # Usage Example: How to use ActionTokenizer with DiscreteDiffusionActionHead\n"
+                },
+                {
+                    "date": 1768827784354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -839,10 +839,18 @@\n             x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)\n \n         # ========== Output discrete token logits ==========\n         logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)\n-        \n+\n+        # Numerical stability: clamp logits to prevent inf/nan in softmax\n+        logits = torch.clamp(logits, min=-100, max=100)\n+\n         probs = torch.softmax(logits, dim=-1)\n+\n+        # Add small epsilon and renormalize to prevent zero probabilities\n+        probs = probs + 1e-8\n+        probs = probs / probs.sum(dim=-1, keepdim=True)\n+\n         flat_probs = probs.view(-1, probs.size(-1))\n         final_tokens = torch.multinomial(flat_probs, 1).view(B, self.num_action_tokens)\n \n         return logits, final_tokens\n"
                 }
             ],
             "date": 1765107839596,

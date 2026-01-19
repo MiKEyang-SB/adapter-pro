@@ -840,8 +840,16 @@ class DiscreteDiffusionActionHead(nn.Module):
 
         # ========== Output discrete token logits ==========
         logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)
-        
+
+        # Numerical stability: clamp logits to prevent inf/nan in softmax
+        logits = torch.clamp(logits, min=-100, max=100)
+
         probs = torch.softmax(logits, dim=-1)
+
+        # Add small epsilon and renormalize to prevent zero probabilities
+        probs = probs + 1e-8
+        probs = probs / probs.sum(dim=-1, keepdim=True)
+
         flat_probs = probs.view(-1, probs.size(-1))
         final_tokens = torch.multinomial(flat_probs, 1).view(B, self.num_action_tokens)
 
