@@ -1,7 +1,13 @@
+LIBERO
+debug_cache
 eval_logs
 experiments
 figure
+openvla
+outputs
 pretrained_models
 prismatic
+rollouts
 scripts
 vla-scripts
+wandb

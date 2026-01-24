@@ -17,7 +17,7 @@ from typing import Optional, Union
 import draccus
 import numpy as np
 import tqdm
-from libero.libero import benchmark
+from LIBERO.libero.libero import benchmark
 
 import wandb
 
@@ -33,6 +33,7 @@ from experiments.robot.libero.libero_utils import (
 )
 from experiments.robot.openvla_utils import (
     get_action_head,
+    get_action_tokenizer,
     get_noisy_action_projector,
     get_processor,
     get_proprio_projector,
@@ -87,10 +88,12 @@ class GenerateConfig:
     # Model-specific parameters
     #################################################################################################################
     model_family: str = "openvla"                    # Model family
-    pretrained_checkpoint: Union[str, Path] = ""     # Pretrained checkpoint path
-    use_l1_regression: bool = True                   # If True, uses continuous action head with L1 regression objective
+    pretrained_checkpoint: Union[str, Path] = "configs+libero_spatial_no_noops+b16+lr-0.0005+lora-r64+dropout-0.0--image_aug"     # Pretrained checkpoint path
+    use_l1_regression: bool = False                   # If True, uses continuous action head with L1 regression objective
+    use_discrete_diffusion: bool = True             # If True, uses discrete diffusion action head with MaskGIT decoding
     use_minivlm: bool = True                         # If True, uses minivlm
     num_diffusion_steps: int = 50                    # (When `diffusion==True`) Number of diffusion steps for inference
+    num_diffusion_iters: int = 12                    # (When `use_discrete_diffusion==True`) Number of MaskGIT decoding iterations
     use_film: bool = False                           # If True, uses FiLM to infuse language inputs into visual features
     num_images_in_input: int = 2                     # Number of images in the VLA input (default: 1)
     use_proprio: bool = True                         # Whether to include proprio state in input
@@ -160,8 +163,13 @@ def initialize_model(cfg: GenerateConfig):
 
     # Load action head if needed
     action_head = None
-    if cfg.use_l1_regression:
+    if cfg.use_l1_regression or cfg.use_discrete_diffusion:
         action_head = get_action_head(cfg, model.llm_dim)
+
+    # Load action tokenizer for discrete diffusion
+    action_tokenizer = None
+    if cfg.use_discrete_diffusion:
+        action_tokenizer = get_action_tokenizer(bins=256, min_action=-1.0, max_action=1.0)
 
     # Load noisy action projector if using diffusion
     noisy_action_projector = None
@@ -172,7 +180,7 @@ def initialize_model(cfg: GenerateConfig):
         processor = get_processor(cfg)
         check_unnorm_key(cfg, model)
 
-    return model, action_head, proprio_projector, noisy_action_projector, processor
+    return model, action_head, proprio_projector, noisy_action_projector, processor, action_tokenizer
 
 
 def check_unnorm_key(cfg: GenerateConfig, model) -> None:
@@ -290,6 +298,7 @@ def run_episode(
     action_head=None,
     proprio_projector=None,
     noisy_action_projector=None,
+    action_tokenizer=None,
     initial_state=None,
     log_file=None,
 ):
@@ -341,6 +350,7 @@ def run_episode(
                     action_head=action_head,
                     proprio_projector=proprio_projector,
                     noisy_action_projector=noisy_action_projector,
+                    action_tokenizer=action_tokenizer,
                     use_film=cfg.use_film,
                     use_minivlm=cfg.use_minivlm
                 )
@@ -380,6 +390,7 @@ def run_task(
     action_head=None,
     proprio_projector=None,
     noisy_action_projector=None,
+    action_tokenizer=None,
     total_episodes=0,
     total_successes=0,
     log_file=None,
@@ -431,6 +442,7 @@ def run_task(
             action_head,
             proprio_projector,
             noisy_action_projector,
+            action_tokenizer,
             initial_state,
             log_file,
         )
@@ -486,7 +498,7 @@ def eval_libero(cfg: GenerateConfig) -> float:
     set_seed_everywhere(cfg.seed)
 
     # Initialize model and components
-    model, action_head, proprio_projector, noisy_action_projector, processor = initialize_model(cfg)
+    model, action_head, proprio_projector, noisy_action_projector, processor, action_tokenizer = initialize_model(cfg)
 
     # for name, param in model.named_parameters():
     #     if 'action_queries' in name: 
@@ -518,6 +530,7 @@ def eval_libero(cfg: GenerateConfig) -> float:
             action_head,
             proprio_projector,
             noisy_action_projector,
+            action_tokenizer,
             total_episodes,
             total_successes,
             log_file,

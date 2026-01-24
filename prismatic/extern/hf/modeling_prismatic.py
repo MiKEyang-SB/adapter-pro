@@ -817,6 +817,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         action_head=None,
         proprio=None,
         proprio_projector=None,
+        action_tokenizer=None,
     ):
         """Run L1 regression-based continuous action prediction or discrete action tokens prediction."""
 
@@ -846,32 +847,60 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
 
         # Extract hidden states for action tokens
         multi_layer_hidden_states = []
-        
+
         for item in language_model_output.hidden_states[0:]:
             # last_hidden_states = output.hidden_states[-1]  # (B, seq_len, D)
             # Get hidden states for text portion of prompt+response (after the vision patches)
             text_hidden_states = item
             # Get hidden states for action portion of response
             actions_hidden_states = text_hidden_states[:, NUM_PATCHES+ NUM_PROMPT_TOKENS : NUM_PATCHES + NUM_PROMPT_TOKENS + NUM_TOKENS, :,].reshape(1, 1, NUM_TOKENS, -1).to(torch.bfloat16)
-            
+
             batch_size = item.shape[0]
             task_latten_states = item[:, :NUM_PATCHES].reshape(batch_size, 1, NUM_PATCHES , -1)
             all_hidden_states = torch.cat((task_latten_states, actions_hidden_states),2)
             multi_layer_hidden_states.append(all_hidden_states)
-            
+
         multi_layer_hidden_states = torch.cat(multi_layer_hidden_states, dim = 1)
-        
+
 
         # Handle different prediction methods
         if action_head is not None:
-            # L1 regression prediction
-            normalized_actions = action_head.predict_action(multi_layer_hidden_states,
-                                                proprio=proprio,
-                                                proprio_projector=proprio_projector)
-            normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
-            normalized_actions = normalized_actions.float().cpu().detach().numpy()
+            # Check if it's a DiscreteDiffusionActionHead
+            from prismatic.models.action_heads import DiscreteDiffusionActionHead
+
+            if isinstance(action_head, DiscreteDiffusionActionHead): #dd
+                # Discrete Diffusion prediction with MaskGIT-style iterative decoding
+                predicted_tokens = action_head.predict_action(
+                    multi_layer_hidden_states,
+                    proprio=proprio,
+                    temperature=1.0,
+                    use_remask=False,
+                )  # (B, num_action_tokens) discrete token IDs [0, 255]
+
+                # Decode discrete tokens to continuous actions using tokenizer
+                if action_tokenizer is not None:
+                    predicted_tokens_np = predicted_tokens.cpu().numpy()  # (B, 56)
+                    normalized_actions = action_tokenizer.decode(predicted_tokens_np)  # (B, 56)
+                    normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                else:
+                    # Fallback: use bin centers directly (less accurate)
+                    bins = np.linspace(-1, 1, 256)
+                    bin_centers = (bins[:-1] + bins[1:]) / 2.0
+                    predicted_tokens_np = predicted_tokens.cpu().numpy()
+                    predicted_tokens_clipped = np.clip(predicted_tokens_np, 0, len(bin_centers) - 1)
+                    normalized_actions = bin_centers[predicted_tokens_clipped]
+                    normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+            else:
+                # L1 regression prediction
+                normalized_actions = action_head.predict_action(
+                    multi_layer_hidden_states,
+                    proprio=proprio,
+                    proprio_projector=proprio_projector
+                )
+                normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                normalized_actions = normalized_actions.float().cpu().detach().numpy()
         else:
-            # Discrete token-based prediction
+            # Discrete token-based prediction (original VLA)
             predicted_action_token_ids = (
                 language_model_output.logits[
                     :,
@@ -897,6 +926,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         proprio_projector=None,
         action_head=None,
         noisy_action_projector=None,
+        action_tokenizer=None,
         use_film: bool = False,
         **kwargs: str,
     ) -> np.ndarray:
@@ -909,6 +939,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
             proprio_projector: Projector for proprioceptive features
             action_head: Optional head for L1 regression or diffusion-based prediction
             noisy_action_projector: Projector for noisy actions in diffusion-based prediction
+            action_tokenizer: Optional tokenizer for discrete diffusion action head decode
             use_film: Whether to use FiLM conditioning
             **kwargs: Additional arguments including pixel_values and attention_mask
 
@@ -964,6 +995,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
             action_head=action_head,
             proprio=proprio, # [8]
             proprio_projector=proprio_projector,
+            action_tokenizer=action_tokenizer,
             )
            
         # Unnormalize predicted actions

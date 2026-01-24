@@ -24,14 +24,16 @@ json_numpy.patch()
 from prismatic.extern.hf.configuration_prismatic import OpenVLAConfig
 from prismatic.extern.hf.modeling_prismatic import OpenVLAForActionPrediction
 from prismatic.extern.hf.processing_prismatic import PrismaticImageProcessor, PrismaticProcessor
-from prismatic.models.action_heads import L1RegressionActionHead
+from prismatic.models.action_heads import L1RegressionActionHead, DiscreteDiffusionActionHead
 from prismatic.models.film_vit_wrapper import FiLMedPrismaticVisionBackbone
 from prismatic.models.projectors import NoisyActionProjector, ProprioProjector
 from prismatic.vla.constants import (
     ACTION_DIM,
     ACTION_PROPRIO_NORMALIZATION_TYPE,
+    NUM_ACTIONS_CHUNK,
 )
 from prismatic.vla.datasets.rlds.utils.data_utils import NormalizationType
+from prismatic.vla.action_tokenizer import DDActionTokenizer
 
 # Initialize important constants
 DATE = time.strftime("%Y_%m_%d")
@@ -286,16 +288,16 @@ def get_vla(cfg: Any) -> torch.nn.Module:
     # actually go into effect
     # If loading a pretrained checkpoint from Hugging Face Hub, we just assume that the policy
     # will be used as is, with its original modeling logic
-    if not model_is_on_hf_hub(cfg.pretrained_checkpoint):
+    # if not model_is_on_hf_hub(cfg.pretrained_checkpoint):
         # Register OpenVLA model to HF Auto Classes (not needed if the model is on HF Hub)
-        AutoConfig.register("openvla", OpenVLAConfig)
-        AutoImageProcessor.register(OpenVLAConfig, PrismaticImageProcessor)
-        AutoProcessor.register(OpenVLAConfig, PrismaticProcessor)
-        AutoModelForVision2Seq.register(OpenVLAConfig, OpenVLAForActionPrediction)
+    AutoConfig.register("openvla", OpenVLAConfig)
+    AutoImageProcessor.register(OpenVLAConfig, PrismaticImageProcessor)
+    AutoProcessor.register(OpenVLAConfig, PrismaticProcessor)
+    AutoModelForVision2Seq.register(OpenVLAConfig, OpenVLAForActionPrediction)
 
-        # Update config.json and sync model files
-        update_auto_map(cfg.pretrained_checkpoint)
-        check_model_logic_mismatch(cfg.pretrained_checkpoint)
+    # Update config.json and sync model files
+    update_auto_map(cfg.pretrained_checkpoint)
+    check_model_logic_mismatch(cfg.pretrained_checkpoint)
 
     # Load the model
     vla = AutoModelForVision2Seq.from_pretrained(
@@ -479,7 +481,7 @@ def get_noisy_action_projector(cfg: Any, llm_dim: int) -> NoisyActionProjector:
     return noisy_action_projector
 
 
-def get_action_head(cfg: Any, llm_dim: int) -> Union[L1RegressionActionHead]:
+def get_action_head(cfg: Any, llm_dim: int) -> Union[L1RegressionActionHead, DiscreteDiffusionActionHead]:
     """
     Get action head for continuous value prediction.
 
@@ -488,7 +490,7 @@ def get_action_head(cfg: Any, llm_dim: int) -> Union[L1RegressionActionHead]:
         llm_dim: Dimension of the language model
 
     Returns:
-        Union[L1RegressionActionHead, DiffusionActionHead]: The initialized action head
+        Union[L1RegressionActionHead, DiscreteDiffusionActionHead]: The initialized action head
 
     Raises:
         AssertionError: If both L1 regression and diffusion are specified
@@ -500,17 +502,32 @@ def get_action_head(cfg: Any, llm_dim: int) -> Union[L1RegressionActionHead]:
         else:
             cfg.use_pro_version = False
 
+    # Check if using discrete diffusion action head
+    use_discrete_diffusion = getattr(cfg, "use_discrete_diffusion", False)
+
     # Initialize appropriate action head based on configuration
-    if cfg.use_l1_regression:
+    if use_discrete_diffusion:
+        action_head = DiscreteDiffusionActionHead(
+            hidden_dim=llm_dim,              # VLA hidden state dimension
+            action_head_dim=llm_dim,         # action decoder internal dimension
+            num_blocks=24,                   # MLPResNetBlock_Pro layers
+            num_heads=8,                     # attention heads
+            num_action_tokens=NUM_ACTIONS_CHUNK * ACTION_DIM,  # 8 chunks × 7 dims = 56 tokens
+            vocab_size=256,                  # discrete vocabulary size
+            mask_token_id=256,               # mask token ID
+            num_diffusion_iters=getattr(cfg, "num_diffusion_iters", 12),  # iterative decoding steps
+            use_proprio=cfg.use_proprio,     # whether to use proprio
+            proprio_dim=8,                   # proprio dimension
+        )
+    elif cfg.use_l1_regression:
         action_head = L1RegressionActionHead(
-            input_dim=llm_dim, 
-            hidden_dim=llm_dim, 
+            input_dim=llm_dim,
+            hidden_dim=llm_dim,
             action_dim=ACTION_DIM,
             use_pro_version=cfg.use_pro_version,
         )
-
     else:
-        raise ValueError("Either use_l1_regression or use_diffusion must be True")
+        raise ValueError("Either use_l1_regression or use_discrete_diffusion must be True")
 
     action_head = action_head.to(torch.bfloat16).to(DEVICE)
     action_head.eval()
@@ -537,6 +554,21 @@ def get_action_head(cfg: Any, llm_dim: int) -> Union[L1RegressionActionHead]:
         action_head.load_state_dict(state_dict)
 
     return action_head
+
+
+def get_action_tokenizer(bins: int = 256, min_action: float = -1.0, max_action: float = 1.0) -> DDActionTokenizer:
+    """
+    Get action tokenizer for discrete diffusion action head.
+
+    Args:
+        bins: Number of bins for discretization (default: 256)
+        min_action: Minimum action value (default: -1.0)
+        max_action: Maximum action value (default: 1.0)
+
+    Returns:
+        DDActionTokenizer: The action tokenizer for encode/decode
+    """
+    return DDActionTokenizer(bins=bins, min_action=min_action, max_action=max_action)
 
 
 def resize_image_for_policy(img: np.ndarray, resize_size: Union[int, Tuple[int, int]]) -> np.ndarray:
@@ -743,6 +775,7 @@ def get_vla_action(
     action_head: Optional[torch.nn.Module] = None,
     proprio_projector: Optional[torch.nn.Module] = None,
     noisy_action_projector: Optional[torch.nn.Module] = None,
+    action_tokenizer: Optional[DDActionTokenizer] = None,
     use_film: bool = False,
     use_minivlm: bool = False,
 ) -> List[np.ndarray]:
@@ -758,6 +791,7 @@ def get_vla_action(
         action_head: Optional action head for continuous actions
         proprio_projector: Optional proprioception projector
         noisy_action_projector: Optional noisy action projector for diffusion
+        action_tokenizer: Optional tokenizer for discrete diffusion action head
         use_film: Whether to use FiLM
 
     Returns:
@@ -771,7 +805,7 @@ def get_vla_action(
             all_images.extend([obs[k] for k in obs.keys() if "wrist" in k])
 
         # Process images
-        all_images = prepare_images_for_vla(all_images, cfg)
+        all_images = prepare_images_for_vla(all_images, cfg) #[PIL, PIL]
 
         # Extract primary image and additional images
         primary_image = all_images.pop(0)
@@ -818,6 +852,7 @@ def get_vla_action(
                 proprio_projector=proprio_projector,
                 noisy_action_projector=noisy_action_projector,
                 action_head=action_head,
+                action_tokenizer=action_tokenizer,
                 use_film=use_film,
             )
 

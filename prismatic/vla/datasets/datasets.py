@@ -12,6 +12,7 @@ from typing import Any, Dict, Tuple, Type
 import numpy as np
 import random
 import torch
+import torch.distributed as dist
 from PIL import Image
 from torch.utils.data import Dataset, IterableDataset
 from transformers import PreTrainedTokenizerBase
@@ -44,7 +45,7 @@ class RLDSBatchTransform:
         dataset_name, current_action = rlds_batch["dataset_name"], rlds_batch["action"][0]
         img = Image.fromarray(rlds_batch["observation"]["image_primary"][0])
         lang = rlds_batch["task"]["language_instruction"].decode().lower()
-        actions = rlds_batch["action"]
+        actions = rlds_batch["action"] #(b, )
 
         # Construct Chat-based Prompt =>> Input is default query + language instruction, output are the action tokens
         prompt_builder = self.prompt_builder_fn("openvla")

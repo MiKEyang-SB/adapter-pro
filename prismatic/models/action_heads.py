@@ -76,7 +76,7 @@ class L1RegressionActionHead(nn.Module):
             rearranged_actions_hidden_states = (rearranged_actions_hidden_states + random_perturbations) # (1, seq_len, dim)
 
         action = self.model(
-            rearranged_actions_hidden_states, # (batch, chunk_len, action_dim * hidden_dim) (b, 7, 8*896)
+            rearranged_actions_hidden_states, # (batch, chunk_len, action_dim * hidden_dim) (b, 8, 7*896)
             h_a=actions_hidden_states, #transformer中和的动作hidden_state #(b, 25, 64, 896)
             p=proprio_features,  # (bsz, 1, llm_dim)
             h_t=task_hidden_states #视觉语言 torch.Size([b, 25, 512, 896])
@@ -115,9 +115,9 @@ class MLPResNet(nn.Module):
     def forward(self, x, h_a=None, h_t=None, p= None):
  
         # x: (batch_size, input_dim)
-        x = self.layer_norm1(x)  # shape: (batch_size, input_dim)
-        x = self.fc1(x)  # shape: (batch_size, hidden_dim)
-        x = self.relu(x)  # shape: (batch_size, hidden_dim)
+        x = self.layer_norm1(x)  # shape: (batch_size, chunk, input_dim)
+        x = self.fc1(x)  # shape: (batch_size, chunk, hidden_dim)
+        x = self.relu(x)  # shape: (batch_size, chunk, hidden_dim)
         for i, block in enumerate(self.mlp_resnet_blocks):
             x = block(x, h_t = h_t[:,i+1,:], h_a = h_a[:,i+1,:], p=p)  # shape: (batch_size, hidden_dim)
         x = self.layer_norm2(x)  # shape: (batch_size, hidden_dim)
@@ -597,7 +597,7 @@ class MLPResNetBlock_Pro(nn.Module):
 
     def forward(self, x, h_a=None, h_t=None, p=None):
         """
-        x: (B, 8, 896)   ddx:(b, 8*7, 896)
+        x: (B, 8, 896)   ddx:(b, 56, 896) 
         h_a: adapter tokens #(b, 64, 896)  
         h_t: task tokens #(b, 512, 896)
         p:   possible conditioning vector (for FiLM) #(b, 1, 896)
@@ -727,6 +727,7 @@ class DiscreteDiffusionActionHead(nn.Module):
     - MaskGIT-style iterative decoding
     - Outputs discrete token logits (not continuous actions)
     - Uses MLPResNetBlock_Pro with RoPE and independent projections
+    - Supports 1D and 2D mask-remask mechanisms
     """
     def __init__(
         self,
@@ -740,6 +741,9 @@ class DiscreteDiffusionActionHead(nn.Module):
         num_diffusion_iters=12,       # Number of iterative decoding steps
         use_proprio=False,            # Whether to use proprioception
         proprio_dim=8,                # Proprioception dimension
+        mask_type='1D',               # Mask type: '1D' or '2D'
+        num_action_chunks=8,          # NUM_ACTIONS_CHUNK (temporal dimension for 2D mask)
+        action_dim=7,                 # ACTION_DIM (spatial dimension for 2D mask)
     ):
         super().__init__()
         self.hidden_dim = hidden_dim
@@ -751,6 +755,11 @@ class DiscreteDiffusionActionHead(nn.Module):
         self.num_diffusion_iters = num_diffusion_iters
         self.use_proprio = use_proprio
 
+        # 2D mask parameters
+        self.mask_type = mask_type
+        self.num_action_chunks = num_action_chunks  # xtokens (temporal dimension)
+        self.action_dim = action_dim                # ytokens (spatial dimension)
+
         # ========== Input Projection ==========
         # Learnable action query embeddings
         self.action_query_embed = nn.Parameter(
@@ -758,8 +767,8 @@ class DiscreteDiffusionActionHead(nn.Module):
         )
 
         # Proprio projector (if needed)
-        if use_proprio:
-            self.proprio_projector = nn.Linear(proprio_dim, action_head_dim)
+        # if use_proprio:
+        #     self.proprio_projector = nn.Linear(proprio_dim, action_head_dim)
 
         # Token embedding layer (for masked tokens during iterative decoding)
         self.token_embedding = nn.Embedding(vocab_size + 1, action_head_dim)  # +1 for mask token
@@ -773,7 +782,7 @@ class DiscreteDiffusionActionHead(nn.Module):
         self.input_head = nn.Sequential(
             nn.LayerNorm(action_head_dim),
             nn.Linear(action_head_dim, action_head_dim),
-            # nn.ReLU() #这个relu的作用，对比vla-adapter
+            nn.ReLU() #这个relu的作用，对比vla-adapter
         )
         # ========== Output head: predict discrete token logits ==========
         self.output_head = nn.Sequential(
@@ -784,7 +793,7 @@ class DiscreteDiffusionActionHead(nn.Module):
     def forward(
         self,
         multi_layer_hidden_states,  # (B, num_layers, num_tokens, hidden_dim)
-        proprio=None,                # (B, proprio_dim) or None
+        proprio_features=None,                # (B, proprio_dim) or None
         input_tokens=None,           # (B, num_action_tokens) optional input tokens for conditioning
     ):
         """
@@ -814,13 +823,13 @@ class DiscreteDiffusionActionHead(nn.Module):
         num_visual_tokens = 512  # Adjust based on your vision encoder (e.g., 576 for OpenVLA)
 
         h_task = multi_layer_hidden_states[:, :, :num_visual_tokens, :]   # (B, L, 512, hidden_dim)
-        h_adapter = multi_layer_hidden_states[:, :, num_visual_tokens:, :]  # (B, L, K, hidden_dim)
+        h_adapter = multi_layer_hidden_states[:, :, num_visual_tokens:, :]  # (B, L, 64, hidden_dim)
 
         # Process proprio
-        if self.use_proprio and proprio is not None:
-            p = self.proprio_projector(proprio).unsqueeze(1)  # (B, 1, action_head_dim)
-        else:
-            p = None
+        # if self.use_proprio and proprio is not None:
+        #     p = self.proprio_projector(proprio).unsqueeze(1)  # (B, 1, action_head_dim)
+        # else:
+        #     p = None
 
         # ========== Initialize action queries ==========
         if input_tokens is not None:
@@ -831,18 +840,17 @@ class DiscreteDiffusionActionHead(nn.Module):
             x = self.action_query_embed.expand(B, -1, -1)  # (B, num_action_tokens, action_head_dim)
 
         x = self.input_head(x)
-        # ========== Pass through MLPResNetBlock_Pro layers ==========
+        #这里是否要添加2D的时空编码，还是在里面正常使用ROPE做编码
+        # # ========== Pass through MLPResNetBlock_Pro layers ==========
         for i, block in enumerate(self.blocks):
             # Extract corresponding layer features
-            h_t_i = h_task[:, i+1, :, :]      # (B, num_visual_tokens, hidden_dim)
-            h_a_i = h_adapter[:, i+1, :, :]   # (B, K, hidden_dim)
-            x = block(x, h_a=h_a_i, h_t=h_t_i, p=p)  # (B, num_action_tokens, action_head_dim)
+            x = block(x, h_t = h_task[:,i+1,:], h_a = h_adapter[:,i+1,:], p=proprio_features) # (B, num_action_tokens, action_head_dim)
 
-        # ========== Output discrete token logits ==========
-        logits = self.output_head(x)  # (B, num_action_tokens, vocab_size)
-
+        # # ========== Output discrete token logits ==========
+        logits = self.output_head(x)  # (B, num_action_toke`ns, vocab_size)
+        # x = x.reshape(B, NUM_ACTIONS_CHUNK, -1) ## (batch, chunk_len, action_dim * hidden_dim) 
         # Numerical stability: clamp logits to prevent inf/nan in softmax
-        logits = torch.clamp(logits, min=-100, max=100)
+        # logits = torch.clamp(logits, min=-100, max=100)
 
         probs = torch.softmax(logits, dim=-1)
 
@@ -859,7 +867,6 @@ class DiscreteDiffusionActionHead(nn.Module):
         self,
         multi_layer_hidden_states,
         proprio=None,
-        num_diffusion_iters=None,
         temperature=1.0,
         use_remask=False,
     ):
@@ -876,8 +883,7 @@ class DiscreteDiffusionActionHead(nn.Module):
         Returns:
             final_actions: (B, num_action_tokens) discrete token IDs
         """
-        if num_diffusion_iters is None:
-            num_diffusion_iters = self.num_diffusion_iters
+        num_diffusion_iters = self.num_diffusion_iters
 
         B = multi_layer_hidden_states.size(0)
         device = multi_layer_hidden_states.device
@@ -917,15 +923,15 @@ class DiscreteDiffusionActionHead(nn.Module):
             mask_ratio = cosine_schedule(torch.tensor(ratio, device=device), unknown_init)
             mask_len = torch.floor(unknown_init.float() * mask_ratio).long()
             mask_len = torch.clamp(mask_len, min=0, max=(unknown_init - 1).clamp(min=0))
-
+            # remask的个数
             # Early stop if no more tokens to mask
             if mask_len.max() == 0:
                 break
 
-            # 5) Calculate confidence scores
+            # 5) Calculate confidence scores 计算每个位置的置信度
             selected_probs = probs.gather(2, sampled.unsqueeze(-1)).squeeze(-1)  # (B, L)
 
-            if use_remask:
+            if use_remask: #已经填过的地方不会再被重新遮盖回去
                 # Allow remasking with decreasing probability
                 p_remask = 1.0 - ratio
                 selected_probs = torch.where(
@@ -946,7 +952,7 @@ class DiscreteDiffusionActionHead(nn.Module):
                 selected_probs,
                 mask_len,
                 temperature=temperature * (1.0 - ratio)
-            )
+            )#选择置信度最低的mask_len个位置
 
             # 7) Update sequence: remask low-confidence positions
             next_seqs = torch.where(masking, self.mask_token_id, sampled)
@@ -969,6 +975,7 @@ class DiscreteDiffusionActionHead(nn.Module):
         multi_layer_hidden_states,
         target_actions,  # (B, num_action_tokens) discrete token IDs
         proprio=None,
+        proprio_projector=None,
         mask_ratio_range=(0.0, 1.0),  # Random masking ratio range (deprecated, use cosine schedule instead)
         no_mask_token_prob=0.0,        # Probability to unmask some masked tokens
         use_cosine_schedule=True,      # Use cosine schedule like DiscreteDiffusionVLA
@@ -991,42 +998,68 @@ class DiscreteDiffusionActionHead(nn.Module):
         """
         B = target_actions.size(0)
         device = target_actions.device
+        ntokens = self.num_action_tokens
+        xtokens = self.num_action_chunks  # temporal dimension (e.g., 8)
+        ytokens = self.action_dim  
+        # ========== Step 9: Get proprio_features ==========
+        proprio = proprio.reshape(B, -1).to(torch.bfloat16)  # (bsz, proprio_dim)
+        proprio_features = proprio_projector(proprio)  # (bsz, llm_dim)
+        proprio_features = proprio_features.unsqueeze(dim=1)  # (bsz, 1, llm_dim)
 
         # ========== Step 1: Calculate total maskable tokens ==========
         # All tokens are maskable in our case
-        total_unknown = torch.full((B,), self.num_action_tokens, dtype=torch.float32, device=device)  # (B,)
+        if self.mask_type == '1D':
+            total_unknown = torch.full((B,), self.num_action_tokens, dtype=torch.float32, device=device)  # (B,)
 
-        if use_cosine_schedule:
-            # ========== Step 2: Sample random time ratio in [0, 1) ==========
-            rand_time = torch.rand(B, device=device)  # (B,)
+            if use_cosine_schedule:
+                # ========== Step 2: Sample random time ratio in [0, 1) ==========
+                rand_time = torch.rand(B, device=device)  # (B,)
 
-            # ========== Step 3: Use cosine schedule to compute mask ratio ==========
-            # mask_ratios: (B,), values in (0, 1]
-            mask_ratios = cosine_schedule(rand_time, total_unknown)  # (B,)
+                # ========== Step 3: Use cosine schedule to compute mask ratio ==========
+                # mask_ratios: (B,), values in (0, 1]
+                mask_ratios = cosine_schedule(rand_time, total_unknown)  # (B,)
 
-            # ========== Step 4: Compute number of tokens to mask per sample ==========
-            num_mask = torch.clamp((total_unknown * mask_ratios).round(), min=1).long()  # (B,)
-        else:
-            # Use old random uniform masking
-            mask_ratio = torch.rand(1, device=device) * (mask_ratio_range[1] - mask_ratio_range[0]) + mask_ratio_range[0]
-            num_mask = torch.full((B,), int(self.num_action_tokens * mask_ratio.item()), dtype=torch.long, device=device)
+                # ========== Step 4: Compute number of tokens to mask per sample ==========
+                num_mask = torch.clamp((total_unknown * mask_ratios).round(), min=1).long()  # (B,)
+            else:
+                # Use old random uniform masking
+                mask_ratio = torch.rand(1, device=device) * (mask_ratio_range[1] - mask_ratio_range[0]) + mask_ratio_range[0]
+                num_mask = torch.full((B,), int(self.num_action_tokens * mask_ratio.item()), dtype=torch.long, device=device)
 
-        # ========== Step 5: Generate random scores for each position ==========
-        vals = torch.rand(B, self.num_action_tokens, device=device)  # (B, num_action_tokens)
+            # ========== Step 5: Generate random scores for each position ==========
+            vals = torch.rand(B, self.num_action_tokens, device=device)  # (B, num_action_tokens)
 
-        # ========== Step 6: Sort and select top-k positions to mask ==========
-        perm = vals.argsort(dim=1)                    # (B, num_action_tokens) - indices after sorting
-        ranks = perm.argsort(dim=1)                   # (B, num_action_tokens) - rank of each position
-        masked_mask = ranks < num_mask[:, None]       # (B, num_action_tokens) - True if masked
+            # ========== Step 6: Sort and select top-k positions to mask ==========
+            perm = vals.argsort(dim=1)                    # (B, num_action_tokens) - indices after sorting
+            ranks = perm.argsort(dim=1)                   # (B, num_action_tokens) - rank of each position
+            masked_mask = ranks < num_mask[:, None]       # (B, num_action_tokens) - True if masked
 
-        # ========== Step 7: Optional: unmask some positions with no_mask_token_prob ==========
-        # 再次随机取消一部分已 mask 的位置
-        if no_mask_token_prob > 0:
-            # Generate random probabilities
-            prob = torch.rand(B, self.num_action_tokens, device=device)
-            # Unmask positions where prob < no_mask_token_prob AND already masked
-            unmask = (prob < no_mask_token_prob) & masked_mask
-            masked_mask = masked_mask & (~unmask)
+            # ========== Step 7: Optional: unmask some positions with no_mask_token_prob ==========
+            # 再次随机取消一部分已 mask 的位置
+            if no_mask_token_prob > 0:
+                # Generate random probabilities
+                prob = torch.rand(B, self.num_action_tokens, device=device)
+                # Unmask positions where prob < no_mask_token_prob AND already masked
+                unmask = (prob < no_mask_token_prob) & masked_mask
+                masked_mask = masked_mask & (~unmask)
+        elif self.mask_type == '2D':
+            total_unknown = torch.full((B,), self.num_action_tokens, dtype=torch.float32, device=device)  # (B,)
+
+            if use_cosine_schedule:
+                # ========== Step 2: Sample random time ratio in [0, 1) ==========
+                rand_time = torch.rand(B, device=device)  # (B,)
+
+                # ========== Step 3: Use cosine schedule to compute mask ratio ==========
+                # mask_ratios: (B,), values in (0, 1]
+                mask_ratios = cosine_schedule(rand_time, total_unknown)  # (B,)
+
+                # ========== Step 4: Compute number of tokens to mask per sample ==========
+                num_mask = torch.clamp((total_unknown * mask_ratios).round(), min=1).long()  # (B,)
+            else:
+                # Use old random uniform masking
+                mask_ratio = torch.rand(1, device=device) * (mask_ratio_range[1] - mask_ratio_range[0]) + mask_ratio_range[0]
+                num_mask = torch.full((B,), int(self.num_action_tokens * mask_ratio.item()), dtype=torch.long, device=device)
+            #修改2D掩码
 
         # ========== Step 8: Create input tokens with masked positions ==========
         input_tokens = target_actions.clone().to(device)
@@ -1034,9 +1067,9 @@ class DiscreteDiffusionActionHead(nn.Module):
 
         # ========== Step 9: Get predictions ==========
         logits, final_tokens = self.forward(
-            multi_layer_hidden_states,
-            proprio=proprio,
-            input_tokens=input_tokens
+            multi_layer_hidden_states, #torch.Size([b, 25, 576, 896])
+            proprio_features=proprio_features,  #torch.Size([b, 8])
+            input_tokens=input_tokens, #torch.Size([b, 56])
         )  # (B, num_action_tokens, vocab_size) all in cuda
 
         # ========== Step 10: Compute loss only on masked positions ==========
@@ -1046,7 +1079,18 @@ class DiscreteDiffusionActionHead(nn.Module):
             reduction='mean'
         )
 
-        return loss, final_tokens
+        # ========== Step 11: Compute pred_id and accuracy on masked positions ==========
+        # pred_id: Top-1 prediction for all positions
+        pred_id = torch.argmax(logits, dim=-1)  # (B, num_action_tokens)
+
+        # acc: Top-1 accuracy on masked positions only
+        masked_pred = pred_id[masked_mask]  # predictions at masked positions
+        masked_target = target_actions[masked_mask]  # ground truth at masked positions
+        n_correct = (masked_pred == masked_target).sum().item()
+        n_total = masked_mask.sum().item()
+        acc = n_correct / n_total if n_total > 0 else 0.0
+
+        return loss, final_tokens, pred_id, acc
 
 
 # ============================================================================
