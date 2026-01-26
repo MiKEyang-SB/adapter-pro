@@ -880,7 +880,10 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
                 # Decode discrete tokens to continuous actions using tokenizer
                 if action_tokenizer is not None:
                     predicted_tokens_np = predicted_tokens.cpu().numpy()  # (B, 56)
-                    normalized_actions = action_tokenizer.decode(predicted_tokens_np)  # (B, 56)
+                    normalized_actions = action_tokenizer.decode(
+                        token_ids=predicted_tokens_np,
+                        action_dim=ACTION_DIM
+                    )  # (B, NUM_ACTIONS_CHUNK, ACTION_DIM) = (B, 8, 7)
                     normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
                 else:
                     # Fallback: use bin centers directly (less accurate)

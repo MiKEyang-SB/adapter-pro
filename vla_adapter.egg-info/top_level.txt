@@ -1,5 +1,8 @@
 LIBERO
+clash-for-linux-install
+data
 debug_cache
+dlimp
 eval_logs
 experiments
 figure
@@ -7,7 +10,6 @@ openvla
 outputs
 pretrained_models
 prismatic
-rollouts
 scripts
+transformers-openvla-oft
 vla-scripts
-wandb

@@ -104,7 +104,7 @@ class FinetuneConfig:
     # Training configuration
     batch_size: int = 4                              # Batch size per device (total batch size = batch_size * num GPUs)
     learning_rate: float = 5e-4                      # Learning rate
-    lr_warmup_ratio: float = 0.1                     # Ratio of total steps for learning rate warmup (e.g., 0.1 = 10%)
+    lr_warmup_ratio: float = 0.03                     # Ratio of total steps for learning rate warmup (e.g., 0.1 = 10%)
     num_steps_before_decay: int = 150000             # Number of steps before LR decays by 10x
     grad_accumulation_steps: int = 4                 # Number of gradient accumulation steps
     max_steps: int = 150005                          # Max number of training steps

@@ -9,3 +9,11 @@ pip install -e .
 还需要额外安装
 numpy==1.26.4
 positional-encodings==6.0.3
+pip install packaging ninja
+pip install "flash-attn==2.5.5" --no-build-isolation
+
+##查找setsid进程
+ps -eo pid,ppid,sid,pgid,tty,cmd | grep torchrun
+ps -u $USER -o pid,ppid,sid,pgid,tty,cmd | grep -E "torchrun|torch.distributed.run|finetune.py" | grep -v grep
+
+kill -9 -PID
