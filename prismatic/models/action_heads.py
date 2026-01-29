@@ -793,7 +793,7 @@ class DiscreteDiffusionActionHead(nn.Module):
     def forward(
         self,
         multi_layer_hidden_states,  # (B, num_layers, num_tokens, hidden_dim)
-        proprio_features=None,                # (B, proprio_dim) or None
+        proprio_features=None,                # (B, 1, proprio_dim) or None
         input_tokens=None,           # (B, num_action_tokens) optional input tokens for conditioning
     ):
         """
@@ -872,7 +872,8 @@ class DiscreteDiffusionActionHead(nn.Module):
     def predict_action(
         self,
         multi_layer_hidden_states,
-        proprio=None,
+        proprio,
+        proprio_projector,
         temperature=1.0,
         use_remask=False,
     ):
@@ -891,12 +892,12 @@ class DiscreteDiffusionActionHead(nn.Module):
         """
         num_diffusion_iters = self.num_diffusion_iters
 
-        B = multi_layer_hidden_states.size(0)
+        batch_size = multi_layer_hidden_states.size(0)
         device = multi_layer_hidden_states.device
 
         # Initialize with all masked tokens
         cur_seqs = torch.full(
-            (B, self.num_action_tokens),
+            (batch_size, self.num_action_tokens),
             self.mask_token_id,
             dtype=torch.long,
             device=device
@@ -906,10 +907,15 @@ class DiscreteDiffusionActionHead(nn.Module):
 
         # ========== Iterative decoding ==========
         for step in range(num_diffusion_iters):
+            #get proprio_features
+            proprio = proprio.reshape(batch_size, -1).to(torch.bfloat16)  # (bsz, proprio_dim)
+            proprio_features = proprio_projector(proprio)  # (bsz, llm_dim)
+            proprio_features = proprio_features.unsqueeze(dim=1)  # (bsz, 1, llm_dim)
+
             # 1) Forward pass to get logits
             logits = self.forward(
                 multi_layer_hidden_states,
-                proprio=proprio,
+                proprio_features=proprio_features, #(B, 1, dim)
                 input_tokens=cur_seqs
             )  # (B, L, vocab_size)
 
@@ -918,7 +924,7 @@ class DiscreteDiffusionActionHead(nn.Module):
             # 2) Sample from categorical distribution
             flat_probs = probs.view(-1, probs.size(-1))  # (B*L, vocab_size)
             sampled_flat = torch.multinomial(flat_probs, 1)  # (B*L, 1)
-            sampled = sampled_flat.view(B, self.num_action_tokens)  # (B, L)
+            sampled = sampled_flat.view(batch_size, self.num_action_tokens)  # (B, L)
 
             # 3) Only update masked positions
             unknown_map = cur_seqs == self.mask_token_id
@@ -967,12 +973,12 @@ class DiscreteDiffusionActionHead(nn.Module):
         # ========== Final sampling ==========
         logits = self.forward(
             multi_layer_hidden_states,
-            proprio=proprio,
+            proprio_features=proprio_features,
             input_tokens=cur_seqs
         )
         probs = torch.softmax(logits, dim=-1)
         flat_probs = probs.view(-1, probs.size(-1))
-        final_tokens = torch.multinomial(flat_probs, 1).view(B, self.num_action_tokens)
+        final_tokens = torch.multinomial(flat_probs, 1).view(batch_size, self.num_action_tokens)
 
         return final_tokens
 

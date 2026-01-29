@@ -17,3 +17,6 @@ ps -eo pid,ppid,sid,pgid,tty,cmd | grep torchrun
 ps -u $USER -o pid,ppid,sid,pgid,tty,cmd | grep -E "torchrun|torch.distributed.run|finetune.py" | grep -v grep
 
 kill -9 -PID
+
+#杀评估进程
+pkill -f "experiments/robot/libero/run_libero_eval.py"

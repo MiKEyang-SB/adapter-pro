@@ -873,6 +873,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
                 predicted_tokens = action_head.predict_action(
                     multi_layer_hidden_states,
                     proprio=proprio,
+                    proprio_projector=proprio_projector,
                     temperature=1.0,
                     use_remask=False,
                 )  # (B, num_action_tokens) discrete token IDs [0, 255]

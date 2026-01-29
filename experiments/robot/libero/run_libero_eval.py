@@ -88,7 +88,7 @@ class GenerateConfig:
     # Model-specific parameters
     #################################################################################################################
     model_family: str = "openvla"                    # Model family
-    pretrained_checkpoint: Union[str, Path] = "configs+libero_spatial_no_noops+b16+lr-0.0005+lora-r64+dropout-0.0--image_aug"     # Pretrained checkpoint path
+    pretrained_checkpoint: Union[str, Path] = "/home/mike/many_work/adapter-pro/outputs/configs+libero_object_no_noops+b16+lr-0.0002+lora-r64+dropout-0.0--image_aug--50000_chkpt"     # Pretrained checkpoint path
     use_l1_regression: bool = False                   # If True, uses continuous action head with L1 regression objective
     use_discrete_diffusion: bool = True             # If True, uses discrete diffusion action head with MaskGIT decoding
     use_minivlm: bool = True                         # If True, uses minivlm
@@ -108,7 +108,7 @@ class GenerateConfig:
     #################################################################################################################
     # LIBERO environment-specific parameters
     #################################################################################################################
-    task_suite_name: str = TaskSuite.LIBERO_SPATIAL  # Task suite
+    task_suite_name: str = TaskSuite.LIBERO_OBJECT  # Task suite
     num_steps_wait: int = 10                         # Number of steps to wait for objects to stabilize in sim
     num_trials_per_task: int = 50                    # Number of rollouts per task
     initial_states_path: str = "DEFAULT"             # "DEFAULT", or path to initial states JSON file

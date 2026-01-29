@@ -32,7 +32,7 @@ import h5py
 import numpy as np
 import robosuite.utils.transform_utils as T
 import tqdm
-from libero.libero import benchmark
+from LIBERO.libero.libero import benchmark
 
 from experiments.robot.libero.libero_utils import (
     get_libero_dummy_action,

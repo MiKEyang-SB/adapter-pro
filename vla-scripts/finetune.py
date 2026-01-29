@@ -1186,6 +1186,31 @@ def finetune(cfg: FinetuneConfig) -> None:
             # Backward pass
             normalized_loss.backward()
 
+            # Compute gradient norms for monitoring
+            if distributed_state.is_main_process:
+                vla_grad_norm = 0.0
+                action_head_grad_norm = 0.0
+                proprio_grad_norm = 0.0
+
+                # Calculate VLA gradient norm
+                for param in vla.parameters():
+                    if param.grad is not None:
+                        vla_grad_norm += param.grad.data.norm(2).item() ** 2
+                vla_grad_norm = vla_grad_norm ** 0.5
+
+                # Calculate action head gradient norm
+                for param in action_head.parameters():
+                    if param.grad is not None:
+                        action_head_grad_norm += param.grad.data.norm(2).item() ** 2
+                action_head_grad_norm = action_head_grad_norm ** 0.5
+
+                # Calculate proprio projector gradient norm if applicable
+                if cfg.use_proprio and proprio_projector is not None:
+                    for param in proprio_projector.parameters():
+                        if param.grad is not None:
+                            proprio_grad_norm += param.grad.data.norm(2).item() ** 2
+                    proprio_grad_norm = proprio_grad_norm ** 0.5
+
             # Store recent train metrics
             for metric_name, value in metrics.items():
                 if metric_name in recent_metrics:
@@ -1201,6 +1226,17 @@ def finetune(cfg: FinetuneConfig) -> None:
             log_step = gradient_step_idx if not cfg.resume else cfg.resume_step + gradient_step_idx
             if distributed_state.is_main_process and log_step % cfg.wandb_log_freq == 0:
                 log_metrics_to_wandb(smoothened_metrics, "VLA Train", log_step, wandb)
+
+                # Log gradient norms to wandb
+                grad_log_dict = {
+                    "Gradients/VLA_grad_norm": vla_grad_norm,
+                    "Gradients/ActionHead_grad_norm": action_head_grad_norm,
+                    "Gradients/Total_grad_norm": vla_grad_norm + action_head_grad_norm + proprio_grad_norm,
+                }
+                if cfg.use_proprio and proprio_projector is not None:
+                    grad_log_dict["Gradients/Proprio_grad_norm"] = proprio_grad_norm
+
+                wandb.log(grad_log_dict, step=log_step)
 
             # [If applicable] Linearly warm up learning rate from 10% to 100% of original
             # Calculate warmup steps based on ratio
