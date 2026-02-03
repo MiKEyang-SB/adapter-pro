@@ -918,13 +918,28 @@ def finetune(cfg: FinetuneConfig) -> None:
 
     else:
         RAW_STATE_DICT ={}
-        vla = AutoModelForVision2Seq.from_pretrained(
-            cfg.config_file_path,
-            torch_dtype=torch.bfloat16,
-            low_cpu_mem_usage=False,
-            trust_remote_code=False,
-            ).to(device_id)
 
+        def _has_hf_weights(p: Path) -> bool:
+            return (p / "model.safetensors").exists() or (p / "pytorch_model.bin").exists()
+
+        ckpt_root = Path(cfg.resum_vla_path) if cfg.resume else None
+
+        if cfg.resume and ckpt_root is not None and _has_hf_weights(ckpt_root):
+            print(f"Loading FULL (merged) VLA from checkpoint: {ckpt_root}")
+            vla = AutoModelForVision2Seq.from_pretrained(
+                str(ckpt_root),
+                torch_dtype=torch.bfloat16,
+                low_cpu_mem_usage=False,
+                trust_remote_code=False,
+            ).to(device_id)
+        else:
+            print(f"Loading base VLA from: {cfg.config_file_path}")
+            vla = AutoModelForVision2Seq.from_pretrained(
+                cfg.config_file_path,
+                torch_dtype=torch.bfloat16,
+                low_cpu_mem_usage=False,
+                trust_remote_code=False,
+            ).to(device_id)
     # Set number of images in VLA input
     vla.vision_backbone.set_num_images_in_input(cfg.num_images_in_input)#2
 
@@ -938,11 +953,22 @@ def finetune(cfg: FinetuneConfig) -> None:
             target_modules="all-linear",
             init_lora_weights="gaussian",
         )
-        vla = get_peft_model(vla, lora_config)
+        if cfg.resume and ckpt_root is not None and _has_hf_weights(ckpt_root):
+            print("✅ Checkpoint is merged; injecting NEW LoRA modules for continued LoRA finetuning.")
+            vla = get_peft_model(vla, lora_config)
+        else:
+            lora_dir = Path(cfg.resum_vla_path) / "lora_adapter"
+            if cfg.resume and lora_dir.exists():
+                print(f"✅ Resuming LoRA from: {lora_dir}")
+                vla = PeftModel.from_pretrained(vla, str(lora_dir), is_trainable=True)
+            else:
+                print("✅ Creating NEW LoRA weights.")
+                vla = get_peft_model(vla, lora_config)
+
         for name, param in vla.named_parameters():
             if "action_queries" in name:
                 param.requires_grad = True
-        vla.print_trainable_parameters() #103M
+        vla.print_trainable_parameters()
 
     else:
         for name, param in vla.named_parameters():
@@ -1099,7 +1125,8 @@ def finetune(cfg: FinetuneConfig) -> None:
         prompt_builder_fn=PurePromptBuilder,
         use_wrist_image=use_wrist_image,
         use_proprio=cfg.use_proprio,
-        use_minivlm=cfg.use_minivlm
+        use_minivlm=cfg.use_minivlm,
+        resume=cfg.resume,
         )
     train_dataset = RLDSDataset(
         cfg.data_root_dir,
@@ -1134,6 +1161,8 @@ def finetune(cfg: FinetuneConfig) -> None:
         sampler=None,
         collate_fn=collator,
         num_workers=0,  # Important: Set to 0 if using RLDS, which uses its own parallelism
+        pin_memory=True,  # Pin memory for faster CPU->GPU transfer
+        # prefetch_factor=4,  # Prefetch 4 batches per worker
     )
     print('Len of dataloader: ', len(dataloader))
     if cfg.use_val_set:

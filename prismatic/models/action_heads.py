@@ -883,7 +883,6 @@ class DiscreteDiffusionActionHead(nn.Module):
         Args:
             multi_layer_hidden_states: (B, num_layers, num_tokens, hidden_dim)
             proprio: (B, proprio_dim)
-            num_diffusion_iters: number of decoding iterations (default: self.num_diffusion_iters)
             temperature: sampling temperature
             use_remask: whether to allow remasking of previously decoded tokens
 
@@ -905,13 +904,13 @@ class DiscreteDiffusionActionHead(nn.Module):
 
         unknown_init = (cur_seqs == self.mask_token_id).sum(dim=1)  # (B,) = num_action_tokens
 
+        # Prepare proprio_features once (will be used in loop and final sampling)
+        proprio = proprio.reshape(batch_size, -1).to(torch.bfloat16)  # (bsz, proprio_dim)
+        proprio_features = proprio_projector(proprio)  # (bsz, llm_dim)
+        proprio_features = proprio_features.unsqueeze(dim=1)  # (bsz, 1, llm_dim)
+
         # ========== Iterative decoding ==========
         for step in range(num_diffusion_iters):
-            #get proprio_features
-            proprio = proprio.reshape(batch_size, -1).to(torch.bfloat16)  # (bsz, proprio_dim)
-            proprio_features = proprio_projector(proprio)  # (bsz, llm_dim)
-            proprio_features = proprio_features.unsqueeze(dim=1)  # (bsz, 1, llm_dim)
-
             # 1) Forward pass to get logits
             logits = self.forward(
                 multi_layer_hidden_states,
@@ -934,7 +933,7 @@ class DiscreteDiffusionActionHead(nn.Module):
             ratio = float(step + 1) / num_diffusion_iters
             mask_ratio = cosine_schedule(torch.tensor(ratio, device=device), unknown_init)
             mask_len = torch.floor(unknown_init.float() * mask_ratio).long()
-            mask_len = torch.clamp(mask_len, min=0, max=(unknown_init - 1).clamp(min=0))
+            mask_len = torch.clamp(mask_len, min=0, max=unknown_init)
             # remask的个数
             # Early stop if no more tokens to mask
             if mask_len.max() == 0:
@@ -943,7 +942,7 @@ class DiscreteDiffusionActionHead(nn.Module):
             # 5) Calculate confidence scores 计算每个位置的置信度
             selected_probs = probs.gather(2, sampled.unsqueeze(-1)).squeeze(-1)  # (B, L)
 
-            if use_remask: #已经填过的地方不会再被重新遮盖回去
+            if use_remask: #已经填过的地方会再被重新遮盖回去
                 # Allow remasking with decreasing probability
                 p_remask = 1.0 - ratio
                 selected_probs = torch.where(

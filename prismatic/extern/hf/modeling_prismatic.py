@@ -625,7 +625,9 @@ class PrismaticForConditionalGeneration(PrismaticPreTrainedModel):
                     input_embeddings, all_actions_mask, action_queries)
                 
 
-            else:
+            else:#resume,all_actions_mask=all false 
+                #训练时， all_actions_mask是(1, 112)，后面有true
+                #resume时，all_actions_mask是(1, 28) 后面全是false
                 action_queries = self.action_queries.weight  # (1, h)
                 action_queries = action_queries.view(1, action_queries.shape[0], action_queries.shape[1]).repeat(input_embeddings.shape[0], 1, 1)  # (b, chunk_size, h)
                 all_actions_mask = self._process_action_masks(labels)
@@ -847,15 +849,15 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
 
         # Extract hidden states for action tokens
         multi_layer_hidden_states = []
+        batch_size = language_model_output.hidden_states[0].shape[0]
 
         for item in language_model_output.hidden_states[0:]:
             # last_hidden_states = output.hidden_states[-1]  # (B, seq_len, D)
             # Get hidden states for text portion of prompt+response (after the vision patches)
             text_hidden_states = item
             # Get hidden states for action portion of response
-            actions_hidden_states = text_hidden_states[:, NUM_PATCHES+ NUM_PROMPT_TOKENS : NUM_PATCHES + NUM_PROMPT_TOKENS + NUM_TOKENS, :,].reshape(1, 1, NUM_TOKENS, -1).to(torch.bfloat16)
+            actions_hidden_states = text_hidden_states[:, NUM_PATCHES+ NUM_PROMPT_TOKENS : NUM_PATCHES + NUM_PROMPT_TOKENS + NUM_TOKENS, :].reshape(batch_size, 1, NUM_TOKENS, -1).to(torch.bfloat16)
 
-            batch_size = item.shape[0]
             task_latten_states = item[:, :NUM_PATCHES].reshape(batch_size, 1, NUM_PATCHES , -1)
             all_hidden_states = torch.cat((task_latten_states, actions_hidden_states),2)
             multi_layer_hidden_states.append(all_hidden_states)
@@ -880,9 +882,13 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
 
                 # Decode discrete tokens to continuous actions using tokenizer
                 if action_tokenizer is not None:
-                    predicted_tokens_np = predicted_tokens.cpu().numpy()  # (B, 56)
-                    normalized_actions = action_tokenizer.decode(predicted_tokens_np)  # (B, 56)
-                    normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                    predicted_tokens_np = predicted_tokens.cpu().numpy()  # (B, num_action_tokens)
+                    normalized_actions = action_tokenizer.decode(predicted_tokens_np)  # (B, num_action_tokens)
+                    # Reshape: if batch_size=1, remove batch dim; otherwise keep it
+                    if batch_size == 1:
+                        normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                    else:
+                        normalized_actions = normalized_actions.reshape(batch_size, NUM_ACTIONS_CHUNK, ACTION_DIM)
                 else:
                     # Fallback: use bin centers directly (less accurate)
                     bins = np.linspace(-1, 1, 256)
@@ -890,7 +896,11 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
                     predicted_tokens_np = predicted_tokens.cpu().numpy()
                     predicted_tokens_clipped = np.clip(predicted_tokens_np, 0, len(bin_centers) - 1)
                     normalized_actions = bin_centers[predicted_tokens_clipped]
-                    normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                    # Reshape: if batch_size=1, remove batch dim; otherwise keep it
+                    if batch_size == 1:
+                        normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                    else:
+                        normalized_actions = normalized_actions.reshape(batch_size, NUM_ACTIONS_CHUNK, ACTION_DIM)
             else:
                 # L1 regression prediction
                 normalized_actions = action_head.predict_action(
@@ -898,7 +908,11 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
                     proprio=proprio,
                     proprio_projector=proprio_projector
                 )
-                normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                # Reshape: if batch_size=1, remove batch dim; otherwise keep it
+                if batch_size == 1:
+                    normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+                else:
+                    normalized_actions = normalized_actions.reshape(batch_size, NUM_ACTIONS_CHUNK, ACTION_DIM)
                 normalized_actions = normalized_actions.float().cpu().detach().numpy()
         else:
             # Discrete token-based prediction (original VLA)
@@ -914,7 +928,11 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
             discretized_actions = self.vocab_size - predicted_action_token_ids
             discretized_actions = np.clip(discretized_actions - 1, a_min=0, a_max=self.bin_centers.shape[0] - 1)
             normalized_actions = self.bin_centers[discretized_actions]
-            normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+            # Reshape: if batch_size=1, remove batch dim; otherwise keep it
+            if batch_size == 1:
+                normalized_actions = normalized_actions.reshape(NUM_ACTIONS_CHUNK, ACTION_DIM)
+            else:
+                normalized_actions = normalized_actions.reshape(batch_size, NUM_ACTIONS_CHUNK, ACTION_DIM)
 
         return normalized_actions, actions_hidden_states
 

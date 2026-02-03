@@ -1,0 +1,8 @@
+{
+  "action_dim": null,
+  "min_token": -141,
+  "processor_class": "UniversalActionProcessor",
+  "scale": 50,
+  "time_horizon": null,
+  "vocab_size": 1024
+}

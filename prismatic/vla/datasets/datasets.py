@@ -38,6 +38,7 @@ class RLDSBatchTransform:
     use_wrist_image: bool = False
     use_proprio: bool = False
     use_minivlm: bool = False
+    resume: bool = False
 
 
     def __call__(self, rlds_batch: Dict[str, Any]) -> Dict[str, Any]:
@@ -53,12 +54,13 @@ class RLDSBatchTransform:
         # Get future action chunk
         future_actions = rlds_batch["action"][1:]
 
-        if self.use_minivlm:
+        if self.use_minivlm or self.resume:
             self.prompt_builder_fn = QwenPromptBuilder
             prompt_builder = self.prompt_builder_fn("openvla")
             # Get action chunk string
-            future_actions_string = self.action_tokenizer(future_actions,self.use_minivlm)
-            current_action_string = self.action_tokenizer(current_action,self.use_minivlm)
+            #resume从这里就开始不对了，
+            future_actions_string = self.action_tokenizer(future_actions,use_minivlm=True)
+            current_action_string = self.action_tokenizer(current_action,use_minivlm=True)
 
             action_chunk_string = [current_action_string] + future_actions_string
 
@@ -208,8 +210,10 @@ class RLDSDataset(IterableDataset):
             shuffle_buffer_size=shuffle_buffer_size,
             sample_weights=weights,
             balance_weights=True,
-            traj_transform_threads=len(mixture_spec),
-            traj_read_threads=len(mixture_spec),
+            # traj_transform_threads=len(mixture_spec),
+            # traj_read_threads=len(mixture_spec),
+            traj_transform_threads=16,
+            traj_read_threads=16,
             train=train,
         )
 
