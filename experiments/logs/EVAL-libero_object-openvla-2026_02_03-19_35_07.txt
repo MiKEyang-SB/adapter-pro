@@ -1,0 +1,203 @@
+Task suite: libero_object
+Using default initial states
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 1...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=1--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 1
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 2...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=2--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 2
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 3...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=3--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 3
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 4...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=4--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 4
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 5...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=5--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 5
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 6...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=6--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 6
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 7...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=7--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 7
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 8...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=8--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 8
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 9...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=9--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 9
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 10...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=10--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 10
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 11...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=11--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 11
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 12...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=12--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 12
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 13...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=13--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 13
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 14...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=14--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 14
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 15...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=15--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 15
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 16...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=16--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 16
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 17...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=17--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 17
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 18...
+Episode error: softmax() received an invalid combination of arguments - got (tuple, dim=int), but expected one of:
+ * (Tensor input, int dim, torch.dtype dtype, *, Tensor out)
+ * (Tensor input, name dim, *, torch.dtype dtype)
+
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_03/2026_02_03-19_35_07--episode=18--success=False--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: False
+# episodes completed so far: 18
+# successes: 0 (0.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 19...

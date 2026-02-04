@@ -1,0 +1,879 @@
+Task suite: libero_object
+Using default initial states
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=1--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 1
+# successes: 1 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=2--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 2
+# successes: 2 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=3--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 3
+# successes: 3 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=4--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 4
+# successes: 4 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=5--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 5
+# successes: 5 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=6--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 6
+# successes: 6 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=7--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 7
+# successes: 7 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=8--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 8
+# successes: 8 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=9--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 9
+# successes: 9 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=10--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 10
+# successes: 10 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=11--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 11
+# successes: 11 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=12--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 12
+# successes: 12 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=13--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 13
+# successes: 13 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=14--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 14
+# successes: 14 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=15--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 15
+# successes: 15 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=16--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 16
+# successes: 16 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=17--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 17
+# successes: 17 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=18--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 18
+# successes: 18 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=19--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 19
+# successes: 19 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=20--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 20
+# successes: 20 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=21--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 21
+# successes: 21 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=22--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 22
+# successes: 22 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=23--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 23
+# successes: 23 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=24--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 24
+# successes: 24 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=25--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 25
+# successes: 25 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=26--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 26
+# successes: 26 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=27--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 27
+# successes: 27 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=28--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 28
+# successes: 28 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=29--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 29
+# successes: 29 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=30--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 30
+# successes: 30 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=31--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 31
+# successes: 31 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=32--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 32
+# successes: 32 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=33--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 33
+# successes: 33 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=34--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 34
+# successes: 34 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=35--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 35
+# successes: 35 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=36--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 36
+# successes: 36 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=37--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 37
+# successes: 37 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=38--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 38
+# successes: 38 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=39--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 39
+# successes: 39 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=40--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 40
+# successes: 40 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=41--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 41
+# successes: 41 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=42--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 42
+# successes: 42 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=43--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 43
+# successes: 43 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=44--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 44
+# successes: 44 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=45--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 45
+# successes: 45 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=46--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 46
+# successes: 46 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=47--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 47
+# successes: 47 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=48--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 48
+# successes: 48 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=49--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 49
+# successes: 49 (100.0%)
+
+Task: pick up the alphabet soup and place it in the basket
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=50--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.mp4
+Success: True
+# episodes completed so far: 50
+# successes: 50 (100.0%)
+Current task success rate: 1.0
+Current total success rate: 1.0
+Using default initial states
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=51--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 51
+# successes: 51 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=52--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 52
+# successes: 52 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=53--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 53
+# successes: 53 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=54--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 54
+# successes: 54 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=55--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 55
+# successes: 55 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=56--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 56
+# successes: 56 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=57--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 57
+# successes: 57 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=58--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 58
+# successes: 58 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=59--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 59
+# successes: 59 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=60--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 60
+# successes: 60 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=61--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 61
+# successes: 61 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=62--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 62
+# successes: 62 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=63--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 63
+# successes: 63 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=64--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 64
+# successes: 64 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=65--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 65
+# successes: 65 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=66--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 66
+# successes: 66 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=67--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 67
+# successes: 67 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=68--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 68
+# successes: 68 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=69--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 69
+# successes: 69 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=70--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 70
+# successes: 70 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=71--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 71
+# successes: 71 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=72--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 72
+# successes: 72 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=73--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 73
+# successes: 73 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=74--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 74
+# successes: 74 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=75--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 75
+# successes: 75 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=76--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 76
+# successes: 76 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=77--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 77
+# successes: 77 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=78--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 78
+# successes: 78 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=79--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 79
+# successes: 79 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=80--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 80
+# successes: 80 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=81--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 81
+# successes: 81 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=82--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 82
+# successes: 82 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=83--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 83
+# successes: 83 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=84--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 84
+# successes: 84 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=85--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 85
+# successes: 85 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=86--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 86
+# successes: 86 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=87--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 87
+# successes: 87 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=88--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 88
+# successes: 88 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=89--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 89
+# successes: 89 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=90--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 90
+# successes: 90 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=91--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 91
+# successes: 91 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=92--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 92
+# successes: 92 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=93--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 93
+# successes: 93 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=94--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 94
+# successes: 94 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=95--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 95
+# successes: 95 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=96--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 96
+# successes: 96 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=97--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 97
+# successes: 97 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=98--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 98
+# successes: 98 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=99--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 99
+# successes: 99 (100.0%)
+
+Task: pick up the cream cheese and place it in the basket
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=100--success=True--task=pick_up_the_cream_cheese_and_place_it_in_the_baske.mp4
+Success: True
+# episodes completed so far: 100
+# successes: 100 (100.0%)
+Current task success rate: 1.0
+Current total success rate: 1.0
+Using default initial states
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=101--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 101
+# successes: 101 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=102--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 102
+# successes: 102 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=103--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 103
+# successes: 103 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=104--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 104
+# successes: 104 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=105--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 105
+# successes: 105 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=106--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 106
+# successes: 106 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=107--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 107
+# successes: 107 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=108--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 108
+# successes: 108 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=109--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 109
+# successes: 109 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=110--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 110
+# successes: 110 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=111--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 111
+# successes: 111 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=112--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 112
+# successes: 112 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=113--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 113
+# successes: 113 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=114--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 114
+# successes: 114 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=115--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 115
+# successes: 115 (100.0%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=116--success=False--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: False
+# episodes completed so far: 116
+# successes: 115 (99.1%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=117--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 117
+# successes: 116 (99.1%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=118--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 118
+# successes: 117 (99.2%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=119--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 119
+# successes: 118 (99.2%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=120--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 120
+# successes: 119 (99.2%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=121--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 121
+# successes: 120 (99.2%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=122--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 122
+# successes: 121 (99.2%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=123--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 123
+# successes: 122 (99.2%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_04/2026_02_04-16_53_56--episode=124--success=True--task=pick_up_the_salad_dressing_and_place_it_in_the_bas.mp4
+Success: True
+# episodes completed so far: 124
+# successes: 123 (99.2%)
+
+Task: pick up the salad dressing and place it in the basket
+Starting episode 25...

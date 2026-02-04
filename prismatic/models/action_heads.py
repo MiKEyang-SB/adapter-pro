@@ -893,6 +893,7 @@ class DiscreteDiffusionActionHead(nn.Module):
 
         batch_size = multi_layer_hidden_states.size(0)
         device = multi_layer_hidden_states.device
+        L = self.num_action_tokens
 
         # Initialize with all masked tokens
         cur_seqs = torch.full(
@@ -906,19 +907,23 @@ class DiscreteDiffusionActionHead(nn.Module):
 
         # Prepare proprio_features once (will be used in loop and final sampling)
         proprio = proprio.reshape(batch_size, -1).to(torch.bfloat16)  # (bsz, proprio_dim)
-        proprio_features = proprio_projector(proprio)  # (bsz, llm_dim)
-        proprio_features = proprio_features.unsqueeze(dim=1)  # (bsz, 1, llm_dim)
+        proprio_features = proprio_projector(proprio).unsqueeze(dim=1)   # (bsz, 1, llm_dim)
 
+        temperature = float(max(1e-6, temperature))
         # ========== Iterative decoding ==========
         for step in range(num_diffusion_iters):
             # 1) Forward pass to get logits
-            logits = self.forward(
+            logits, _ = self.forward(
                 multi_layer_hidden_states,
                 proprio_features=proprio_features, #(B, 1, dim)
                 input_tokens=cur_seqs
             )  # (B, L, vocab_size)
 
-            probs = torch.softmax(logits, dim=-1)  # (B, L, vocab_size)
+            # step_temp = max(1e-6, temperature * (1.0 - ratio))
+            ratio = float(step + 1) / float(num_diffusion_iters)
+            step_temp = max(1e-6, temperature * (1.0 - ratio))
+
+            probs = torch.softmax(logits / step_temp, dim=-1)  # (B, L, vocab_size)
 
             # 2) Sample from categorical distribution
             flat_probs = probs.view(-1, probs.size(-1))  # (B*L, vocab_size)
@@ -930,13 +935,14 @@ class DiscreteDiffusionActionHead(nn.Module):
             sampled = torch.where(unknown_map, sampled, cur_seqs)
 
             # 4) Calculate mask ratio for next iteration
-            ratio = float(step + 1) / num_diffusion_iters
             mask_ratio = cosine_schedule(torch.tensor(ratio, device=device), unknown_init)
             mask_len = torch.floor(unknown_init.float() * mask_ratio).long()
-            mask_len = torch.clamp(mask_len, min=0, max=unknown_init)
+            mask_len = mask_len.clamp(min=0)
+            mask_len = torch.minimum(mask_len, unknown_init.long())
             # remask的个数
             # Early stop if no more tokens to mask
-            if mask_len.max() == 0:
+            if mask_len.max().item() == 0:
+                cur_seqs = sampled
                 break
 
             # 5) Calculate confidence scores 计算每个位置的置信度
@@ -962,22 +968,27 @@ class DiscreteDiffusionActionHead(nn.Module):
             masking = mask_by_random_topk(
                 selected_probs,
                 mask_len,
-                temperature=temperature * (1.0 - ratio)
+                temperature=step_temp
             )#选择置信度最低的mask_len个位置
 
             # 7) Update sequence: remask low-confidence positions
-            next_seqs = torch.where(masking, self.mask_token_id, sampled)
-            cur_seqs = next_seqs
+            cur_seqs = torch.where(masking, self.mask_token_id, sampled)
 
         # ========== Final sampling ==========
-        logits = self.forward(
+        logits, _ = self.forward(
             multi_layer_hidden_states,
             proprio_features=proprio_features,
             input_tokens=cur_seqs
         )
-        probs = torch.softmax(logits, dim=-1)
-        flat_probs = probs.view(-1, probs.size(-1))
-        final_tokens = torch.multinomial(flat_probs, 1).view(batch_size, self.num_action_tokens)
+        final_probs = torch.softmax(logits / max(1e-6, temperature), dim=-1)
+        final_tokens = torch.multinomial(
+            final_probs.view(-1, final_probs.size(-1)),
+            1
+        ).view(batch_size, L)
+
+        # keep already-decoded positions (if any remain non-mask)
+        unknown_map = (cur_seqs == self.mask_token_id)
+        final_tokens = torch.where(unknown_map, final_tokens, cur_seqs)
 
         return final_tokens
 

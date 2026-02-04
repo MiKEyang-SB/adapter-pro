@@ -17,4 +17,5 @@ setsid torchrun --standalone --nproc-per-node 1 vla-scripts/finetune.py \
     --data_root_dir='/root/autodl-fs/LIBERO_RLDS' \
     --run_root_dir='/root/autodl-fs/outputs' \
     --save_freq=50000 \
+    --reset_scheduler_on_resume=True \
     > resume.log 2>&1 &

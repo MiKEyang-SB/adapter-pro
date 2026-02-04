@@ -108,6 +108,7 @@ class FinetuneConfig:
     num_steps_before_decay: int = 150000             # Number of steps before LR decays by 10x
     grad_accumulation_steps: int = 4                 # Number of gradient accumulation steps
     max_steps: int = 150005                          # Max number of training steps
+    reset_scheduler_on_resume: bool = False          # If True, do not load scheduler state when resuming
     use_val_set: bool = False                        # If True, uses validation set and log validation metrics
     val_freq: int = 10_000                           # (When `use_val_set==True`) Validation set logging frequency in steps
     val_time_limit: int = 180                        # (When `use_val_set==True`) Time limit for computing validation metrics
@@ -1089,8 +1090,18 @@ def finetune(cfg: FinetuneConfig) -> None:
             print(f"Loading training state from {training_state_path}...")
             training_state = torch.load(training_state_path, map_location=f"cuda:{device_id}")
             optimizer.load_state_dict(training_state['optimizer_state_dict'])
-            scheduler.load_state_dict(training_state['scheduler_state_dict'])
-            print(f"Resumed optimizer and scheduler from step {training_state['step']}")
+            if cfg.reset_scheduler_on_resume:
+                # Reset LR and align scheduler step to the global resume step.
+                for param_group in optimizer.param_groups:
+                    param_group["lr"] = cfg.learning_rate
+                scheduler.last_epoch = cfg.resume_step
+                print(
+                    f"Resumed optimizer from step {training_state['step']} and reset scheduler "
+                    f"to step {cfg.resume_step} with lr={cfg.learning_rate}"
+                )
+            else:
+                scheduler.load_state_dict(training_state['scheduler_state_dict'])
+                print(f"Resumed optimizer and scheduler from step {training_state['step']}")
         else:
             print(f"Warning: Training state file not found at {training_state_path}, starting with fresh optimizer/scheduler")
 
@@ -1294,7 +1305,7 @@ def finetune(cfg: FinetuneConfig) -> None:
                 optimizer.step()
                 # Only apply scheduler after warmup is complete
                 if gradient_step_idx >= warmup_steps:
-                    scheduler.step()
+                    scheduler.step(log_step)
                 optimizer.zero_grad()
                 progress.update()
 
