@@ -140,7 +140,7 @@ class FinetuneConfig:
 
     # Performance optimization
     use_torch_compile: bool = False                  # If True, use torch.compile for speedup (requires PyTorch 2.0+)
-    compile_mode: str = "max-autotune"            # torch.compile mode: "default", "reduce-overhead", "max-autotune"
+    compile_mode: str = "default"            # torch.compile mode: "default", "reduce-overhead", "max-autotune"
     # max-autotune
 
     # revision version
@@ -376,6 +376,21 @@ def run_forward_pass(
             use_film=use_film,
             )
     #每个隐藏层：(b, 632, 896)
+    # #to avoid the unused parameter error in DDP
+    # vla_module = vla.module if hasattr(vla, "module") else vla
+    # base_model = None
+    # if hasattr(vla_module, "base_model"):
+    #     bm = vla_module.base_model
+    #     base_model = bm.model if hasattr(bm, "model") else bm
+    # elif hasattr(vla_module, "model"):
+    #     base_model = vla_module.model
+    # else:
+    #     base_model = vla_module
+    # if hasattr(base_model, "action_queries") and base_model.action_queries is not None:
+    #     dummy = 0.0 * base_model.action_queries.sum()
+    # else:
+    #     dummy = 0.0 
+
     # Get action masks needed for logging
     ground_truth_token_ids = batch["labels"][:,1:].to(device_id)#(b, 119)
     current_action_mask = get_current_action_mask(ground_truth_token_ids)#当前位置为true #(b, 119)
@@ -384,6 +399,7 @@ def run_forward_pass(
     action_ids = action_id.reshape(batch["input_ids"].shape[0], 1,NUM_TOKENS, -1)#torch.Size([4, 1, 64, 1])
     # Compute metrics for discrete action representation (next-token prediction)
     if not (use_l1_regression):
+        # loss = output.loss + dummy
         loss = output.loss
         predicted_token_ids = output.logits[:, num_patches:-1].argmax(dim=2)
 
@@ -459,6 +475,7 @@ def run_forward_pass(
                 proprio_projector=proprio_projector if use_proprio else None,
                 mask_ratio_range=(0.0, 1.0),   # 随机 mask 0-100%
             )#final_tokens：(4, 56)
+            # loss = loss + dummy
 
         metrics.update(
             {
@@ -777,7 +794,7 @@ def finetune(cfg: FinetuneConfig) -> None:
 
     # Initialize wandb logging
     if distributed_state.is_main_process:
-        wandb.init(project=cfg.wandb_project, name=f"ft+{run_id}", mode="online")
+        wandb.init(project=cfg.wandb_project, name=f"ft+{run_id}", mode="offline")
 
     # Print detected constants
     print(
@@ -1010,6 +1027,8 @@ def finetune(cfg: FinetuneConfig) -> None:
             device_id,
             {"llm_dim": vla.module.llm_dim, "proprio_dim": PROPRIO_DIM},
             to_bf16=True,
+            find_unused_params=False,
+            use_compile=cfg.use_torch_compile,
         )
 
     # If applicable, instantiate continuous action head for L1 regression
@@ -1027,6 +1046,8 @@ def finetune(cfg: FinetuneConfig) -> None:
                     "use_pro_version": cfg.use_pro_version,
                     },
                 to_bf16=True,
+                find_unused_params=False,
+                use_compile=cfg.use_torch_compile,
             )
         else:
         # Instantiate discrete diffusion action head with DDP wrapping
