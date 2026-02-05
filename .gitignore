@@ -157,3 +157,6 @@ pretrained_models/prism-qwen25-extra-dinosiglip-224px-0_5b
 outputs/
 openvla/
 debug_cache/
+run.sh
+eval.sh
+resume.sh
