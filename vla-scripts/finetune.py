@@ -112,7 +112,7 @@ class FinetuneConfig:
     use_val_set: bool = False                        # If True, uses validation set and log validation metrics
     val_freq: int = 10_000                           # (When `use_val_set==True`) Validation set logging frequency in steps
     val_time_limit: int = 180                        # (When `use_val_set==True`) Time limit for computing validation metrics
-    save_freq: int = 10000                          # Checkpoint saving frequency in steps
+    save_freq: int = 10                          # Checkpoint saving frequency in steps
     save_latest_checkpoint_only: bool = False        # If True, saves only 1 checkpoint, overwriting latest checkpoint
                                                      #   (If False, saves all checkpoints)
     resume: bool = False                             # If True, resumes from checkpoint
@@ -645,8 +645,17 @@ def save_training_checkpoint(
         if cfg.use_minivlm:
             config = AutoConfig.from_pretrained("pretrained_models/configs/config.json")
             base_vla = AutoModelForVision2Seq.from_config(config, torch_dtype=torch.bfloat16)  # Create a new model with configuration, the parameters are randomly initialized
-            # print(new_state_dict['action_queries.weight'])
-            new_state_dict['action_queries.weight'] = vla.state_dict()['module.base_model.model.action_queries.weight'].cpu()
+            # Dynamically find action_queries.weight key (wrapper layers may change the prefix)
+            vla_sd = vla.state_dict()
+            aq_key = None
+            for k in vla_sd:
+                if k.endswith('action_queries.weight'):
+                    aq_key = k
+                    break
+            if aq_key is not None:
+                new_state_dict['action_queries.weight'] = vla_sd[aq_key].cpu()
+            else:
+                print("Warning: action_queries.weight not found in vla state_dict, skipping")
             missing_keys, unexpected_keys = base_vla.load_state_dict(new_state_dict, strict=False)
             
         else:

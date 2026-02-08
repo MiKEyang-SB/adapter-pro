@@ -1,0 +1,3535 @@
+Task suite: libero_goal
+Using default initial states
+
+Task: open the middle drawer of the cabinet
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=1--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 1
+# successes: 1 (100.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=2--success=False--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 2
+# successes: 1 (50.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=3--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 3
+# successes: 2 (66.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=4--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 4
+# successes: 3 (75.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=5--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 5
+# successes: 4 (80.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=6--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 6
+# successes: 5 (83.3%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=7--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 7
+# successes: 6 (85.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=8--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 8
+# successes: 7 (87.5%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=9--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 9
+# successes: 8 (88.9%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=10--success=False--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 10
+# successes: 8 (80.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=11--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 11
+# successes: 9 (81.8%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=12--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 12
+# successes: 10 (83.3%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=13--success=False--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 13
+# successes: 10 (76.9%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=14--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 14
+# successes: 11 (78.6%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=15--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 15
+# successes: 12 (80.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=16--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 16
+# successes: 13 (81.2%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=17--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 17
+# successes: 14 (82.4%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=18--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 18
+# successes: 15 (83.3%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=19--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 19
+# successes: 16 (84.2%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=20--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 20
+# successes: 17 (85.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=21--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 21
+# successes: 18 (85.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=22--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 22
+# successes: 19 (86.4%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=23--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 23
+# successes: 20 (87.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=24--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 24
+# successes: 21 (87.5%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=25--success=False--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 25
+# successes: 21 (84.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=26--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 26
+# successes: 22 (84.6%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=27--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 27
+# successes: 23 (85.2%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=28--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 28
+# successes: 24 (85.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=29--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 29
+# successes: 25 (86.2%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=30--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 30
+# successes: 26 (86.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=31--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 31
+# successes: 27 (87.1%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=32--success=False--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 32
+# successes: 27 (84.4%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=33--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 33
+# successes: 28 (84.8%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=34--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 34
+# successes: 29 (85.3%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=35--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 35
+# successes: 30 (85.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=36--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 36
+# successes: 31 (86.1%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=37--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 37
+# successes: 32 (86.5%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=38--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 38
+# successes: 33 (86.8%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=39--success=False--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 39
+# successes: 33 (84.6%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=40--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 40
+# successes: 34 (85.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=41--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 41
+# successes: 35 (85.4%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=42--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 42
+# successes: 36 (85.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=43--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 43
+# successes: 37 (86.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=44--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 44
+# successes: 38 (86.4%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=45--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 45
+# successes: 39 (86.7%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=46--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 46
+# successes: 40 (87.0%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=47--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 47
+# successes: 41 (87.2%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=48--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 48
+# successes: 42 (87.5%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=49--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 49
+# successes: 43 (87.8%)
+
+Task: open the middle drawer of the cabinet
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=50--success=True--task=open_the_middle_drawer_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 50
+# successes: 44 (88.0%)
+Current task success rate: 0.88
+Current total success rate: 0.88
+Using default initial states
+
+Task: put the bowl on the stove
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=51--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 51
+# successes: 45 (88.2%)
+
+Task: put the bowl on the stove
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=52--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 52
+# successes: 46 (88.5%)
+
+Task: put the bowl on the stove
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=53--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 53
+# successes: 47 (88.7%)
+
+Task: put the bowl on the stove
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=54--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 54
+# successes: 48 (88.9%)
+
+Task: put the bowl on the stove
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=55--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 55
+# successes: 49 (89.1%)
+
+Task: put the bowl on the stove
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=56--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 56
+# successes: 50 (89.3%)
+
+Task: put the bowl on the stove
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=57--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 57
+# successes: 51 (89.5%)
+
+Task: put the bowl on the stove
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=58--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 58
+# successes: 52 (89.7%)
+
+Task: put the bowl on the stove
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=59--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 59
+# successes: 53 (89.8%)
+
+Task: put the bowl on the stove
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=60--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 60
+# successes: 54 (90.0%)
+
+Task: put the bowl on the stove
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=61--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 61
+# successes: 55 (90.2%)
+
+Task: put the bowl on the stove
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=62--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 62
+# successes: 56 (90.3%)
+
+Task: put the bowl on the stove
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=63--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 63
+# successes: 57 (90.5%)
+
+Task: put the bowl on the stove
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=64--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 64
+# successes: 58 (90.6%)
+
+Task: put the bowl on the stove
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=65--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 65
+# successes: 59 (90.8%)
+
+Task: put the bowl on the stove
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=66--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 66
+# successes: 60 (90.9%)
+
+Task: put the bowl on the stove
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=67--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 67
+# successes: 61 (91.0%)
+
+Task: put the bowl on the stove
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=68--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 68
+# successes: 62 (91.2%)
+
+Task: put the bowl on the stove
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=69--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 69
+# successes: 63 (91.3%)
+
+Task: put the bowl on the stove
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=70--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 70
+# successes: 64 (91.4%)
+
+Task: put the bowl on the stove
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=71--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 71
+# successes: 65 (91.5%)
+
+Task: put the bowl on the stove
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=72--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 72
+# successes: 66 (91.7%)
+
+Task: put the bowl on the stove
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=73--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 73
+# successes: 67 (91.8%)
+
+Task: put the bowl on the stove
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=74--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 74
+# successes: 68 (91.9%)
+
+Task: put the bowl on the stove
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=75--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 75
+# successes: 69 (92.0%)
+
+Task: put the bowl on the stove
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=76--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 76
+# successes: 70 (92.1%)
+
+Task: put the bowl on the stove
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=77--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 77
+# successes: 71 (92.2%)
+
+Task: put the bowl on the stove
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=78--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 78
+# successes: 72 (92.3%)
+
+Task: put the bowl on the stove
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=79--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 79
+# successes: 73 (92.4%)
+
+Task: put the bowl on the stove
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=80--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 80
+# successes: 74 (92.5%)
+
+Task: put the bowl on the stove
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=81--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 81
+# successes: 75 (92.6%)
+
+Task: put the bowl on the stove
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=82--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 82
+# successes: 76 (92.7%)
+
+Task: put the bowl on the stove
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=83--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 83
+# successes: 77 (92.8%)
+
+Task: put the bowl on the stove
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=84--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 84
+# successes: 78 (92.9%)
+
+Task: put the bowl on the stove
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=85--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 85
+# successes: 79 (92.9%)
+
+Task: put the bowl on the stove
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=86--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 86
+# successes: 80 (93.0%)
+
+Task: put the bowl on the stove
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=87--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 87
+# successes: 81 (93.1%)
+
+Task: put the bowl on the stove
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=88--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 88
+# successes: 82 (93.2%)
+
+Task: put the bowl on the stove
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=89--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 89
+# successes: 83 (93.3%)
+
+Task: put the bowl on the stove
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=90--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 90
+# successes: 84 (93.3%)
+
+Task: put the bowl on the stove
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=91--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 91
+# successes: 85 (93.4%)
+
+Task: put the bowl on the stove
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=92--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 92
+# successes: 86 (93.5%)
+
+Task: put the bowl on the stove
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=93--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 93
+# successes: 87 (93.5%)
+
+Task: put the bowl on the stove
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=94--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 94
+# successes: 88 (93.6%)
+
+Task: put the bowl on the stove
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=95--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 95
+# successes: 89 (93.7%)
+
+Task: put the bowl on the stove
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=96--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 96
+# successes: 90 (93.8%)
+
+Task: put the bowl on the stove
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=97--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 97
+# successes: 91 (93.8%)
+
+Task: put the bowl on the stove
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=98--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 98
+# successes: 92 (93.9%)
+
+Task: put the bowl on the stove
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=99--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 99
+# successes: 93 (93.9%)
+
+Task: put the bowl on the stove
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=100--success=True--task=put_the_bowl_on_the_stove.mp4
+Success: True
+# episodes completed so far: 100
+# successes: 94 (94.0%)
+Current task success rate: 1.0
+Current total success rate: 0.94
+Using default initial states
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=101--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 101
+# successes: 95 (94.1%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=102--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 102
+# successes: 96 (94.1%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=103--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 103
+# successes: 97 (94.2%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=104--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 104
+# successes: 98 (94.2%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=105--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 105
+# successes: 99 (94.3%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=106--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 106
+# successes: 100 (94.3%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=107--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 107
+# successes: 101 (94.4%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=108--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 108
+# successes: 102 (94.4%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=109--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 109
+# successes: 103 (94.5%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=110--success=False--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 110
+# successes: 103 (93.6%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=111--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 111
+# successes: 104 (93.7%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=112--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 112
+# successes: 105 (93.8%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=113--success=False--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 113
+# successes: 105 (92.9%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=114--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 114
+# successes: 106 (93.0%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=115--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 115
+# successes: 107 (93.0%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=116--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 116
+# successes: 108 (93.1%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=117--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 117
+# successes: 109 (93.2%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=118--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 118
+# successes: 110 (93.2%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=119--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 119
+# successes: 111 (93.3%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=120--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 120
+# successes: 112 (93.3%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=121--success=False--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: False
+# episodes completed so far: 121
+# successes: 112 (92.6%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=122--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 122
+# successes: 113 (92.6%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=123--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 123
+# successes: 114 (92.7%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=124--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 124
+# successes: 115 (92.7%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=125--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 125
+# successes: 116 (92.8%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=126--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 126
+# successes: 117 (92.9%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=127--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 127
+# successes: 118 (92.9%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=128--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 128
+# successes: 119 (93.0%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=129--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 129
+# successes: 120 (93.0%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=130--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 130
+# successes: 121 (93.1%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=131--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 131
+# successes: 122 (93.1%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=132--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 132
+# successes: 123 (93.2%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=133--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 133
+# successes: 124 (93.2%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=134--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 134
+# successes: 125 (93.3%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=135--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 135
+# successes: 126 (93.3%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=136--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 136
+# successes: 127 (93.4%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=137--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 137
+# successes: 128 (93.4%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=138--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 138
+# successes: 129 (93.5%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=139--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 139
+# successes: 130 (93.5%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=140--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 140
+# successes: 131 (93.6%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=141--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 141
+# successes: 132 (93.6%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=142--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 142
+# successes: 133 (93.7%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=143--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 143
+# successes: 134 (93.7%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=144--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 144
+# successes: 135 (93.8%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=145--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 145
+# successes: 136 (93.8%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=146--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 146
+# successes: 137 (93.8%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=147--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 147
+# successes: 138 (93.9%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=148--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 148
+# successes: 139 (93.9%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=149--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 149
+# successes: 140 (94.0%)
+
+Task: put the wine bottle on top of the cabinet
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=150--success=True--task=put_the_wine_bottle_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 150
+# successes: 141 (94.0%)
+Current task success rate: 0.94
+Current total success rate: 0.94
+Using default initial states
+
+Task: open the top drawer and put the bowl inside
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=151--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 151
+# successes: 142 (94.0%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=152--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 152
+# successes: 143 (94.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=153--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 153
+# successes: 144 (94.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=154--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 154
+# successes: 145 (94.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=155--success=False--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: False
+# episodes completed so far: 155
+# successes: 145 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=156--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 156
+# successes: 146 (93.6%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=157--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 157
+# successes: 147 (93.6%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=158--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 158
+# successes: 148 (93.7%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=159--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 159
+# successes: 149 (93.7%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=160--success=False--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: False
+# episodes completed so far: 160
+# successes: 149 (93.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=161--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 161
+# successes: 150 (93.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=162--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 162
+# successes: 151 (93.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=163--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 163
+# successes: 152 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=164--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 164
+# successes: 153 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=165--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 165
+# successes: 154 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=166--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 166
+# successes: 155 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=167--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 167
+# successes: 156 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=168--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 168
+# successes: 157 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=169--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 169
+# successes: 158 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=170--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 170
+# successes: 159 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=171--success=False--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: False
+# episodes completed so far: 171
+# successes: 159 (93.0%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=172--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 172
+# successes: 160 (93.0%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=173--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 173
+# successes: 161 (93.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=174--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 174
+# successes: 162 (93.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=175--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 175
+# successes: 163 (93.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=176--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 176
+# successes: 164 (93.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=177--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 177
+# successes: 165 (93.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=178--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 178
+# successes: 166 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=179--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 179
+# successes: 167 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=180--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 180
+# successes: 168 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=181--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 181
+# successes: 169 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=182--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 182
+# successes: 170 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=183--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 183
+# successes: 171 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=184--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 184
+# successes: 172 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=185--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 185
+# successes: 173 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=186--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 186
+# successes: 174 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=187--success=False--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: False
+# episodes completed so far: 187
+# successes: 174 (93.0%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=188--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 188
+# successes: 175 (93.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=189--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 189
+# successes: 176 (93.1%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=190--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 190
+# successes: 177 (93.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=191--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 191
+# successes: 178 (93.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=192--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 192
+# successes: 179 (93.2%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=193--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 193
+# successes: 180 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=194--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 194
+# successes: 181 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=195--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 195
+# successes: 182 (93.3%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=196--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 196
+# successes: 183 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=197--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 197
+# successes: 184 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=198--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 198
+# successes: 185 (93.4%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=199--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 199
+# successes: 186 (93.5%)
+
+Task: open the top drawer and put the bowl inside
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=200--success=True--task=open_the_top_drawer_and_put_the_bowl_inside.mp4
+Success: True
+# episodes completed so far: 200
+# successes: 187 (93.5%)
+Current task success rate: 0.92
+Current total success rate: 0.935
+Using default initial states
+
+Task: put the bowl on top of the cabinet
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=201--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 201
+# successes: 188 (93.5%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=202--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 202
+# successes: 189 (93.6%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=203--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 203
+# successes: 190 (93.6%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=204--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 204
+# successes: 191 (93.6%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=205--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 205
+# successes: 192 (93.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=206--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 206
+# successes: 193 (93.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=207--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 207
+# successes: 194 (93.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=208--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 208
+# successes: 195 (93.8%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=209--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 209
+# successes: 196 (93.8%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=210--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 210
+# successes: 197 (93.8%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=211--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 211
+# successes: 198 (93.8%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=212--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 212
+# successes: 199 (93.9%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=213--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 213
+# successes: 200 (93.9%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=214--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 214
+# successes: 201 (93.9%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=215--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 215
+# successes: 202 (94.0%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=216--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 216
+# successes: 203 (94.0%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=217--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 217
+# successes: 204 (94.0%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=218--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 218
+# successes: 205 (94.0%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=219--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 219
+# successes: 206 (94.1%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=220--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 220
+# successes: 207 (94.1%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=221--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 221
+# successes: 208 (94.1%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=222--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 222
+# successes: 209 (94.1%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=223--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 223
+# successes: 210 (94.2%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=224--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 224
+# successes: 211 (94.2%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=225--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 225
+# successes: 212 (94.2%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=226--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 226
+# successes: 213 (94.2%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=227--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 227
+# successes: 214 (94.3%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=228--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 228
+# successes: 215 (94.3%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=229--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 229
+# successes: 216 (94.3%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=230--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 230
+# successes: 217 (94.3%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=231--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 231
+# successes: 218 (94.4%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=232--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 232
+# successes: 219 (94.4%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=233--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 233
+# successes: 220 (94.4%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=234--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 234
+# successes: 221 (94.4%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=235--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 235
+# successes: 222 (94.5%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=236--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 236
+# successes: 223 (94.5%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=237--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 237
+# successes: 224 (94.5%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=238--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 238
+# successes: 225 (94.5%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=239--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 239
+# successes: 226 (94.6%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=240--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 240
+# successes: 227 (94.6%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=241--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 241
+# successes: 228 (94.6%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=242--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 242
+# successes: 229 (94.6%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=243--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 243
+# successes: 230 (94.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=244--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 244
+# successes: 231 (94.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=245--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 245
+# successes: 232 (94.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=246--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 246
+# successes: 233 (94.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=247--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 247
+# successes: 234 (94.7%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=248--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 248
+# successes: 235 (94.8%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=249--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 249
+# successes: 236 (94.8%)
+
+Task: put the bowl on top of the cabinet
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=250--success=True--task=put_the_bowl_on_top_of_the_cabinet.mp4
+Success: True
+# episodes completed so far: 250
+# successes: 237 (94.8%)
+Current task success rate: 1.0
+Current total success rate: 0.948
+Using default initial states
+
+Task: push the plate to the front of the stove
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=251--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 251
+# successes: 238 (94.8%)
+
+Task: push the plate to the front of the stove
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=252--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 252
+# successes: 239 (94.8%)
+
+Task: push the plate to the front of the stove
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=253--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 253
+# successes: 240 (94.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=254--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 254
+# successes: 241 (94.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=255--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 255
+# successes: 242 (94.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=256--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 256
+# successes: 243 (94.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=257--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 257
+# successes: 244 (94.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=258--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 258
+# successes: 245 (95.0%)
+
+Task: push the plate to the front of the stove
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=259--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 259
+# successes: 246 (95.0%)
+
+Task: push the plate to the front of the stove
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=260--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 260
+# successes: 247 (95.0%)
+
+Task: push the plate to the front of the stove
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=261--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 261
+# successes: 248 (95.0%)
+
+Task: push the plate to the front of the stove
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=262--success=False--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: False
+# episodes completed so far: 262
+# successes: 248 (94.7%)
+
+Task: push the plate to the front of the stove
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=263--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 263
+# successes: 249 (94.7%)
+
+Task: push the plate to the front of the stove
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=264--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 264
+# successes: 250 (94.7%)
+
+Task: push the plate to the front of the stove
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=265--success=False--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: False
+# episodes completed so far: 265
+# successes: 250 (94.3%)
+
+Task: push the plate to the front of the stove
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=266--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 266
+# successes: 251 (94.4%)
+
+Task: push the plate to the front of the stove
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=267--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 267
+# successes: 252 (94.4%)
+
+Task: push the plate to the front of the stove
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=268--success=False--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: False
+# episodes completed so far: 268
+# successes: 252 (94.0%)
+
+Task: push the plate to the front of the stove
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=269--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 269
+# successes: 253 (94.1%)
+
+Task: push the plate to the front of the stove
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=270--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 270
+# successes: 254 (94.1%)
+
+Task: push the plate to the front of the stove
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=271--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 271
+# successes: 255 (94.1%)
+
+Task: push the plate to the front of the stove
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=272--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 272
+# successes: 256 (94.1%)
+
+Task: push the plate to the front of the stove
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=273--success=False--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: False
+# episodes completed so far: 273
+# successes: 256 (93.8%)
+
+Task: push the plate to the front of the stove
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=274--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 274
+# successes: 257 (93.8%)
+
+Task: push the plate to the front of the stove
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=275--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 275
+# successes: 258 (93.8%)
+
+Task: push the plate to the front of the stove
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=276--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 276
+# successes: 259 (93.8%)
+
+Task: push the plate to the front of the stove
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=277--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 277
+# successes: 260 (93.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=278--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 278
+# successes: 261 (93.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=279--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 279
+# successes: 262 (93.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=280--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 280
+# successes: 263 (93.9%)
+
+Task: push the plate to the front of the stove
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=281--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 281
+# successes: 264 (94.0%)
+
+Task: push the plate to the front of the stove
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=282--success=False--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: False
+# episodes completed so far: 282
+# successes: 264 (93.6%)
+
+Task: push the plate to the front of the stove
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=283--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 283
+# successes: 265 (93.6%)
+
+Task: push the plate to the front of the stove
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=284--success=False--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: False
+# episodes completed so far: 284
+# successes: 265 (93.3%)
+
+Task: push the plate to the front of the stove
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=285--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 285
+# successes: 266 (93.3%)
+
+Task: push the plate to the front of the stove
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=286--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 286
+# successes: 267 (93.4%)
+
+Task: push the plate to the front of the stove
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=287--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 287
+# successes: 268 (93.4%)
+
+Task: push the plate to the front of the stove
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=288--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 288
+# successes: 269 (93.4%)
+
+Task: push the plate to the front of the stove
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=289--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 289
+# successes: 270 (93.4%)
+
+Task: push the plate to the front of the stove
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=290--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 290
+# successes: 271 (93.4%)
+
+Task: push the plate to the front of the stove
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=291--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 291
+# successes: 272 (93.5%)
+
+Task: push the plate to the front of the stove
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=292--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 292
+# successes: 273 (93.5%)
+
+Task: push the plate to the front of the stove
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=293--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 293
+# successes: 274 (93.5%)
+
+Task: push the plate to the front of the stove
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=294--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 294
+# successes: 275 (93.5%)
+
+Task: push the plate to the front of the stove
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=295--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 295
+# successes: 276 (93.6%)
+
+Task: push the plate to the front of the stove
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=296--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 296
+# successes: 277 (93.6%)
+
+Task: push the plate to the front of the stove
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=297--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 297
+# successes: 278 (93.6%)
+
+Task: push the plate to the front of the stove
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=298--success=False--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: False
+# episodes completed so far: 298
+# successes: 278 (93.3%)
+
+Task: push the plate to the front of the stove
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=299--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 299
+# successes: 279 (93.3%)
+
+Task: push the plate to the front of the stove
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=300--success=True--task=push_the_plate_to_the_front_of_the_stove.mp4
+Success: True
+# episodes completed so far: 300
+# successes: 280 (93.3%)
+Current task success rate: 0.86
+Current total success rate: 0.9333333333333333
+Using default initial states
+
+Task: put the cream cheese in the bowl
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=301--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 301
+# successes: 281 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=302--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 302
+# successes: 282 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=303--success=False--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: False
+# episodes completed so far: 303
+# successes: 282 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=304--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 304
+# successes: 283 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=305--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 305
+# successes: 284 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=306--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 306
+# successes: 285 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=307--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 307
+# successes: 286 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=308--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 308
+# successes: 287 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=309--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 309
+# successes: 288 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=310--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 310
+# successes: 289 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=311--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 311
+# successes: 290 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=312--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 312
+# successes: 291 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=313--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 313
+# successes: 292 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=314--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 314
+# successes: 293 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=315--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 315
+# successes: 294 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=316--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 316
+# successes: 295 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=317--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 317
+# successes: 296 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=318--success=False--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: False
+# episodes completed so far: 318
+# successes: 296 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=319--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 319
+# successes: 297 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=320--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 320
+# successes: 298 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=321--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 321
+# successes: 299 (93.1%)
+
+Task: put the cream cheese in the bowl
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=322--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 322
+# successes: 300 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=323--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 323
+# successes: 301 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=324--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 324
+# successes: 302 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=325--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 325
+# successes: 303 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=326--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 326
+# successes: 304 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=327--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 327
+# successes: 305 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=328--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 328
+# successes: 306 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=329--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 329
+# successes: 307 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=330--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 330
+# successes: 308 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=331--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 331
+# successes: 309 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=332--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 332
+# successes: 310 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=333--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 333
+# successes: 311 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=334--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 334
+# successes: 312 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=335--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 335
+# successes: 313 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=336--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 336
+# successes: 314 (93.5%)
+
+Task: put the cream cheese in the bowl
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=337--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 337
+# successes: 315 (93.5%)
+
+Task: put the cream cheese in the bowl
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=338--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 338
+# successes: 316 (93.5%)
+
+Task: put the cream cheese in the bowl
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=339--success=False--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: False
+# episodes completed so far: 339
+# successes: 316 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=340--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 340
+# successes: 317 (93.2%)
+
+Task: put the cream cheese in the bowl
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=341--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 341
+# successes: 318 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=342--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 342
+# successes: 319 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=343--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 343
+# successes: 320 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=344--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 344
+# successes: 321 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=345--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 345
+# successes: 322 (93.3%)
+
+Task: put the cream cheese in the bowl
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=346--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 346
+# successes: 323 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=347--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 347
+# successes: 324 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=348--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 348
+# successes: 325 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=349--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 349
+# successes: 326 (93.4%)
+
+Task: put the cream cheese in the bowl
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=350--success=True--task=put_the_cream_cheese_in_the_bowl.mp4
+Success: True
+# episodes completed so far: 350
+# successes: 327 (93.4%)
+Current task success rate: 0.94
+Current total success rate: 0.9342857142857143
+Using default initial states
+
+Task: turn on the stove
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=351--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 351
+# successes: 328 (93.4%)
+
+Task: turn on the stove
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=352--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 352
+# successes: 329 (93.5%)
+
+Task: turn on the stove
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=353--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 353
+# successes: 330 (93.5%)
+
+Task: turn on the stove
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=354--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 354
+# successes: 331 (93.5%)
+
+Task: turn on the stove
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=355--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 355
+# successes: 332 (93.5%)
+
+Task: turn on the stove
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=356--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 356
+# successes: 333 (93.5%)
+
+Task: turn on the stove
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=357--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 357
+# successes: 334 (93.6%)
+
+Task: turn on the stove
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=358--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 358
+# successes: 335 (93.6%)
+
+Task: turn on the stove
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=359--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 359
+# successes: 336 (93.6%)
+
+Task: turn on the stove
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=360--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 360
+# successes: 337 (93.6%)
+
+Task: turn on the stove
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=361--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 361
+# successes: 338 (93.6%)
+
+Task: turn on the stove
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=362--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 362
+# successes: 339 (93.6%)
+
+Task: turn on the stove
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=363--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 363
+# successes: 340 (93.7%)
+
+Task: turn on the stove
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=364--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 364
+# successes: 341 (93.7%)
+
+Task: turn on the stove
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=365--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 365
+# successes: 342 (93.7%)
+
+Task: turn on the stove
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=366--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 366
+# successes: 343 (93.7%)
+
+Task: turn on the stove
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=367--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 367
+# successes: 344 (93.7%)
+
+Task: turn on the stove
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=368--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 368
+# successes: 345 (93.8%)
+
+Task: turn on the stove
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=369--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 369
+# successes: 346 (93.8%)
+
+Task: turn on the stove
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=370--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 370
+# successes: 347 (93.8%)
+
+Task: turn on the stove
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=371--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 371
+# successes: 348 (93.8%)
+
+Task: turn on the stove
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=372--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 372
+# successes: 349 (93.8%)
+
+Task: turn on the stove
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=373--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 373
+# successes: 350 (93.8%)
+
+Task: turn on the stove
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=374--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 374
+# successes: 351 (93.9%)
+
+Task: turn on the stove
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=375--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 375
+# successes: 352 (93.9%)
+
+Task: turn on the stove
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=376--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 376
+# successes: 353 (93.9%)
+
+Task: turn on the stove
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=377--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 377
+# successes: 354 (93.9%)
+
+Task: turn on the stove
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=378--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 378
+# successes: 355 (93.9%)
+
+Task: turn on the stove
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=379--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 379
+# successes: 356 (93.9%)
+
+Task: turn on the stove
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=380--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 380
+# successes: 357 (93.9%)
+
+Task: turn on the stove
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=381--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 381
+# successes: 358 (94.0%)
+
+Task: turn on the stove
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=382--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 382
+# successes: 359 (94.0%)
+
+Task: turn on the stove
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=383--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 383
+# successes: 360 (94.0%)
+
+Task: turn on the stove
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=384--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 384
+# successes: 361 (94.0%)
+
+Task: turn on the stove
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=385--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 385
+# successes: 362 (94.0%)
+
+Task: turn on the stove
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=386--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 386
+# successes: 363 (94.0%)
+
+Task: turn on the stove
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=387--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 387
+# successes: 364 (94.1%)
+
+Task: turn on the stove
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=388--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 388
+# successes: 365 (94.1%)
+
+Task: turn on the stove
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=389--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 389
+# successes: 366 (94.1%)
+
+Task: turn on the stove
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=390--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 390
+# successes: 367 (94.1%)
+
+Task: turn on the stove
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=391--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 391
+# successes: 368 (94.1%)
+
+Task: turn on the stove
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=392--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 392
+# successes: 369 (94.1%)
+
+Task: turn on the stove
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=393--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 393
+# successes: 370 (94.1%)
+
+Task: turn on the stove
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=394--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 394
+# successes: 371 (94.2%)
+
+Task: turn on the stove
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=395--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 395
+# successes: 372 (94.2%)
+
+Task: turn on the stove
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=396--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 396
+# successes: 373 (94.2%)
+
+Task: turn on the stove
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=397--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 397
+# successes: 374 (94.2%)
+
+Task: turn on the stove
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=398--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 398
+# successes: 375 (94.2%)
+
+Task: turn on the stove
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=399--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 399
+# successes: 376 (94.2%)
+
+Task: turn on the stove
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=400--success=True--task=turn_on_the_stove.mp4
+Success: True
+# episodes completed so far: 400
+# successes: 377 (94.2%)
+Current task success rate: 1.0
+Current total success rate: 0.9425
+Using default initial states
+
+Task: put the bowl on the plate
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=401--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 401
+# successes: 378 (94.3%)
+
+Task: put the bowl on the plate
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=402--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 402
+# successes: 379 (94.3%)
+
+Task: put the bowl on the plate
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=403--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 403
+# successes: 380 (94.3%)
+
+Task: put the bowl on the plate
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=404--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 404
+# successes: 381 (94.3%)
+
+Task: put the bowl on the plate
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=405--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 405
+# successes: 382 (94.3%)
+
+Task: put the bowl on the plate
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=406--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 406
+# successes: 383 (94.3%)
+
+Task: put the bowl on the plate
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=407--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 407
+# successes: 384 (94.3%)
+
+Task: put the bowl on the plate
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=408--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 408
+# successes: 385 (94.4%)
+
+Task: put the bowl on the plate
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=409--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 409
+# successes: 386 (94.4%)
+
+Task: put the bowl on the plate
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=410--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 410
+# successes: 387 (94.4%)
+
+Task: put the bowl on the plate
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=411--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 411
+# successes: 388 (94.4%)
+
+Task: put the bowl on the plate
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=412--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 412
+# successes: 389 (94.4%)
+
+Task: put the bowl on the plate
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=413--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 413
+# successes: 390 (94.4%)
+
+Task: put the bowl on the plate
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=414--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 414
+# successes: 391 (94.4%)
+
+Task: put the bowl on the plate
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=415--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 415
+# successes: 392 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=416--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 416
+# successes: 393 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=417--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 417
+# successes: 394 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=418--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 418
+# successes: 395 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=419--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 419
+# successes: 396 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=420--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 420
+# successes: 397 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=421--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 421
+# successes: 398 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=422--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 422
+# successes: 399 (94.5%)
+
+Task: put the bowl on the plate
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=423--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 423
+# successes: 400 (94.6%)
+
+Task: put the bowl on the plate
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=424--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 424
+# successes: 401 (94.6%)
+
+Task: put the bowl on the plate
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=425--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 425
+# successes: 402 (94.6%)
+
+Task: put the bowl on the plate
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=426--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 426
+# successes: 403 (94.6%)
+
+Task: put the bowl on the plate
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=427--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 427
+# successes: 404 (94.6%)
+
+Task: put the bowl on the plate
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=428--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 428
+# successes: 405 (94.6%)
+
+Task: put the bowl on the plate
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=429--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 429
+# successes: 406 (94.6%)
+
+Task: put the bowl on the plate
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=430--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 430
+# successes: 407 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=431--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 431
+# successes: 408 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=432--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 432
+# successes: 409 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=433--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 433
+# successes: 410 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=434--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 434
+# successes: 411 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=435--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 435
+# successes: 412 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=436--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 436
+# successes: 413 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=437--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 437
+# successes: 414 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=438--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 438
+# successes: 415 (94.7%)
+
+Task: put the bowl on the plate
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=439--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 439
+# successes: 416 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=440--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 440
+# successes: 417 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=441--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 441
+# successes: 418 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=442--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 442
+# successes: 419 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=443--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 443
+# successes: 420 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=444--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 444
+# successes: 421 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=445--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 445
+# successes: 422 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=446--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 446
+# successes: 423 (94.8%)
+
+Task: put the bowl on the plate
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=447--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 447
+# successes: 424 (94.9%)
+
+Task: put the bowl on the plate
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=448--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 448
+# successes: 425 (94.9%)
+
+Task: put the bowl on the plate
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=449--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 449
+# successes: 426 (94.9%)
+
+Task: put the bowl on the plate
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=450--success=True--task=put_the_bowl_on_the_plate.mp4
+Success: True
+# episodes completed so far: 450
+# successes: 427 (94.9%)
+Current task success rate: 1.0
+Current total success rate: 0.9488888888888889
+Using default initial states
+
+Task: put the wine bottle on the rack
+Starting episode 1...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=451--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 451
+# successes: 428 (94.9%)
+
+Task: put the wine bottle on the rack
+Starting episode 2...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=452--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 452
+# successes: 429 (94.9%)
+
+Task: put the wine bottle on the rack
+Starting episode 3...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=453--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 453
+# successes: 430 (94.9%)
+
+Task: put the wine bottle on the rack
+Starting episode 4...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=454--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 454
+# successes: 431 (94.9%)
+
+Task: put the wine bottle on the rack
+Starting episode 5...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=455--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 455
+# successes: 432 (94.9%)
+
+Task: put the wine bottle on the rack
+Starting episode 6...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=456--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 456
+# successes: 433 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 7...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=457--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 457
+# successes: 434 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 8...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=458--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 458
+# successes: 435 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 9...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=459--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 459
+# successes: 436 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 10...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=460--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 460
+# successes: 437 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 11...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=461--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 461
+# successes: 438 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 12...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=462--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 462
+# successes: 439 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 13...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=463--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 463
+# successes: 440 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 14...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=464--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 464
+# successes: 441 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 15...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=465--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 465
+# successes: 442 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 16...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=466--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 466
+# successes: 443 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 17...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=467--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 467
+# successes: 444 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 18...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=468--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 468
+# successes: 445 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 19...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=469--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 469
+# successes: 446 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 20...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=470--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 470
+# successes: 447 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 21...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=471--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 471
+# successes: 448 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 22...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=472--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 472
+# successes: 449 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 23...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=473--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 473
+# successes: 450 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 24...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=474--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 474
+# successes: 451 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 25...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=475--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 475
+# successes: 452 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 26...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=476--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 476
+# successes: 453 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 27...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=477--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 477
+# successes: 454 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 28...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=478--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 478
+# successes: 455 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 29...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=479--success=False--task=put_the_wine_bottle_on_the_rack.mp4
+Success: False
+# episodes completed so far: 479
+# successes: 455 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 30...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=480--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 480
+# successes: 456 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 31...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=481--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 481
+# successes: 457 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 32...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=482--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 482
+# successes: 458 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 33...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=483--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 483
+# successes: 459 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 34...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=484--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 484
+# successes: 460 (95.0%)
+
+Task: put the wine bottle on the rack
+Starting episode 35...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=485--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 485
+# successes: 461 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 36...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=486--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 486
+# successes: 462 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 37...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=487--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 487
+# successes: 463 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 38...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=488--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 488
+# successes: 464 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 39...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=489--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 489
+# successes: 465 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 40...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=490--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 490
+# successes: 466 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 41...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=491--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 491
+# successes: 467 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 42...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=492--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 492
+# successes: 468 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 43...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=493--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 493
+# successes: 469 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 44...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=494--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 494
+# successes: 470 (95.1%)
+
+Task: put the wine bottle on the rack
+Starting episode 45...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=495--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 495
+# successes: 471 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 46...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=496--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 496
+# successes: 472 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 47...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=497--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 497
+# successes: 473 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 48...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=498--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 498
+# successes: 474 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 49...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=499--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 499
+# successes: 475 (95.2%)
+
+Task: put the wine bottle on the rack
+Starting episode 50...
+Saved rollout MP4 at path ./rollouts/vla-adapter/2026_02_07/2026_02_07-15_56_47--episode=500--success=True--task=put_the_wine_bottle_on_the_rack.mp4
+Success: True
+# episodes completed so far: 500
+# successes: 476 (95.2%)
+Current task success rate: 0.98
+Current total success rate: 0.952
+Final results:
+Total episodes: 500
+Total successes: 476
+Overall success rate: 0.9520 (95.2%)

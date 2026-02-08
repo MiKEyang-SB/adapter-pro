@@ -20,3 +20,4 @@ kill -9 -PID
 
 #杀评估进程
 pkill -f "experiments/robot/libero/run_libero_eval.py"
+pkill -u $USER -f "torchrun"
