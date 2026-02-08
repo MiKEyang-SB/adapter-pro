@@ -1084,84 +1084,69 @@ class DiscreteDiffusionActionHead(nn.Module):
             input_tokens[masked_mask] = self.mask_token_id
 
         elif self.mask_type == '2D':
-            # ========== 2D Mask: Temporal + Spatial ==========
+            # ========== 2D Mask: Temporal + Spatial (BERT-style masking scheme) ==========
             # Reshape target_actions to 2D: (B, ntokens) -> (B, xtokens, ytokens)
-            discretized_action = target_actions.view(B, xtokens, ytokens)  # (B, 8, 7)
+            action_2d = target_actions.view(B, xtokens, ytokens)  # (B, xtokens, ytokens)
 
-            # Sample random time ratio for mask scheduling
-            rand_time = torch.rand(B, device=device)  # (B,)
-            rand_mask_probs = cosine_schedule(rand_time, torch.ones(B, device=device))  # (B,)
+            # Sample random mask ratio using cosine schedule
+            rand_time = uniform((B,), device=device)              # (B,)
+            mask_probs = cosine_schedule(rand_time, None)         # (B,)
 
-            # ========== Step 1: Temporal Mask (along xtokens dimension) ==========
-            # Compute number of temporal positions to mask
-            num_token_masked_temp = (xtokens * rand_mask_probs).round().clamp(min=0).long()  # (B,)
-            batch_randperm_temp = torch.rand((B, xtokens), device=device).argsort(dim=-1)  # (B, xtokens)
-            # Positions to be MASKED are TRUE
-            mask_temp = batch_randperm_temp < num_token_masked_temp.unsqueeze(-1)  # (B, xtokens)
+            # ============================================================
+            # 1) Temporal mask (mask whole frames): build temporal_frame_mask
+            # ============================================================
+            # number of frames to mask per sample
+            n_mask_frames = (xtokens * mask_probs).round().clamp(min=1).long()  # (B,)
 
-            # Initialize labels and x_ids
-            # labels: training target (masked positions should predict original tokens)
-            labels = torch.where(
-                mask_temp[..., None].expand(-1, -1, ytokens),  # (B, xtokens, ytokens)
-                discretized_action,
-                torch.full_like(discretized_action, self.mask_token_id)
-            )  # (B, xtokens, ytokens)
+            # pick random frames to mask (without replacement)
+            frame_perm = torch.rand((B, xtokens), device=device).argsort(dim=-1)  # (B, xtokens)
+            temporal_frame_mask = frame_perm < n_mask_frames.unsqueeze(-1)        # (B, xtokens)  True=mask this frame
 
-            x_ids = discretized_action.clone()  # (B, xtokens, ytokens)
+            # Expand to token-level mask for those frames: (B, xtokens, ytokens) -> (B, ntokens)
+            temporal_token_mask = temporal_frame_mask[..., None].expand(-1, -1, ytokens).reshape(B, -1)  # (B, ntokens)
 
-            # Apply BERT-style masking for temporal positions
-            # Step 1: 10% replace with random token
-            mask_rid_temp = self._get_mask_subset_prob(mask_temp, 0.1)  # (B, xtokens)
-            rand_id_temp = torch.randint(0, self.mask_token_id, (B, xtokens, ytokens), device=device)
-            x_ids = torch.where(
-                mask_rid_temp[..., None].expand(-1, -1, ytokens),
-                rand_id_temp,
-                x_ids
-            )
+            # Start from clean tokens
+            input_tokens = action_2d.clone().reshape(B, -1)  # (B, ntokens)
 
-            # Step 2: 88% of remaining masked positions get mask token
-            mask_mid_temp = self._get_mask_subset_prob(mask_temp & ~mask_rid_temp, 0.88)  # (B, xtokens)
-            x_ids = torch.where(
-                mask_mid_temp[..., None].expand(-1, -1, ytokens),
-                torch.full_like(x_ids, self.mask_token_id),
-                x_ids
-            )
+            # Apply BERT scheme on temporally masked tokens
+            # 10% -> random wrong token
+            temp_rid_mask = get_mask_subset_prob(temporal_frame_mask, 0.1)  # (B, xtokens)
+            temp_rid_token_mask = temp_rid_mask[..., None].expand(-1, -1, ytokens).reshape(B, -1)  # (B, ntokens)
+            rand_id = torch.randint_like(input_tokens, high=self.mask_token_id)
+            input_tokens = torch.where(temp_rid_token_mask, rand_id, input_tokens)
 
-            # Keep track of temporal mask for excluding from spatial mask
-            mask_time = mask_temp[..., None].expand(-1, -1, ytokens)  # (B, xtokens, ytokens)
+            # ~80% -> mask token (from remaining masked-but-not-random)
+            temp_mid_mask = get_mask_subset_prob(temporal_frame_mask & ~temp_rid_mask, 0.88)  # (B, xtokens)
+            temp_mid_token_mask = temp_mid_mask[..., None].expand(-1, -1, ytokens).reshape(B, -1)  # (B, ntokens)
+            input_tokens = torch.where(temp_mid_token_mask, self.mask_token_id, input_tokens)
+            # remaining ~10% stay original token, but still counted as masked positions via temporal_token_mask
 
-            # ========== Step 2: Spatial Mask (along flattened ntokens dimension) ==========
-            # Flatten for spatial masking
-            x_ids_flat = x_ids.reshape(B, ntokens)  # (B, 56)
-            labels_flat = labels.reshape(B, ntokens)  # (B, 56)
-            mask_time_flat = mask_time.reshape(B, ntokens)  # (B, 56)
+            # ============================================================
+            # 2) Spatial mask (token-level): build spatial_token_mask, exclude temporal
+            # ============================================================
+            n_mask_tokens = (ntokens * mask_probs).round().clamp(min=1).long()  # (B,)
 
-            # Compute number of spatial positions to mask
-            num_token_masked_spat = (ntokens * rand_mask_probs).round().clamp(min=0).long()  # (B,)
-            batch_randperm_spat = torch.rand((B, ntokens), device=device).argsort(dim=-1)  # (B, ntokens)
-            # Positions to be MASKED are TRUE, but exclude already temporally masked positions
-            mask_spat = batch_randperm_spat < num_token_masked_spat.unsqueeze(-1)  # (B, ntokens)
-            mask_spat = mask_spat & ~mask_time_flat  # Exclude temporal masked positions
+            token_perm = torch.rand((B, ntokens), device=device).argsort(dim=-1)  # (B, ntokens)
+            spatial_token_mask = token_perm < n_mask_tokens.unsqueeze(-1)         # (B, ntokens)
 
-            # Update labels for spatial masked positions
-            labels_flat = torch.where(mask_spat, x_ids_flat, labels_flat)  # (B, ntokens)
+            # exclude tokens already covered by temporal masking
+            spatial_token_mask = spatial_token_mask & ~temporal_token_mask        # (B, ntokens)
 
-            # Apply BERT-style masking for spatial positions
-            # Step 1: 10% replace with random token
-            mask_rid_spat = self._get_mask_subset_prob(mask_spat, 0.1)  # (B, ntokens)
-            rand_id_spat = torch.randint(0, self.mask_token_id, (B, ntokens), device=device)
-            x_ids_flat = torch.where(mask_rid_spat, rand_id_spat, x_ids_flat)
+            # Apply BERT scheme on spatially masked tokens
+            # 10% -> random wrong token
+            spat_rid_token_mask = get_mask_subset_prob(spatial_token_mask, 0.1)   # (B, ntokens)
+            rand_id = torch.randint_like(input_tokens, high=self.mask_token_id)
+            input_tokens = torch.where(spat_rid_token_mask, rand_id, input_tokens)
 
-            # Step 2: 88% of remaining masked positions get mask token
-            mask_mid_spat = self._get_mask_subset_prob(mask_spat & ~mask_rid_spat, 0.88)  # (B, ntokens)
-            x_ids_flat = torch.where(mask_mid_spat, torch.full_like(x_ids_flat, self.mask_token_id), x_ids_flat)
+            # ~80% -> mask token (from remaining masked-but-not-random)
+            spat_mid_token_mask = get_mask_subset_prob(spatial_token_mask & ~spat_rid_token_mask, 0.88)  # (B, ntokens)
+            input_tokens = torch.where(spat_mid_token_mask, self.mask_token_id, input_tokens)
+            # remaining ~10% stay original token, but still counted as masked positions via spatial_token_mask
 
-            # ========== Final: Combine temporal and spatial masks ==========
-            # masked_mask: positions where we need to compute loss (both temporal and spatial)
-            masked_mask = mask_time_flat | mask_spat  # (B, ntokens)
-
-            # Update input_tokens for forward pass
-            input_tokens = x_ids_flat  # (B, ntokens) - already modified with masks
+            # ============================================================
+            # 3) Combined mask for loss/acc (same meaning as 1D masked_mask)
+            # ============================================================
+            masked_mask = temporal_token_mask | spatial_token_mask  # (B, ntokens)
 
         # ========== Step 9: Get predictions ==========
         logits, final_tokens = self.forward(

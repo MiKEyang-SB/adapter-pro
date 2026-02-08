@@ -119,6 +119,7 @@ class FinetuneConfig:
     resume_step: Optional[int] = None                # (When `resume==True`) Step number that we are resuming from
     image_aug: bool = True                           # If True, trains with image augmentations (HIGHLY RECOMMENDED)
     diffusion_sample_freq: int = 50                  # (When `use_diffusion==True`) Frequency for sampling in steps
+    mask_type: str = '2D'                            
 
     # LoRA
     use_lora: bool = True                           # If True, uses LoRA fine-tuning
@@ -662,7 +663,7 @@ def save_training_checkpoint(
             base_vla = AutoModelForVision2Seq.from_pretrained(
             cfg.config_file_path, torch_dtype=torch.bfloat16, low_cpu_mem_usage=False, trust_remote_code=False
         )
-
+ 
 
         merged_vla = PeftModel.from_pretrained(base_vla, adapter_dir)
         merged_vla = merged_vla.merge_and_unload()
@@ -1075,7 +1076,9 @@ def finetune(cfg: FinetuneConfig) -> None:
                     "mask_token_id": 256,           # mask token ID (通常是 vocab_size - 1)
                     "num_diffusion_iters": 12,      # 推理时的迭代解码步数
                     "use_proprio": True,            # 是否使用 proprio
-                    "proprio_dim": 8,               # proprio 维度
+                    # "proprio_dim": 8,               # proprio 维度
+                    "mask_type": cfg.mask_type,
+
                 },
                 to_bf16=True,
                 find_unused_params=False,
