@@ -119,7 +119,8 @@ class FinetuneConfig:
     resume_step: Optional[int] = None                # (When `resume==True`) Step number that we are resuming from
     image_aug: bool = True                           # If True, trains with image augmentations (HIGHLY RECOMMENDED)
     diffusion_sample_freq: int = 50                  # (When `use_diffusion==True`) Frequency for sampling in steps
-    mask_type: str = '2D'                            
+    mask_type: str = '2D'               
+    step_unroll: float = 1.0             
 
     # LoRA
     use_lora: bool = True                           # If True, uses LoRA fine-tuning
@@ -208,6 +209,7 @@ def get_run_id(cfg) -> str:
             run_id += f"+lora-r{cfg.lora_rank}+dropout-{cfg.lora_dropout}"
         if cfg.image_aug:
             run_id += "--image_aug"
+        run_id += f"+mask-{cfg.mask_type}"
         if cfg.run_id_note is not None:
             run_id += f"--{cfg.run_id_note}"
     return run_id
@@ -1078,6 +1080,7 @@ def finetune(cfg: FinetuneConfig) -> None:
                     "use_proprio": True,            # 是否使用 proprio
                     # "proprio_dim": 8,               # proprio 维度
                     "mask_type": cfg.mask_type,
+                    "step_unroll": cfg.step_unroll,
 
                 },
                 to_bf16=True,

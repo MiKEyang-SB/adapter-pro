@@ -744,6 +744,7 @@ class DiscreteDiffusionActionHead(nn.Module):
         mask_type='1D',               # Mask type: '1D' or '2D'
         num_action_chunks=8,          # NUM_ACTIONS_CHUNK (temporal dimension for 2D mask)
         action_dim=7,                 # ACTION_DIM (spatial dimension for 2D mask)
+        step_unroll=0.0,              # Step unroll weight (0 = disabled, >0 = loss weight for unroll)
     ):
         super().__init__()
         self.hidden_dim = hidden_dim
@@ -754,6 +755,7 @@ class DiscreteDiffusionActionHead(nn.Module):
         self.mask_token_id = mask_token_id
         self.num_diffusion_iters = num_diffusion_iters
         self.use_proprio = use_proprio
+        self.step_unroll = step_unroll
 
         # 2D mask parameters
         self.mask_type = mask_type
@@ -1091,12 +1093,12 @@ class DiscreteDiffusionActionHead(nn.Module):
             # Sample random mask ratio using cosine schedule
             rand_time = uniform((B,), device=device)              # (B,)
             mask_probs = cosine_schedule(rand_time, None)         # (B,)
-
+            mask_probs_2d = 1.0 - torch.sqrt((1.0 - mask_probs).clamp(min=1e-5))
             # ============================================================
             # 1) Temporal mask (mask whole frames): build temporal_frame_mask
             # ============================================================
             # number of frames to mask per sample
-            n_mask_frames = (xtokens * mask_probs).round().clamp(min=1).long()  # (B,)
+            n_mask_frames = (xtokens * mask_probs_2d).round().clamp(min=1).long()  # (B,)
 
             # pick random frames to mask (without replacement)
             frame_perm = torch.rand((B, xtokens), device=device).argsort(dim=-1)  # (B, xtokens)
@@ -1124,7 +1126,7 @@ class DiscreteDiffusionActionHead(nn.Module):
             # ============================================================
             # 2) Spatial mask (token-level): build spatial_token_mask, exclude temporal
             # ============================================================
-            n_mask_tokens = (ntokens * mask_probs).round().clamp(min=1).long()  # (B,)
+            n_mask_tokens = (ntokens * mask_probs_2d).round().clamp(min=1).long()  # (B,)
 
             token_perm = torch.rand((B, ntokens), device=device).argsort(dim=-1)  # (B, ntokens)
             spatial_token_mask = token_perm < n_mask_tokens.unsqueeze(-1)         # (B, ntokens)
@@ -1173,7 +1175,87 @@ class DiscreteDiffusionActionHead(nn.Module):
         n_total = masked_mask.sum().item()
         acc = n_correct / n_total if n_total > 0 else 0.0
 
+        # ========== Step 12: Optional step unroll ==========
+        if self.step_unroll > 0:
+            su_loss, su_pred_id, su_acc = self.step_unroll_forward(
+                input_tokens, masked_mask, target_actions, logits,
+                multi_layer_hidden_states, proprio_features
+            )
+            loss = (loss + self.step_unroll * su_loss) / (1.0 + self.step_unroll)
+            acc = (acc + self.step_unroll * su_acc) / (1.0 + self.step_unroll)
+
         return loss, final_tokens, pred_id, acc
+
+    def step_unroll_forward(self, prev_masked_ids, prev_mask, target_actions, logits,
+                            multi_layer_hidden_states, proprio_features):
+        """
+        Step unroll: 用上一步的预测结果部分填充 masked 位置，然后对剩余 masked 位置重新预测。
+        模拟推理时的迭代解码过程，缩小 train-test gap。
+
+        Args:
+            prev_masked_ids: (B, ntokens) 上一步的输入 tokens（含 mask token）
+            prev_mask: (B, ntokens) boolean, True = 上一步被 mask 的位置
+            target_actions: (B, ntokens) ground truth discrete token IDs
+            logits: (B, ntokens, vocab_size) 上一步 forward 的输出 logits
+            multi_layer_hidden_states: (B, num_layers, num_tokens, hidden_dim)
+            proprio_features: (B, 1, llm_dim)
+        """
+        total_timesteps = 12
+        ntokens = self.num_action_tokens
+        device = prev_masked_ids.device
+
+        # 反推上一步的时间刻度: cosine_schedule(t) = cos(t * pi/2), 逆函数 t = arccos(p) * 2/pi
+        prev_rand_mask_probs = prev_mask.count_nonzero(dim=-1).float() / ntokens
+        prev_rand_time = torch.acos(prev_rand_mask_probs.clamp(-1, 1)) * 2 / torch.pi
+
+        # 前进一个时间步（mask 比例变小）
+        rand_time = (prev_rand_time + (1 / (total_timesteps + 1))).clamp(max=1)
+        rand_mask_probs = cosine_schedule(rand_time, None)
+
+        # 用上一步的 logits 获取预测结果和置信度（detach 避免白占显存）
+        probs = logits.detach().softmax(dim=-1)          # (B, ntokens, vocab_size)
+        scores, pred_ids = probs.max(dim=-1)             # (B, ntokens)
+
+        # 非 mask 位置设置极高分数，避免被重新 mask
+        scores = scores.masked_fill(~prev_mask, 1e5)
+
+        # 按置信度排序，保留最不自信的位置继续 mask
+        sorted_indices = scores.argsort(dim=1)
+        ranks = sorted_indices.argsort(dim=1)
+        prev_num_masked = prev_mask.sum(dim=-1)          # (B,) 上一步 mask 数量
+        num_token_masked = torch.round(rand_mask_probs * ntokens).clamp(min=1).long()
+        num_token_masked = torch.minimum(num_token_masked, prev_num_masked)  # 不超过上一步的 mask 数
+        mask = (ranks < num_token_masked.unsqueeze(-1))
+
+        # retained_preds: 上一步被 mask，这一步被"释放"的位置（用模型预测填充）
+        retained_preds = (prev_mask == True) & (mask == False)
+
+        # 构建新的输入: retained 位置填入预测结果，其余保持不变
+        x_ids = torch.where(retained_preds, pred_ids, prev_masked_ids)
+
+        # 重新 forward
+        su_logits, _ = self.forward(
+            multi_layer_hidden_states,
+            proprio_features=proprio_features,
+            input_tokens=x_ids,
+        )
+
+        # 在仍然被 mask 的位置上计算 loss
+        su_loss = torch.nn.functional.cross_entropy(
+            su_logits[mask].view(-1, self.vocab_size),
+            target_actions[mask].view(-1),
+            reduction='mean'
+        )
+
+        # 计算仍然被 mask 位置的准确率
+        su_pred_id = torch.argmax(su_logits, dim=-1)
+        su_masked_pred = su_pred_id[mask]
+        su_masked_target = target_actions[mask]
+        n_correct = (su_masked_pred == su_masked_target).sum().item()
+        n_total = mask.sum().item()
+        su_acc = n_correct / n_total if n_total > 0 else 0.0
+
+        return su_loss, su_pred_id, su_acc
 
 
 # ============================================================================
