@@ -21,3 +21,7 @@ kill -9 -PID
 #杀评估进程
 pkill -f "experiments/robot/libero/run_libero_eval.py"
 pkill -u $USER -f "torchrun"
+
+
+#如果想减少loss的突然上升情况，需要在H800服务器上安装flash attention3,
+pip install flash-attn --no-build-isolation

@@ -18,6 +18,15 @@ from typing import Dict, Optional, Tuple, Type
 import torch.nn.functional as F
 import draccus
 import torch
+
+# ====== FA3 + FP32 Accumulate Patch (方案 B: arXiv 2510.04212) ======
+# Must be applied BEFORE any model instantiation.
+# Replaces FA2's flash_attn_func with FA3's version using fp32_accumulate=True,
+# so O = P @ V is accumulated in FP32 inside the fused kernel.
+# Requires H100/H800 (Hopper) GPU + flash-attn compiled with FA3 support.
+from prismatic.util.fa3_fp32_patch import patch_fa3_fp32_accumulate
+patch_fa3_fp32_accumulate()
+# ====== END PATCH ======
 import torch.distributed as dist
 import torch.nn as nn
 import sys

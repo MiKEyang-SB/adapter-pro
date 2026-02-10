@@ -363,8 +363,11 @@ class PrismaticForConditionalGeneration(PrismaticPreTrainedModel):
         )
 
         # Instantiate LLM Backbone
+        # Force flash_attention_2 so that Qwen2FlashAttention2 is used.
+        # The FA3 monkey-patch (fa3_fp32_patch.py) replaces the underlying
+        # flash_attn_func calls with FA3 + fp32_accumulate=True at runtime.
         self.language_model = AutoModelForCausalLM.from_config(
-            config.text_config, attn_implementation=config._attn_implementation
+            config.text_config, attn_implementation="flash_attention_2"
         )
 
         self.vocab_size = config.text_config.vocab_size
