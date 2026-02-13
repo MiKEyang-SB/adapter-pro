@@ -1347,6 +1347,7 @@ def finetune(cfg: FinetuneConfig) -> None:
 
             # Optimizer and LR scheduler step
             if (batch_idx + 1) % cfg.grad_accumulation_steps == 0:
+                torch.nn.utils.clip_grad_norm_(trainable_params, max_norm=10.0)
                 optimizer.step()
                 # Only apply scheduler after warmup is complete
                 if gradient_step_idx >= warmup_steps:
