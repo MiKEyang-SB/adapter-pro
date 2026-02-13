@@ -554,7 +554,8 @@ class PrismaticForConditionalGeneration(PrismaticPreTrainedModel):
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
         # Respect `use_cache` only if not training (even if `gradient_checkpointing` is off)
-        use_cache = use_cache and not self.training
+        if self.training:
+            use_cache = False
 
         # Instantiate Placeholder for Projector Features
         projected_patch_embeddings = None
